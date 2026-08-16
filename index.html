@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Полянка котиков 🐾</title>
-<meta name="description" content="Милая браузерная игра: чеши котиков, которые бегают по полянке и просят любви.">
+<meta name="description" content="Уютная браузерная игра: узнавай котиков на полянке и приручай их. Кто-то любит ласку, кто-то боится резких движений, а кому-то нужны догонялки.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -15,24 +15,17 @@
 
   <header class="hud" id="hud">
     <div class="panel score-panel">
-      <div class="stat">
-        <span class="stat-label">Мурчалки</span>
-        <span class="stat-value" id="score">0</span>
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-label">Мурчалки</span>
+          <span class="stat-value" id="purrs">0</span>
+        </div>
+        <div class="stat small">
+          <span class="stat-label">Свои</span>
+          <span class="stat-value" id="residents">0</span>
+        </div>
       </div>
-      <div class="stat small">
-        <span class="stat-label">Рекорд</span>
-        <span class="stat-value" id="best">0</span>
-      </div>
-      <div class="combo" id="combo" hidden>x<span id="comboVal">2</span></div>
-    </div>
-
-    <div class="panel mood-panel">
-      <div class="mood-top">
-        <span class="stat-label">Счастье полянки</span>
-        <span class="stat-value tiny" id="moodPct">100%</span>
-      </div>
-      <div class="mood-bar"><div class="mood-fill" id="moodFill"></div></div>
-      <div class="cats-line">🐈 <span id="catCount">0</span> котиков · 🙀 <span id="askCount">0</span> ждут ласки</div>
+      <div class="cats-line" id="catsLine">🐈 4 котика на полянке</div>
     </div>
 
     <div class="panel buttons">
@@ -47,27 +40,33 @@
     <div class="card">
       <div class="cats-row">🐈 🐈‍⬛ 🐱</div>
       <h1>Полянка котиков</h1>
-      <p class="sub">По полянке бегают котики. Иногда котик садится и просит: <b>«мяу, погладь меня»</b>.</p>
+      <p class="sub">Здесь живут котики, и все они <b>разные</b>. Игра не про «успеть», а про то,
+        чтобы понять каждого.</p>
       <ul class="rules">
-        <li><span>👋</span> Наведи ладошку на котика и <b>води туда-сюда</b> — это и есть чесание.</li>
-        <li><span>💗</span> Заполни сердечко до конца — котик замурчит и подарит мурчалки.</li>
-        <li><span>⏳</span> Если не успеть, котик расстроится и счастье полянки упадёт.</li>
-        <li><span>🔥</span> Гладь котиков подряд — растёт множитель.</li>
+        <li><span>😽</span> <b>Ласковый</b> сам идёт навстречу — води ладошкой по спинке, и он замурчит.</li>
+        <li><span>🙀</span> <b>Пугливый</b> боится резких движений. Подойди медленно и <b>замри</b> рядом — он принюхается сам.</li>
+        <li><span>🧶</span> <b>Игривому</b> не до ласки. Поводи лапкой рядом — пусть погоняется.</li>
+        <li><span>💗</span> За понимание растёт доверие. На трёх сердечках котик остаётся жить на полянке.</li>
       </ul>
-      <button class="big-btn" id="playBtn">Погладить котиков</button>
-      <p class="hint">Мышка или палец — работает и то, и другое.</p>
+      <button class="big-btn" id="playBtn">Пойти к котикам</button>
+      <p class="hint">Проиграть нельзя. Мышка и палец работают одинаково.</p>
     </div>
   </div>
 
   <div class="overlay hidden" id="helpScreen">
     <div class="card">
-      <h1>Как играть</h1>
+      <h1>Язык котиков</h1>
+      <p class="sub">Котики всё показывают телом. Научишься читать — поймёшь любого.</p>
       <ul class="rules">
-        <li><span>👋</span> Держи курсор на котике и <b>двигай им</b> — стоящая на месте рука не чешет.</li>
-        <li><span>💗</span> Котики с сердечком над головой ждут ласки — им приоритет.</li>
-        <li><span>😽</span> Погладить можно любого, но за «просящих» дают больше мурчалок.</li>
-        <li><span>🔥</span> Множитель растёт, если гладить котиков без больших пауз.</li>
-        <li><span>🌼</span> Проиграть нельзя — это полянка, тут просто хорошо.</li>
+        <li><span>🐈</span> <b>Хвост трубой</b> — рад тебе, можно подходить.</li>
+        <li><span>😾</span> <b>Уши прижаты, хвост поджат</b> — страшно. Замри и не двигайся.</li>
+        <li><span>😽</span> <b>Глаза щёлочками</b> — блаженство, продолжай в том же духе.</li>
+        <li><span>💤</span> <b>Пунктир вокруг котика</b> — он насторожился, ещё резкое движение и убежит.</li>
+        <li><span>🎵</span> <b>Мурчание</b> — всё делаешь правильно.</li>
+      </ul>
+      <ul class="rules">
+        <li><span>🍲</span> Миска и кустик не просто украшение: у миски котики задерживаются, а в кустах пугливые чувствуют себя спокойно.</li>
+        <li><span>🏡</span> Свои котики остаются на полянке и встречают тебя, когда возвращаешься.</li>
       </ul>
       <button class="big-btn" id="closeHelpBtn">Понятно, мур</button>
     </div>

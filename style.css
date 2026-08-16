@@ -64,10 +64,12 @@ html, body {
 
 .score-panel {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  gap: 2px;
   position: relative;
 }
+
+.stat-row { display: flex; align-items: center; gap: 16px; }
 
 .stat { display: flex; flex-direction: column; line-height: 1.05; }
 .stat-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-soft); font-weight: 800; }
@@ -75,47 +77,7 @@ html, body {
 .stat.small .stat-value { font-size: 17px; color: var(--ink-soft); }
 .stat-value.tiny { font-size: 12px; color: var(--ink-soft); }
 
-.combo {
-  position: absolute;
-  top: -12px;
-  right: -14px;
-  background: linear-gradient(180deg, #ffd86b, #ffa93b);
-  color: #6b3d05;
-  font-weight: 900;
-  font-size: 15px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 3px solid #fff;
-  box-shadow: 0 4px 10px rgba(150, 90, 10, .3);
-  animation: pop .28s ease;
-}
-
-@keyframes pop {
-  0% { transform: scale(.5) rotate(-12deg); }
-  70% { transform: scale(1.18) rotate(4deg); }
-  100% { transform: scale(1) rotate(-4deg); }
-}
-
-.mood-panel { flex: 1; max-width: 320px; min-width: 160px; }
-.mood-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-
-.mood-bar {
-  margin-top: 5px;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(120, 96, 70, .16);
-  overflow: hidden;
-}
-
-.mood-fill {
-  height: 100%;
-  width: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #ffb0c8, #ff7aa5);
-  transition: width .35s ease, background .5s ease;
-}
-
-.cats-line { margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+.cats-line { margin-top: 2px; font-size: 12px; font-weight: 700; color: var(--ink-soft); }
 
 .buttons { display: flex; gap: 8px; padding: 8px; margin-left: auto; pointer-events: auto; }
 
@@ -226,7 +188,6 @@ html, body {
 
 @media (max-width: 620px) {
   .hud { flex-wrap: wrap; }
-  .mood-panel { order: 3; max-width: none; width: 100%; }
   .stat-value { font-size: 22px; }
   .card h1 { font-size: 25px; }
 }
