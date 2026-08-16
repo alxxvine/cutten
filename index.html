@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Полянка котиков 🐾</title>
+<meta name="description" content="Милая браузерная игра: чеши котиков, которые бегают по полянке и просят любви.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <canvas id="game" aria-label="Полянка с котиками"></canvas>
+
+  <header class="hud" id="hud">
+    <div class="panel score-panel">
+      <div class="stat">
+        <span class="stat-label">Мурчалки</span>
+        <span class="stat-value" id="score">0</span>
+      </div>
+      <div class="stat small">
+        <span class="stat-label">Рекорд</span>
+        <span class="stat-value" id="best">0</span>
+      </div>
+      <div class="combo" id="combo" hidden>x<span id="comboVal">2</span></div>
+    </div>
+
+    <div class="panel mood-panel">
+      <div class="mood-top">
+        <span class="stat-label">Счастье полянки</span>
+        <span class="stat-value tiny" id="moodPct">100%</span>
+      </div>
+      <div class="mood-bar"><div class="mood-fill" id="moodFill"></div></div>
+      <div class="cats-line">🐈 <span id="catCount">0</span> котиков · 🙀 <span id="askCount">0</span> ждут ласки</div>
+    </div>
+
+    <div class="panel buttons">
+      <button class="icon-btn" id="soundBtn" title="Звук" aria-label="Звук">🔊</button>
+      <button class="icon-btn" id="helpBtn" title="Как играть" aria-label="Как играть">?</button>
+    </div>
+  </header>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <div class="overlay" id="startScreen">
+    <div class="card">
+      <div class="cats-row">🐈 🐈‍⬛ 🐱</div>
+      <h1>Полянка котиков</h1>
+      <p class="sub">По полянке бегают котики. Иногда котик садится и просит: <b>«мяу, погладь меня»</b>.</p>
+      <ul class="rules">
+        <li><span>👋</span> Наведи ладошку на котика и <b>води туда-сюда</b> — это и есть чесание.</li>
+        <li><span>💗</span> Заполни сердечко до конца — котик замурчит и подарит мурчалки.</li>
+        <li><span>⏳</span> Если не успеть, котик расстроится и счастье полянки упадёт.</li>
+        <li><span>🔥</span> Гладь котиков подряд — растёт множитель.</li>
+      </ul>
+      <button class="big-btn" id="playBtn">Погладить котиков</button>
+      <p class="hint">Мышка или палец — работает и то, и другое.</p>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="helpScreen">
+    <div class="card">
+      <h1>Как играть</h1>
+      <ul class="rules">
+        <li><span>👋</span> Держи курсор на котике и <b>двигай им</b> — стоящая на месте рука не чешет.</li>
+        <li><span>💗</span> Котики с сердечком над головой ждут ласки — им приоритет.</li>
+        <li><span>😽</span> Погладить можно любого, но за «просящих» дают больше мурчалок.</li>
+        <li><span>🔥</span> Множитель растёт, если гладить котиков без больших пауз.</li>
+        <li><span>🌼</span> Проиграть нельзя — это полянка, тут просто хорошо.</li>
+      </ul>
+      <button class="big-btn" id="closeHelpBtn">Понятно, мур</button>
+    </div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
