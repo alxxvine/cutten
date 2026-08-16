@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Полянка котиков 🐾</title>
+<meta name="description" content="Уютная браузерная игра: узнавай котиков на полянке и приручай их. Кто-то любит ласку, кто-то боится резких движений, а кому-то нужны догонялки.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <canvas id="game" aria-label="Полянка с котиками"></canvas>
+
+  <header class="hud" id="hud">
+    <div class="panel score-panel">
+      <div class="stat-row">
+        <div class="stat">
+          <span class="stat-label">Мурчалки</span>
+          <span class="stat-value" id="purrs">0</span>
+        </div>
+        <div class="stat small">
+          <span class="stat-label">Свои</span>
+          <span class="stat-value" id="residents">0</span>
+        </div>
+      </div>
+      <div class="cats-line" id="catsLine">🐈 4 котика на полянке</div>
+    </div>
+
+    <div class="panel buttons">
+      <button class="icon-btn" id="soundBtn" title="Звук" aria-label="Звук">🔊</button>
+      <button class="icon-btn" id="helpBtn" title="Как играть" aria-label="Как играть">?</button>
+    </div>
+  </header>
+
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <div class="overlay" id="startScreen">
+    <div class="card">
+      <div class="cats-row">🐈 🐈‍⬛ 🐱</div>
+      <h1>Полянка котиков</h1>
+      <p class="sub">Здесь живут котики, и все они <b>разные</b>. Игра не про «успеть», а про то,
+        чтобы понять каждого.</p>
+      <ul class="rules">
+        <li><span>😽</span> <b>Ласковый</b> сам идёт навстречу — води ладошкой по спинке, и он замурчит.</li>
+        <li><span>🙀</span> <b>Пугливый</b> боится резких движений. Подойди медленно и <b>замри</b> рядом — он принюхается сам.</li>
+        <li><span>🧶</span> <b>Игривому</b> не до ласки. Поводи лапкой рядом — пусть погоняется.</li>
+        <li><span>💗</span> За понимание растёт доверие. На трёх сердечках котик остаётся жить на полянке.</li>
+      </ul>
+      <button class="big-btn" id="playBtn">Пойти к котикам</button>
+      <p class="hint">Проиграть нельзя. Мышка и палец работают одинаково.</p>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="helpScreen">
+    <div class="card">
+      <h1>Язык котиков</h1>
+      <p class="sub">Котики всё показывают телом. Научишься читать — поймёшь любого.</p>
+      <ul class="rules">
+        <li><span>🐈</span> <b>Хвост трубой</b> — рад тебе, можно подходить.</li>
+        <li><span>😾</span> <b>Уши прижаты, хвост поджат</b> — страшно. Замри и не двигайся.</li>
+        <li><span>😽</span> <b>Глаза щёлочками</b> — блаженство, продолжай в том же духе.</li>
+        <li><span>💤</span> <b>Пунктир вокруг котика</b> — он насторожился, ещё резкое движение и убежит.</li>
+        <li><span>🎵</span> <b>Мурчание</b> — всё делаешь правильно.</li>
+      </ul>
+      <ul class="rules">
+        <li><span>🍲</span> Миска и кустик не просто украшение: у миски котики задерживаются, а в кустах пугливые чувствуют себя спокойно.</li>
+        <li><span>🏡</span> Свои котики остаются на полянке и встречают тебя, когда возвращаешься.</li>
+      </ul>
+      <button class="big-btn" id="closeHelpBtn">Понятно, мур</button>
+    </div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
