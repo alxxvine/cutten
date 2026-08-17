@@ -1,6 +1,6 @@
-/* Дракончик как питомец: потребности, характер, занятия и рост.
-   Правило то же, что в прошлой игре: никаких наказаний и таймеров.
-   Голодный дракончик грустит и заглядывает в глаза, но ничего плохого не случается. */
+/* The dragon as a pet: needs, temperament, activities and growth.
+   Same rule as in the previous game: no punishment and no timers.
+   A hungry dragon looks sad and stares into your eyes, but nothing bad ever happens. */
 window.Pet = (function () {
   'use strict';
 
@@ -12,7 +12,7 @@ window.Pet = (function () {
   function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
   function lerp(a, b, t) { return a + (b - a) * t; }
 
-  // Как быстро убывают потребности (за секунду).
+  // How fast needs drain (per second).
   var DECAY = { food: 0.0022, energy: 0.0016, fun: 0.0035 };
 
   var STAGE_AT = { teen: 0.35, flyer: 0.75 };
@@ -45,7 +45,7 @@ window.Pet = (function () {
 
     this.happiness = 0.5;
     this.voiceTimer = rand(4, 9);
-    this.idleAttention = 0;     // сколько игрок ничего не делает
+    this.idleAttention = 0;     // how long the player has been idle
     this.mood = '';
 
     this.buildBall();
@@ -61,7 +61,7 @@ window.Pet = (function () {
     return 'baby';
   };
 
-  /* ---------- предметы ---------- */
+  /* ---------- props ---------- */
 
   Pet.prototype.buildBall = function () {
     var group = new THREE.Group();
@@ -109,7 +109,7 @@ window.Pet = (function () {
     this.treat = { group: group, active: false, position: new V() };
   };
 
-  /* ---------- взаимодействие извне ---------- */
+  /* ---------- interaction from outside ---------- */
 
   Pet.prototype.throwBall = function (point) {
     var b = this.ball;
@@ -162,7 +162,7 @@ window.Pet = (function () {
     }
     this.offerTreat(false);
     this.setState('goToBed');
-    this.onToast(this.name + ' идёт укладываться');
+    this.onToast(this.name + ' is heading to bed');
   };
 
   Pet.prototype.wakeUp = function () {
@@ -172,10 +172,10 @@ window.Pet = (function () {
     window.Audio3D.chirp(1.1);
   };
 
-  /* ---------- состояния ---------- */
+  /* ---------- states ---------- */
 
   Pet.prototype.setState = function (state, time) {
-    // Отвлёкся на еду, сон или ласку — мячик просто выпадает из пасти.
+    // Distracted by food, sleep or petting — the ball simply drops out of the mouth.
     if (this.ball && this.ball.state === 'carried' && state !== 'returnBall' && state !== 'goToBall') {
       this.dropBall();
     }
@@ -201,7 +201,7 @@ window.Pet = (function () {
     return new V(Math.cos(a) * r, 0, Math.sin(a) * r);
   };
 
-  /** Что делать дальше, когда дракончик свободен. */
+  /** What to do next when the dragon has nothing going on. */
   Pet.prototype.chooseIdleBehaviour = function () {
     var n = this.needs;
 
@@ -243,7 +243,7 @@ window.Pet = (function () {
     }
   };
 
-  /* ---------- перемещение ---------- */
+  /* ---------- movement ---------- */
 
   Pet.prototype.moveToward = function (dt, target, speed) {
     var dx = target.x - this.position.x;
@@ -258,7 +258,7 @@ window.Pet = (function () {
     this.position.z += (dz / dist) * step;
     this.speed = speed;
 
-    // Разворачивается плавно, а не мгновенно.
+    // Turns smoothly rather than instantly.
     var want = Math.atan2(dx, dz);
     var diff = want - this.facing;
     while (diff > Math.PI) diff -= TAU;
@@ -267,14 +267,14 @@ window.Pet = (function () {
     return false;
   };
 
-  /* ---------- кадр ---------- */
+  /* ---------- frame ---------- */
 
   Pet.prototype.update = function (dt, time, pointerWorld) {
     var n = this.needs;
     var d = this.dragon;
     var sleeping = this.state === 'sleep';
 
-    // Потребности.
+    // Needs.
     var activity = this.state === 'zoomies' || this.state === 'goToBall' || this.state === 'fly' ? 2.2 : 1;
     if (sleeping) {
       n.energy = clamp01(n.energy + dt * 0.035);
@@ -288,10 +288,10 @@ window.Pet = (function () {
     this.happiness = clamp01((n.food + n.energy + n.fun) / 3 * 0.7 + this.bond * 0.3);
     d.happiness = this.happiness;
 
-    // Куда смотреть: на угощение, мячик, руку или на игрока.
+    // Where to look: the treat, the ball, the hand, or the player.
     this.updateGaze(dt, pointerWorld);
 
-    // Голос: изредка что-то говорит сам по себе.
+    // Voice: every so often it says something on its own.
     this.voiceTimer -= dt;
     if (this.voiceTimer <= 0 && !sleeping) {
       this.voiceTimer = rand(7, 16);
@@ -299,13 +299,13 @@ window.Pet = (function () {
       else if (this.happiness > 0.6) window.Audio3D.chirp(rand(0.95, 1.15));
     }
 
-    // Скучает, если игрок долго ничего не делает.
+    // Gets bored when the player does nothing for a while.
     this.idleAttention += dt;
 
     this.updateBall(dt);
     this.updateTreat(dt);
 
-    // Ласка перебивает почти всё, кроме сна (спящего гладить тоже можно).
+    // Petting overrides almost everything except sleep (a sleeping dragon can be petted too).
     if (this.petting && this.state !== 'sleep' && this.state !== 'fly') {
       if (this.state !== 'petted') this.setState('petted');
     } else if (this.state === 'petted' && !this.petting) {
@@ -315,7 +315,7 @@ window.Pet = (function () {
     this.stateT += dt;
     this[this.stateHandler(this.state)](dt, time);
 
-    // Приземляем на рельеф и отдаём позу модели.
+    // Drop onto the terrain and hand the pose over to the model.
     this.position.x = Math.max(-World.WALK_R, Math.min(World.WALK_R, this.position.x));
     this.position.z = Math.max(-World.WALK_R, Math.min(World.WALK_R, this.position.z));
     var groundY = World.heightAt(this.position.x, this.position.z);
@@ -351,14 +351,14 @@ window.Pet = (function () {
       this.lookTimer -= dt;
       d.lookAt(this.lookPoint);
     } else if (this.idleAttention > 8) {
-      // Давно не трогали — заглядывает игроку в глаза.
+      // Nobody has interacted in a while — it looks the player in the eye.
       d.lookAt(World.camera.position);
     } else {
       d.lookAt(null);
     }
   };
 
-  /* ---------- поведения ---------- */
+  /* ---------- behaviours ---------- */
 
   Pet.prototype.state_idle = function (dt) {
     this.pose = 'stand';
@@ -399,7 +399,7 @@ window.Pet = (function () {
   Pet.prototype.state_dig = function (dt) {
     this.pose = 'sniff';
     this.speed = 0;
-    // Копает передней лапой — рывками, с землёй из-под лап.
+    // Digs with a front paw in jerky strokes, kicking up dirt.
     var leg = this.dragon.legs[0];
     leg.hip.rotation.x += Math.sin(this.stateT * 16) * 0.35;
     if (Math.random() < dt * 8) {
@@ -415,7 +415,7 @@ window.Pet = (function () {
 
   Pet.prototype.state_butterfly = function (dt, time) {
     this.pose = 'walk';
-    // Гоняется за воображаемой бабочкой: цель кружит рядом.
+    // Chases an imaginary butterfly: the target circles nearby.
     var a = time * 1.3;
     if (!this.butterflyCenter) this.butterflyCenter = this.wanderPoint();
     var target = new V(
@@ -467,7 +467,7 @@ window.Pet = (function () {
     if (this.stateT > this.stateTime) this.setState('idle', rand(0.5, 1.5));
   };
 
-  /* --- полёт (только для подросшего) --- */
+  /* --- flight (grown-up dragons only) --- */
 
   Pet.prototype.state_fly = function (dt, time) {
     this.pose = 'fly';
@@ -493,7 +493,7 @@ window.Pet = (function () {
     }
   };
 
-  /* --- ласка --- */
+  /* --- petting --- */
 
   Pet.prototype.state_petted = function (dt) {
     this.pose = 'pet';
@@ -513,7 +513,7 @@ window.Pet = (function () {
     this.checkGrowth();
   };
 
-  /* --- мячик --- */
+  /* --- the ball --- */
 
   Pet.prototype.updateBall = function (dt) {
     var b = this.ball;
@@ -538,7 +538,7 @@ window.Pet = (function () {
           b.velocity.set(0, 0, 0);
         }
       }
-      // За край островка мячик не улетает.
+      // The ball never flies off the island.
       var r = Math.hypot(b.group.position.x, b.group.position.z);
       if (r > World.WALK_R) {
         var k = World.WALK_R / r;
@@ -548,7 +548,7 @@ window.Pet = (function () {
         b.velocity.z *= -0.4;
       }
 
-      // Страховка: мячик не может лететь вечно.
+      // Safety net: the ball cannot fly forever.
       b.flightTime = (b.flightTime || 0) + dt;
       if (b.flightTime > 5) {
         b.state = 'resting';
@@ -591,7 +591,7 @@ window.Pet = (function () {
       this.dropPoint = camDir.multiplyScalar(Math.min(len, 4.5) / len);
     }
 
-    // Мячик потерялся — просто возвращаемся к делам.
+    // The ball got lost — just go back to whatever we were doing.
     if (this.stateT > 14) {
       this.dragon.flapSpeed = 0;
       this.setState('idle');
@@ -602,7 +602,7 @@ window.Pet = (function () {
     this.pose = 'walk';
     if (!this.dropPoint) this.dropPoint = new V(0, 0, 0);
 
-    // Донёс — или уже долго идёт, тогда просто кладёт где стоит.
+    // Delivered — or has been walking too long, in which case it drops the ball where it stands.
     if (this.moveToward(dt, this.dropPoint, 1.9) || this.stateT > 8) {
       this.ball.state = 'resting';
       var drop = this.position.clone();
@@ -615,9 +615,9 @@ window.Pet = (function () {
     }
   };
 
-  /* --- угощение --- */
+  /* --- the treat --- */
 
-  // Пока дракончик спит, идёт спать или его гладят, угощение не перехватывает управление.
+  // While the dragon sleeps, heads to bed or is being petted, the treat does not take over.
   var TREAT_BLOCKED = { sleep: 1, goToBed: 1, wake: 1, eat: 1, petted: 1, fly: 1 };
 
   Pet.prototype.updateTreat = function (dt) {
@@ -628,7 +628,7 @@ window.Pet = (function () {
 
     if (dist < 6 && this.state !== 'eat' && this.state !== 'sleep') {
       if (dist > 1.1) {
-        // Идёт к угощению.
+        // Walking to the treat.
         if (this.state !== 'goToTreat') this.setState('goToTreat');
       } else if (this.state !== 'eat') {
         this.setState('eat', 2.2);
@@ -654,23 +654,23 @@ window.Pet = (function () {
       this.offerTreat(false);
       this.needs.food = clamp01(this.needs.food + 0.35);
       this.bond = clamp01(this.bond + 0.02);
-      this.onToast(this.name + ' доволен 🍓');
+      this.onToast(this.name + ' loved that 🍓');
       this.checkGrowth();
     }
 
-    // Жуёт: челюсть ходит вверх-вниз, летят искорки.
+    // Chewing: the jaw works up and down and sparks fly.
     this.dragon.openJaw(0.3 + Math.sin(this.stateT * 18) * 0.28, 0.1);
     if (Math.random() < dt * 5) World.fx.sparkles(this.dragon.mouthWorldPosition(), 1);
 
     if (this.stateT > this.stateTime) {
-      // Довольная отрыжка искорками — маленькая шутка, но она делает его живым.
+      // A happy little burp of sparks — a small joke, but it makes the dragon feel alive.
       World.fx.fire(this.dragon.mouthWorldPosition(), 6);
       window.Audio3D.pop();
       this.setState('idle', rand(0.6, 1.2));
     }
   };
 
-  /* --- сон --- */
+  /* --- sleep --- */
 
   Pet.prototype.state_goToBed = function (dt) {
     this.pose = 'walk';
@@ -680,7 +680,7 @@ window.Pet = (function () {
       World.setNight(0.8);
       this.dragon.openJaw(0.8, 1.1);
       window.Audio3D.whine(0.8);
-      this.onToast(this.name + ' засыпает…');
+      this.onToast(this.name + ' is falling asleep…');
     }
   };
 
@@ -707,7 +707,7 @@ window.Pet = (function () {
     if (this.stateT > 1.8) this.setState('idle', 0.5);
   };
 
-  /* --- приветствие при заходе --- */
+  /* --- greeting on arrival --- */
 
   Pet.prototype.state_greet = function (dt) {
     this.pose = 'run';
@@ -723,7 +723,7 @@ window.Pet = (function () {
     }
   };
 
-  /* ---------- рост ---------- */
+  /* ---------- growth ---------- */
 
   Pet.prototype.checkGrowth = function () {
     var next = this.stageForBond(this.bond);
@@ -736,7 +736,7 @@ window.Pet = (function () {
     this.onGrow(next);
   };
 
-  /* ---------- что показать игроку ---------- */
+  /* ---------- what to show the player ---------- */
 
   Pet.prototype.moodEmoji = function () {
     if (this.state === 'sleep') return '💤';

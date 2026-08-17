@@ -1,6 +1,6 @@
-/* Ввод: одна и та же логика для мыши и пальца.
-   Скорость указателя сглаживается по времени, а не по кадрам — иначе один кадр
-   с событием даёт ложный пик в сотни пикселей в секунду (напоролись на это в прошлой игре). */
+/* Input: the same logic for mouse and finger.
+   Pointer speed is smoothed over time rather than per frame — otherwise a single frame
+   carrying an event spikes to hundreds of pixels per second (we hit this in the previous game). */
 window.Input = (function () {
   'use strict';
 
@@ -12,7 +12,7 @@ window.Input = (function () {
     down: false, inside: false, seen: false, touch: false
   };
 
-  var dragging = false;       // тянем камеру
+  var dragging = false;       // dragging the camera
   var dragStart = { x: 0, y: 0 };
   var dragMoved = 0;
   var overDragon = false;
@@ -47,7 +47,7 @@ window.Input = (function () {
     dragStart.x = e.clientX;
     dragStart.y = e.clientY;
     dragMoved = 0;
-    // Камеру крутим только когда потянули мимо дракончика.
+    // The camera only orbits when the drag started away from the dragon.
     dragging = !overDragon && mode === 'idle';
 
     if (canvas.setPointerCapture) {
@@ -71,7 +71,7 @@ window.Input = (function () {
     pointer.seen = true;
     updateNdc(e.clientX, e.clientY);
 
-    // Щипок двумя пальцами — зум.
+    // Two-finger pinch — zoom.
     var ids = Object.keys(activePointers);
     if (ids.length === 2) {
       var a = activePointers[ids[0]], b = activePointers[ids[1]];
@@ -108,7 +108,7 @@ window.Input = (function () {
           setMode('idle');
         }
       } else if (mode === 'treat') {
-        // Повторное касание отпускает угощение — дракончик всё равно его найдёт.
+        // Tapping again drops the treat — the dragon will find it anyway.
         var p = World.groundPoint(ndc);
         if (p) pet.moveTreat(p);
       }
@@ -156,7 +156,7 @@ window.Input = (function () {
       pet.offerTreat(true);
     },
 
-    /** Возвращает точку, на которую сейчас смотрит дракончик (или null). */
+    /** Returns the point the dragon is currently looking at (or null). */
     update: function (dt) {
       var instant = pointer.frameDist / Math.max(dt, 0.001);
       pointer.speed = lerp(pointer.speed, instant, 1 - Math.exp(-dt / 0.1));
@@ -164,10 +164,10 @@ window.Input = (function () {
 
       groundPoint = pointer.inside ? World.groundPoint(ndc) : null;
 
-      // Угощение следует за рукой.
+      // The treat follows the hand.
       if (mode === 'treat' && groundPoint) pet.moveTreat(groundPoint);
 
-      // Поглаживание: рука над дракончиком и движется.
+      // Petting: the hand is over the dragon and moving.
       var canPet = overDragon && !dragging && mode === 'idle' &&
         (pointer.touch ? pointer.down : pointer.inside);
       var moving = pointer.speed > 40;

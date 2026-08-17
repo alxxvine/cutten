@@ -1,7 +1,7 @@
-/* Дракончик: низкополигональная модель, риг и процедурная анимация.
-   Ни одной готовой модели и ни одного клипа анимации — всё считается каждый кадр.
-   Живость складывается из мелочей: дыхание, моргание, слежение головой, запаздывание
-   хвоста и шеи, перенос веса с лапы на лапу. */
+/* The dragon: a low-poly model, a rig and procedural animation.
+   Not a single prebuilt model and not a single animation clip — everything is computed per frame.
+   The feeling of being alive comes from small things: breathing, blinking, head tracking,
+   the tail and neck lagging behind, weight shifting from paw to paw. */
 window.Dragon = (function () {
   'use strict';
 
@@ -19,12 +19,12 @@ window.Dragon = (function () {
   };
 
   var STAGES = {
-    baby: { root: 0.95, head: 1.08, wing: 0.6, leg: 1, label: 'малыш' },
-    teen: { root: 1.2, head: 1.0, wing: 0.85, leg: 1.08, label: 'подросток' },
-    flyer: { root: 1.45, head: 0.94, wing: 1.15, leg: 1.14, label: 'летун' }
+    baby: { root: 0.95, head: 1.08, wing: 0.6, leg: 1, label: 'hatchling' },
+    teen: { root: 1.2, head: 1.0, wing: 0.85, leg: 1.08, label: 'fledgling' },
+    flyer: { root: 1.45, head: 0.94, wing: 1.15, leg: 1.14, label: 'flier' }
   };
 
-  // Целевые значения позы. Всё, что анимируется, живёт здесь и плавно перетекает.
+  // Target values for a pose. Everything animated lives here and blends smoothly.
   var POSES = {
     stand: { height: 0.8, pitch: 0, neck: -0.18, headPitch: 0.06, curl: 0, wing: 0.22, tail: 0.12, eyes: 1, sit: 0, spread: 0 },
     walk: { height: 0.78, pitch: 0.04, neck: -0.1, headPitch: 0.04, curl: 0, wing: 0.16, tail: 0.2, eyes: 1, sit: 0, spread: 0 },
@@ -58,25 +58,25 @@ window.Dragon = (function () {
     this.poseName = 'stand';
 
     this.walkPhase = 0;
-    this.speed = 0;           // текущая скорость перемещения (метры/с)
-    this.blink = 0;           // 0 — глаза открыты, 1 — закрыты
+    this.speed = 0;           // current movement speed (metres per second)
+    this.blink = 0;           // 0 means eyes open, 1 means closed
     this.blinkTimer = rand(2, 5);
     this.doubleBlink = false;
     this.jaw = 0;
     this.jawTarget = 0;
-    this.lookTarget = null;   // куда смотрит (Vector3) или null
+    this.lookTarget = null;   // what it looks at (Vector3), or null
     this.lookAmount = 0;
     this.headYaw = 0;
     this.headPitchExtra = 0;
-    this.eyeShift = 0;        // саккады — глаза чуть бегают
+    this.eyeShift = 0;        // saccades — the eyes drift a little
     this.eyeShiftTimer = 1;
     this.earTwitch = 0;
     this.earTimer = rand(3, 7);
     this.shake = 0;
     this.wingFlap = 0;
     this.flapSpeed = 0;
-    this.tailWag = 0;         // амплитуда виляния
-    this.happiness = 0;       // влияет на бодрость хвоста и ушей
+    this.tailWag = 0;         // wag amplitude
+    this.happiness = 0;       // drives how perky the tail and ears are
     this.breath = rand(0, TAU);
     this.stepSound = 0;
 
@@ -89,7 +89,7 @@ window.Dragon = (function () {
   Dragon.prototype.build = function () {
     var self = this;
 
-    // --- корпус ---
+    // --- body ---
     this.body = new THREE.Group();
     this.root.add(this.body);
 
@@ -107,7 +107,7 @@ window.Dragon = (function () {
     this.bellyMesh.position.set(0, -0.22, 0.06);
     this.torso.add(this.bellyMesh);
 
-    // Гребень вдоль спины.
+    // The crest along the spine.
     this.crest = [];
     for (var i = 0; i < 4; i++) {
       var spike = mesh(new THREE.ConeGeometry(0.09 - i * 0.012, 0.24 - i * 0.03, 4), COLORS.crest);
@@ -117,7 +117,7 @@ window.Dragon = (function () {
       this.crest.push(spike);
     }
 
-    // --- шея и голова ---
+    // --- neck and head ---
     this.neck = new THREE.Group();
     this.neck.position.set(0, 0.42, 0.38);
     this.torso.add(this.neck);
@@ -153,7 +153,7 @@ window.Dragon = (function () {
       self.head.add(n);
     });
 
-    // Челюсть — открывается, когда зевает, ест или трещит.
+    // The jaw — opens for yawns, meals and chirps.
     this.jawGroup = new THREE.Group();
     this.jawGroup.position.set(0, -0.14, 0.16);
     this.head.add(this.jawGroup);
@@ -161,7 +161,7 @@ window.Dragon = (function () {
     jawMesh.position.set(0, -0.04, 0.16);
     this.jawGroup.add(jawMesh);
 
-    // Глаза — крупные, тёмные, с бликом. Моргание — сжатие по вертикали.
+    // Eyes: big, dark, with a highlight. Blinking squashes them vertically.
     this.eyes = [];
     this.pupils = [];
     [-1, 1].forEach(function (side) {
@@ -184,7 +184,7 @@ window.Dragon = (function () {
       self.pupils.push({ ball: ball, shine: shine, shine2: shine2 });
     });
 
-    // Румянец.
+    // Blush.
     [-1, 1].forEach(function (side) {
       var blush = mesh(new THREE.SphereGeometry(0.075, 6, 5), COLORS.blush, { transparent: true, opacity: 0.55 });
       blush.scale.set(1, 0.6, 0.4);
@@ -192,7 +192,7 @@ window.Dragon = (function () {
       self.head.add(blush);
     });
 
-    // Рожки.
+    // Horns.
     this.horns = [];
     [-1, 1].forEach(function (side) {
       var horn = mesh(new THREE.ConeGeometry(0.07, 0.34, 5), COLORS.horn);
@@ -202,7 +202,7 @@ window.Dragon = (function () {
       self.horns.push(horn);
     });
 
-    // Ушки — подрагивают.
+    // Ears — they twitch.
     this.ears = [];
     [-1, 1].forEach(function (side) {
       var ear = new THREE.Group();
@@ -220,7 +220,7 @@ window.Dragon = (function () {
       self.ears.push(ear);
     });
 
-    // --- хвост: цепочка сегментов с запаздыванием ---
+    // --- tail: a chain of segments, each lagging behind the previous one ---
     this.tail = [];
     var parent = this.torso;
     for (var t = 0; t < 7; t++) {
@@ -241,13 +241,13 @@ window.Dragon = (function () {
       parent = seg;
       this.tail.push(seg);
     }
-    // Кисточка на кончике.
+    // The tuft at the tip.
     var tip = mesh(new THREE.ConeGeometry(0.16, 0.34, 5), COLORS.crest);
     tip.rotation.x = -Math.PI / 2;
     tip.position.z = -0.26;
     this.tail[this.tail.length - 1].add(tip);
 
-    // --- крылья ---
+    // --- wings ---
     this.wings = [];
     [-1, 1].forEach(function (side) {
       var wing = new THREE.Group();
@@ -277,7 +277,7 @@ window.Dragon = (function () {
       self.wings.push(wing);
     });
 
-    // --- лапы ---
+    // --- legs ---
     this.legs = [];
     var legDefs = [
       { x: -0.34, z: 0.34, front: true },
@@ -310,7 +310,7 @@ window.Dragon = (function () {
       pad.position.z = 0.05;
       foot.add(pad);
 
-      // Коготки.
+      // Claws.
       [-0.07, 0, 0.07].forEach(function (cx) {
         var claw = mesh(new THREE.ConeGeometry(0.025, 0.08, 4), COLORS.horn);
         claw.rotation.x = Math.PI / 2;
@@ -330,7 +330,7 @@ window.Dragon = (function () {
     });
   };
 
-  /** Пропорции меняются с возрастом: малыш головастый и коротколапый. */
+  /** Proportions change with age: a hatchling is big-headed and short-legged. */
   Dragon.prototype.applyStage = function (stage) {
     var s = STAGES[stage] || STAGES.baby;
     this.stage = stage;
@@ -372,7 +372,7 @@ window.Dragon = (function () {
     return this.head.localToWorld(v);
   };
 
-  /* ---------- кадр анимации ---------- */
+  /* ---------- animation frame ---------- */
 
   Dragon.prototype.update = function (dt, time) {
     var p = this.pose;
@@ -386,25 +386,25 @@ window.Dragon = (function () {
     var moving = this.speed > 0.05;
     this.breath += dt * (moving ? 3.4 : 1.7);
 
-    // --- дыхание: бочок раздувается, плечи чуть поднимаются ---
+    // --- breathing: the belly swells, the shoulders lift a little ---
     var breathAmt = Math.sin(this.breath) * (moving ? 0.012 : 0.022);
     this.torsoMesh.scale.set(1 + breathAmt, 1 + breathAmt * 0.7, 1 - breathAmt * 0.4);
     this.bellyMesh.scale.set(1 + breathAmt * 1.4, 1 + breathAmt, 1);
 
-    // --- поза корпуса ---
+    // --- body pose ---
     var bob = moving ? Math.abs(Math.sin(this.walkPhase * 2)) * 0.045 : Math.sin(this.breath * 0.6) * 0.012;
     this.body.position.y = p.height + bob;
     this.torso.rotation.x = p.pitch + (moving ? Math.sin(this.walkPhase * 2 + 1) * 0.03 : 0);
     this.torso.rotation.z = moving ? Math.sin(this.walkPhase) * 0.06 : Math.sin(this.breath * 0.5) * 0.02;
-    // Свернулся клубочком, когда спит.
+    // Curled up when asleep.
     this.torso.rotation.x -= p.curl * 0.25;
 
-    // --- шея и голова ---
+    // --- neck and head ---
     var neckBase = p.neck + p.curl * 0.15;
     this.neck.rotation.x = neckBase + Math.sin(this.breath * 0.7) * 0.02;
     this.neck2.rotation.x = neckBase * 0.5 - p.headPitch * 0.3;
 
-    // Слежение за курсором: голова догоняет цель пружинкой, есть предел поворота.
+    // Cursor tracking: the head springs toward the target, with a limit on how far it turns.
     var wantYaw = 0, wantPitch = 0;
     if (this.lookTarget) {
       var headPos = this.head.getWorldPosition(new THREE.Vector3());
@@ -430,7 +430,7 @@ window.Dragon = (function () {
     this.head.rotation.x = p.headPitch + this.headPitchExtra + (moving ? Math.sin(this.walkPhase * 2) * 0.04 : 0);
     this.head.rotation.z = this.headYaw * 0.12 + (this.shake > 0 ? Math.sin(this.shake * 40) * 0.35 : 0);
 
-    // --- моргание и саккады ---
+    // --- blinking and saccades ---
     this.blinkTimer -= dt;
     if (this.blinkTimer <= 0) {
       this.triggerBlink(Math.random() < 0.3);
@@ -459,7 +459,7 @@ window.Dragon = (function () {
       pupil.ball.position.x = self.eyeShift * 0.012;
     });
 
-    // --- ушки ---
+    // --- ears ---
     this.earTimer -= dt;
     if (this.earTimer <= 0) {
       this.earTwitch = 1;
@@ -474,7 +474,7 @@ window.Dragon = (function () {
       ear.rotation.x = -0.15 + earDroop * 0.5 + Math.sin(time * 1.3 + i) * 0.03;
     });
 
-    // --- челюсть ---
+    // --- jaw ---
     if (this.jawHold > 0) {
       this.jawHold -= dt;
       if (this.jawHold <= 0) this.jawTarget = 0;
@@ -482,13 +482,13 @@ window.Dragon = (function () {
     this.jaw = lerp(this.jaw, this.jawTarget, Math.min(1, dt * 9));
     this.jawGroup.rotation.x = this.jaw * 0.55;
 
-    // --- встряхивание всем телом ---
+    // --- a full-body shake ---
     if (this.shake > 0) {
       this.shake -= dt * 1.6;
       this.torso.rotation.z += Math.sin(this.shake * 46) * 0.16;
     }
 
-    // --- хвост: волна с запаздыванием + виляние от радости ---
+    // --- tail: a lagging wave plus a happy wag ---
     var wag = (0.25 + this.happiness * 0.85) * (moving ? 1.3 : 1);
     this.tailWag = lerp(this.tailWag, wag, dt * 3);
     for (var i = 0; i < this.tail.length; i++) {
@@ -501,7 +501,7 @@ window.Dragon = (function () {
         - p.curl * 0.32;
     }
 
-    // --- крылья ---
+    // --- wings ---
     this.wingFlap += dt * (6 + this.flapSpeed * 12);
     var flapAmount = p.wing;
     var flap = Math.sin(this.wingFlap) * (0.25 + this.flapSpeed * 1.1);
@@ -512,7 +512,7 @@ window.Dragon = (function () {
       wing.rotation.x = -0.1 + flapAmount * 0.45;
     });
 
-    // --- лапы ---
+    // --- legs ---
     var strideSpeed = Math.min(3.2, this.speed);
     if (moving) this.walkPhase += dt * (3.4 + strideSpeed * 2.6);
     var swing = Math.min(0.62, 0.18 + strideSpeed * 0.16);
@@ -522,7 +522,7 @@ window.Dragon = (function () {
       var restThigh = leg.front ? 0.1 : 0.16;
       var restShin = leg.front ? -0.2 : -0.34;
 
-      // Сидит и спит — задние лапы подобраны, передние вытянуты.
+      // Sitting and sleeping: hind legs tucked in, front legs stretched out.
       var sitFold = p.sit * (leg.front ? 0.25 : 1.15);
       var curlFold = p.curl * (leg.front ? 1.15 : 0.9);
 
@@ -534,7 +534,7 @@ window.Dragon = (function () {
         thigh += Math.sin(ph) * swing;
         shin += Math.max(0, Math.sin(ph + 1.1)) * -swing * 1.1;
       } else {
-        // Стоя переступает и переносит вес — самое «живое» из мелочей.
+        // Standing still, it shifts its weight from paw to paw — the most alive of the small touches.
         thigh += Math.sin(time * 0.7 + l * 1.7) * 0.02;
       }
 
@@ -544,7 +544,7 @@ window.Dragon = (function () {
       leg.foot.rotation.x = -(thigh + shin) * 0.85;
     }
 
-    // Шаги слышно, когда лапа опускается.
+    // Footsteps are heard as a paw lands.
     if (moving) {
       var stepPhase = Math.sin(this.walkPhase);
       if (stepPhase < 0 && this.stepSound >= 0) window.Audio3D.step();

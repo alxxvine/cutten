@@ -1,102 +1,107 @@
-# Дракончик — дизайн-документ
+# Dragon Meadow — design document
 
-Статус: **v1 сделана**. Дорожная карта — внизу.
+Status: **v1 is done**. The roadmap is at the bottom.
 
-## 1. Фантазия
+## 1. The fantasy
 
-> На летающем островке живёт дракончик. Он маленький, любопытный и занят своими делами:
-> нюхает траву, гоняется за бабочками, копает ямку, зевает. Ты приходишь — и он бежит навстречу.
+> A small dragon lives on a floating island. They are little, curious and busy with their own
+> things: sniffing the grass, chasing butterflies, digging a hole, yawning. You arrive — and they
+> come running.
 
-Ключевое ощущение — **он живой и без тебя**. Виртуальный питомец умирает как идея в тот момент,
-когда превращается в набор кнопок «покормить / поиграть / помыть»: тогда это не существо, а
-список дел. Поэтому 80% работы вложено не в занятия, а в то, что дракончик делает сам.
+The key feeling is **they are alive even without you**. A virtual pet dies as an idea the moment it
+turns into a set of buttons — feed / play / wash — because then it is not a creature, it is a
+to-do list. That is why most of the work went not into the activities but into what the dragon does
+on their own.
 
-Целевая сессия — 3–7 минут, «зашёл посмотреть, как он там».
+Target session: 3–7 minutes, "let me check how they are doing".
 
-## 2. Из чего складывается «живой»
+## 2. What makes it feel alive
 
-Ни одна из этих мелочей по отдельности не заметна, а вместе они и создают ощущение существа:
+None of these details is noticeable on its own; together they are the whole creature:
 
-| Приём | Что делает |
+| Technique | What it does |
 | --- | --- |
-| Дыхание | Бока и животик раздуваются постоянно, чуть быстрее при беге |
-| Моргание, иногда двойное | Глаз не стеклянный |
-| Саккады | Зрачки чуть смещаются — взгляд не мёртвый |
-| Слежение головой | Голова догоняет курсор пружиной, с пределом поворота |
-| Запаздывание хвоста | Каждый сегмент отстаёт от предыдущего — хвост «весит» |
-| Перенос веса | Стоя на месте, дракончик едва заметно переступает |
-| Подёргивание ушей | Раз в несколько секунд, случайно |
-| Взгляд в камеру | Если игрок давно ничего не делает — заглядывает в глаза |
-| Свои дела | Обнюхивание, копание, погоня за бабочкой, зевок, встряхивание |
+| Breathing | The sides and belly swell constantly, faster when running |
+| Blinking, sometimes a double blink | The eye is not made of glass |
+| Saccades | Pupils drift slightly — the gaze is not dead |
+| Head tracking | The head springs toward the cursor, with a limit on how far it turns |
+| Tail lag | Each segment trails the previous one, so the tail has weight |
+| Weight shifting | Standing still, the dragon keeps stepping in place |
+| Ear twitches | Every few seconds, at random |
+| Looking at the camera | If the player has been idle, the dragon looks them in the eye |
+| Their own business | Sniffing, digging, chasing a butterfly, yawning, shaking off |
 
-Правило: **любая поза — это цель, а не кадр**. Позы (`стоит`, `идёт`, `сидит`, `спит`, `ест`,
-`играет`, `летит`) заданы числами, между которыми всё плавно перетекает, а сверху накладываются
-дыхание, взгляд и хвост. Поэтому переход из любого состояния в любое всегда выглядит естественно.
+The rule: **a pose is a target, not a frame**. Poses (`stand`, `walk`, `sit`, `sleep`, `eat`,
+`play`, `fly`) are defined as numbers that blend into each other, with breathing, gaze and tail
+layered on top. That is why any transition between any two states looks natural.
 
-## 3. Занятия
+## 3. The activities
 
-Четыре, и каждое даёт свою эмоцию, а не просто плюс к шкале:
+Four of them, and each carries its own emotion rather than a bar increment:
 
-- **Гладить** — тактильность. Чешет только движущаяся рука; дракончик жмурится и урчит.
-- **Мячик** — совместная игра. Бросок по дуге, погоня, ловля, возвращение к тебе.
-- **Кормить** — забота. Принюхивается, жуёт, довольно икает искорками.
-- **Спать** — покой. Сворачивается клубочком, сопит дымком, лужайка темнеет.
+- **Petting** — touch. Only a moving hand pets; the dragon squints and rumbles.
+- **Fetch** — playing together. An arcing throw, a dash, a catch, a return trip to you.
+- **Feeding** — care. Sniffing, chewing, a happy burp of sparks.
+- **Sleep** — calm. Curling up, snoring smoke, the meadow dimming.
 
-Отвлечь можно всегда: понёс мячик, но увидел ягоду — уронит мячик и пойдёт к ягоде. Это важнее
-аккуратной механики: питомец, который непреклонно доводит дело до конца, ощущается роботом.
+They can always be distracted: carrying the ball but spotting a berry means the ball gets dropped.
+That matters more than tidy mechanics — a pet that stubbornly finishes every task feels like a robot.
 
-## 4. Потребности и рост
+## 4. Needs and growth
 
-Сытость, бодрость, веселье — три мягкие шкалы. Привязанность растёт и **никогда не падает**.
-Наказаний нет: голодный дракончик грустит и заглядывает в глаза, но ничего не ломается.
+Fullness, energy, fun — three gentle bars. The bond grows and **never falls**.
+There is no punishment: a hungry dragon looks sad and stares into your eyes, but nothing breaks.
 
-Между визитами шкалы меняются по времени, но с потолком в 8 часов: сутки отсутствия должны
-читаться как «соскучился», а не как вина.
+Between visits the bars change with time, but capped at 8 hours: a day away should read as
+"missed you", not as guilt.
 
-Три стадии по привязанности: **малыш** (0) → **подросток** (0.35) → **летун** (0.75).
-Меняются пропорции (голова меньше, крылья и лапы больше) и набор поведений: подросток
-подпрыгивает на крыльях, летун нарезает круги над лужайкой.
+Three stages by bond: **hatchling** (0) → **fledgling** (0.35) → **flier** (0.75).
+Proportions change (smaller head, bigger wings and legs) and so does the behaviour set: a fledgling
+hops on their wings, a flier circles above the meadow.
 
-## 5. Мир
+## 5. The world
 
-Летающий островок — чтобы не строить бесконечный пейзаж и чтобы мир читался как «его место».
-Рельеф аналитический (сумма синусов): по нему легко ходить, ставить траву и класть мячик.
-Трава — инстансы с ветром в вершинном шейдере, пруд с рябью, деревья, камни, цветы, лежанка,
-бабочки днём и светлячки ночью.
+A floating island — so there is no endless landscape to build, and so the world reads as
+*their place*. The terrain is analytic (a sum of sines): easy to walk on, to plant grass on and to
+drop a ball onto. Grass is instanced with wind in the vertex shader; there is a rippling pond,
+trees, rocks, flowers, a cushion, butterflies by day and fireflies at night.
 
-Камера — уютные три четверти, следует за дракончиком, вращается перетаскиванием.
-Солнце едет за камерой, поэтому маленькой карты теней хватает на всё важное.
+The camera keeps a cosy three-quarter view, follows the dragon and orbits by dragging.
+The sun travels with the camera, so a small shadow map covers everything that matters.
 
-## 6. Что выяснилось при реализации
+## 6. What we learned while building it
 
-- **Мяч завис в воздухе.** У края островка отражалась вся скорость, включая вертикальную,
-  и мячик каждый кадр менял знак. Отражать нужно только горизонтальную.
-- **Дракончик носил мячик вечно.** Он нёс его «к игроку», то есть к камере, а камера следует
-  за дракончиком — цель убегала. Точка возврата теперь фиксируется в момент, когда он поймал мяч.
-- **Два дракончика.** На форме знакомства оказалось два обработчика submit — при возвращении
-  создавался и сохранённый питомец, и новый. Теперь обработчик один и решает по сохранению.
-- **Угощение перебивало сон.** Список состояний, которые угощение не прерывает, — обязателен.
-- **Скорость указателя** сглаживается по времени, а не по кадрам (наследство из игры про котиков:
-  события мыши приходят реже кадров и дают ложные пики).
+- **The ball hung in mid-air.** At the island edge the whole velocity was reflected, vertical
+  component included, so the ball flipped sign every frame. Only the horizontal part should bounce.
+- **The dragon carried the ball forever.** They brought it "to the player", meaning to the camera —
+  and the camera follows the dragon, so the target kept running away. The drop point is now fixed at
+  the moment of the catch.
+- **Two dragons.** The hatching form had two submit handlers, so returning players got both their
+  saved pet and a brand new one.
+- **Treats interrupted sleep.** A list of states that a treat must not interrupt turned out to be
+  mandatory.
+- **Pointer speed** is smoothed over time, not per frame (a lesson inherited from the cat game:
+  pointer events arrive less often than frames and produce false spikes).
 
-## 7. Дорожная карта
+## 7. Roadmap
 
-**v1 — «Он живой». ✅ Сделано.**
-Островок, дракончик с ригом и процедурной анимацией, четыре занятия, потребности, рост,
-сохранение, день и ночь, адаптивное качество.
+**v1 — "They are alive". ✅ Done.**
+The island, the dragon with a rig and procedural animation, four activities, needs, growth, saving,
+day and night, adaptive quality.
 
-**v2 — «Мой дракончик».**
-Выбор цвета и узора при вылуплении, имена-подсказки, дневник («сегодня выучился взлетать»),
-угощения разных видов со своими реакциями, игрушки помимо мячика, купание в пруду.
+**v2 — "My dragon".**
+Colour and pattern choice at hatching, name suggestions, a diary ("today they learned to fly"),
+different treats with different reactions, toys beyond the ball, a bath in the pond.
 
-**v3 — «Мир вокруг».**
-Погода (дождь — прячется под дерево), настоящая смена времени суток, сезоны, второй питомец
-в гости, украшение лужайки за что-нибудь заработанное.
+**v3 — "The world around".**
+Weather (rain sends them under a tree), a real day cycle, seasons, a second pet visiting,
+decorating the meadow with something you earn.
 
-## 8. Открытые вопросы
+## 8. Open questions
 
-- Нужен ли офлайн-прогресс с уведомлениями («дракончик соскучился») — или это давление на игрока.
-- Нужна ли цель поверх привязанности, или уютной бесцельности достаточно.
-- Как показать характер конкретного дракончика: сейчас все дракончики ведут себя одинаково.
-  Идея из прошлой игры (характеры котиков) сюда просится, но питомец один — значит характер
-  должен задаваться при вылуплении и влиять на любимые занятия.
+- Should there be offline progress with notifications ("your dragon missed you") — or is that
+  pressure on the player.
+- Does anything need to sit on top of the bond as a goal, or is cosy aimlessness enough.
+- How to show the character of *this particular* dragon: right now every dragon behaves the same.
+  The idea from the previous game (cat temperaments) is asking to come here, but there is only one
+  pet — so temperament would have to be set at hatching and shape their favourite activities.

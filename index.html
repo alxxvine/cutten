@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Дракончик 🐉</title>
-<meta name="description" content="Милый low-poly дракончик живёт на летающей лужайке: гладь его, корми, играй в мячик и укладывай спать.">
+<title>Dragon Meadow 🐉</title>
+<meta name="description" content="A cute low-poly dragon lives on a floating meadow: pet them, feed them, play fetch and tuck them in.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -16,20 +16,20 @@
   <header class="hud" id="hud" hidden>
     <div class="panel pet-panel">
       <div class="pet-top">
-        <span class="pet-name" id="petName">Дракончик</span>
-        <span class="pet-stage" id="petStage">малыш</span>
+        <span class="pet-name" id="petName">Dragon</span>
+        <span class="pet-stage" id="petStage">hatchling</span>
       </div>
-      <div class="bond" id="bond" title="Привязанность"></div>
+      <div class="bond" id="bond" title="Bond"></div>
       <div class="needs">
-        <div class="need" title="Сытость"><span class="need-icon">🍓</span><div class="need-bar"><i id="needFood"></i></div></div>
-        <div class="need" title="Бодрость"><span class="need-icon">⚡</span><div class="need-bar"><i id="needEnergy"></i></div></div>
-        <div class="need" title="Веселье"><span class="need-icon">🎾</span><div class="need-bar"><i id="needFun"></i></div></div>
+        <div class="need" title="Fullness"><span class="need-icon">🍓</span><div class="need-bar"><i id="needFood"></i></div></div>
+        <div class="need" title="Energy"><span class="need-icon">⚡</span><div class="need-bar"><i id="needEnergy"></i></div></div>
+        <div class="need" title="Fun"><span class="need-icon">🎾</span><div class="need-bar"><i id="needFun"></i></div></div>
       </div>
     </div>
 
     <div class="panel buttons">
-      <button class="icon-btn" id="soundBtn" title="Звук" aria-label="Звук">🔊</button>
-      <button class="icon-btn" id="helpBtn" title="Что делать" aria-label="Что делать">?</button>
+      <button class="icon-btn" id="soundBtn" title="Sound" aria-label="Sound">🔊</button>
+      <button class="icon-btn" id="helpBtn" title="What to do" aria-label="What to do">?</button>
     </div>
   </header>
 
@@ -38,15 +38,15 @@
   <div class="toolbar" id="toolbar" hidden>
     <button class="tool" id="treatBtn">
       <span class="tool-icon">🍓</span>
-      <span class="tool-label">Вкусняшка</span>
+      <span class="tool-label">Treat</span>
     </button>
     <button class="tool" id="ballBtn">
       <span class="tool-icon">🎾</span>
-      <span class="tool-label">Мячик</span>
+      <span class="tool-label">Ball</span>
     </button>
     <button class="tool" id="sleepBtn">
       <span class="tool-icon">💤</span>
-      <span class="tool-label">Спать</span>
+      <span class="tool-label">Sleep</span>
     </button>
   </div>
 
@@ -55,32 +55,32 @@
   <div class="overlay" id="startScreen">
     <div class="card">
       <div class="egg" id="eggArt">🥚</div>
-      <h1 id="startTitle">У тебя вылупился дракончик</h1>
-      <p class="sub" id="startSub">Он совсем малыш и пока никого не знает. Как его зовут?</p>
+      <h1 id="startTitle">Your dragon just hatched</h1>
+      <p class="sub" id="startSub">They are tiny and do not know anyone yet. What is their name?</p>
       <form class="name-form" id="nameForm">
-        <input id="nameInput" type="text" maxlength="16" autocomplete="off" placeholder="Имя дракончика" aria-label="Имя дракончика">
-        <button class="big-btn" type="submit" id="startBtn">Познакомиться</button>
+        <input id="nameInput" type="text" maxlength="16" autocomplete="off" placeholder="Name your dragon" aria-label="Name your dragon">
+        <button class="big-btn" type="submit" id="startBtn">Say hello</button>
       </form>
-      <p class="hint">Работает мышкой и пальцем. Проиграть нельзя — дракончик всегда тебе рад.</p>
+      <p class="hint">Works with a mouse and with a finger. You cannot lose — your dragon is always happy to see you.</p>
     </div>
   </div>
 
   <div class="overlay hidden" id="helpScreen">
     <div class="card">
-      <h1>Что тут делать</h1>
+      <h1>What to do here</h1>
       <ul class="rules">
-        <li><span>✋</span> <b>Гладить.</b> Веди пальцем или мышкой по дракончику — он жмурится, подставляет шею и урчит.</li>
-        <li><span>🎾</span> <b>Играть.</b> Нажми «Мячик», потом ткни в травку — он побежит, схватит и притащит обратно.</li>
-        <li><span>🍓</span> <b>Кормить.</b> Нажми «Вкусняшка» и поднеси ягодку к мордочке.</li>
-        <li><span>💤</span> <b>Укладывать.</b> Когда устанет — зевает и сам сворачивается клубочком. Или нажми «Спать».</li>
-        <li><span>🖱</span> <b>Осмотреться.</b> Тяни по траве, чтобы обойти лужайку кругом.</li>
+        <li><span>✋</span> <b>Pet them.</b> Drag your finger or mouse across the dragon — they squint, lean in and rumble.</li>
+        <li><span>🎾</span> <b>Play fetch.</b> Press “Ball”, then tap the grass: they dash off, grab it and bring it back.</li>
+        <li><span>🍓</span> <b>Feed them.</b> Press “Treat” and hold the berry up to their snout.</li>
+        <li><span>💤</span> <b>Tuck them in.</b> When tired they yawn and curl up on their own. Or press “Sleep”.</li>
+        <li><span>🖱</span> <b>Look around.</b> Drag across the grass to walk around the meadow, scroll or pinch to zoom.</li>
       </ul>
-      <p class="sub">Чем больше вы вместе, тем больше он к тебе привязывается — и растёт. Подросший дракончик учится взлетать.</p>
-      <button class="big-btn" id="closeHelpBtn">Понятно</button>
+      <p class="sub">The more time you spend together, the more attached your dragon gets — and the more they grow. A grown dragon learns to fly.</p>
+      <button class="big-btn" id="closeHelpBtn">Got it</button>
     </div>
   </div>
 
-  <div class="loading" id="loading">Лужайка просыпается…</div>
+  <div class="loading" id="loading">The meadow is waking up…</div>
 </div>
 
 <script src="vendor/three.min.js"></script>

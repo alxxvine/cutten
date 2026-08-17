@@ -1,144 +1,147 @@
-# Полянка котиков — дизайн-документ
+# Cat Meadow — design document (prehistory)
 
-Статус: **v1 реализована**. Дальше — v2 и v3 из дорожной карты внизу.
+This project started as a 2D game about cats, and only later turned into the 3D dragon.
+The document is kept as history: the dragon inherited its tactility, its sound synthesis and,
+above all, the rule of *no punishment and no timers*.
 
-## 1. Фантазия
+Status: v1 was implemented, then the project pivoted to [Dragon Meadow](../DESIGN.md).
 
-> Ты приходишь на полянку, где живут котики. Сначала они тебя не знают. Постепенно ты
-> учишься понимать каждого — кого можно сразу тискать, к кому надо подойти медленно, кто
-> хочет не ласки, а догонялок. Со временем котики начинают ждать именно тебя.
+## 1. The fantasy
 
-Ключевое слово — **узнавание**, а не реакция. Игрок не «успевает», а *разбирается*.
-Игра должна ощущаться как поглаживание кота, а не как кликер.
+> You come to a meadow where cats live. At first they do not know you. Little by little you learn
+> to read each one — who can be scooped up straight away, who needs a slow approach, who does not
+> want affection at all but a game of chase. In time the cats start waiting for *you*.
 
-Целевая сессия: 5–10 минут, «зашёл посмотреть, как там мои».
+The key word is **recognition**, not reaction. The player is not racing a clock, they are
+*figuring things out*. The game should feel like stroking a cat, not like a clicker.
 
-## 2. Что не так с прототипом v0
+Target session: 5–10 minutes, "let me see how mine are doing".
 
-| Проблема | Почему это плохо для уютной игры |
+## 2. What was wrong with the v0 prototype
+
+| Problem | Why it is bad for a cosy game |
 | --- | --- |
-| Все котики ведут себя одинаково | Одно действие на всю игру, глубины нет |
-| Терпение и «котик загрустил» | Наказание и тревожность — прямо против жанра |
-| Счастье полянки падает | Ещё один источник вины, ни к чему не ведёт |
-| Очки как самоцель | Рекорд не даёт причины вернуться завтра |
-| Котики безымянно исчезают | Нет привязанности, а вся игра — про привязанность |
+| Every cat behaves the same | One action for the whole game, no depth |
+| Patience meters and "the cat got sad" | Punishment and anxiety — the opposite of the genre |
+| A falling meadow-happiness bar | Another source of guilt, leading nowhere |
+| Score as the goal | A high score is no reason to come back tomorrow |
+| Cats vanish namelessly | No attachment, while the whole game is about attachment |
 
-Что оставляем без изменений: **тактильность** (чешет только движущаяся рука), процедурная
-отрисовка котиков, звук, общее визуальное настроение.
+What stayed untouched: **tactility** (only a moving hand pets), the procedural cat rendering,
+the sound and the overall mood.
 
-## 3. Петли
+## 3. Loops
 
-- **10 секунд.** Заметил котика → прочитал, чего он хочет → подобрал подход → мурчание.
-- **2 минуты.** Довёл котика до следующего уровня доверия, узнал о нём что-то новое.
-- **Сессия (5–10 минут).** Приручил нового котика или обустроил полянку новым предметом.
-- **Вдолгую.** Собрал всех котиков разных характеров, полянка обжита, все свои.
+- **10 seconds.** Spot a cat → read what they want → pick the right approach → purring.
+- **2 minutes.** Take one cat to the next level of trust, learn something new about them.
+- **A session (5–10 minutes).** Tame a new cat or add something to the meadow.
+- **Long term.** Collect cats of every temperament; the meadow becomes lived-in.
 
-## 4. Характеры — ядро игры
+## 4. Temperaments — the core of the game
 
-У каждого котика есть характер, определяющий, что для него «хорошо». Игрок узнаёт характер
-не из подписи, а по поведению. Это превращает единственную механику в шесть разных.
+Every cat has a temperament that defines what "good" means for them. The player learns it from
+behaviour, not from a label. That turns a single mechanic into six different ones.
 
-| Характер | Чего хочет | Как это читается | Что убивает контакт |
+| Temperament | What they want | How to read it | What breaks the contact |
 | --- | --- | --- | --- |
-| **Ласковый** | Обычное чесание, как в v0 | Сам идёт навстречу, хвост трубой | Ничего, это «обучающий» котик |
-| **Пугливый** | Подойти **медленно**, замереть, дать обнюхать, потом гладить мягко | Уши на бок, тело низко, пятится | Резкое движение — убегает в кусты |
-| **Игривый** | Не ласку, а догонялки: води курсором рядом, он гонится | Крутится, прыжки боком, зрачки широкие | Попытка сразу схватить — теряет интерес |
-| **Ленивый** | Очень медленное долгое поглаживание | Лежит, почти не двигается, глаза щёлочками | Быстрое чесание — просто уходит спать |
-| **Вредный** | Чесать за ушком; подставленное пузо — ловушка | Хвост начинает бить по земле = стоп | Гладить пузо — цапнет и уйдёт на 10 секунд |
-| **Гордый** | Сидеть рядом и **не трогать**, пока сам не подойдёт | Смотрит в упор, не приближается | Тянуться первым — отворачивается |
+| **Affectionate** | Ordinary petting, as in v0 | Walks up to you, tail high | Nothing — this is the tutorial cat |
+| **Shy** | A **slow** approach, then stillness, a sniff, then gentle petting | Ears sideways, body low, backing away | A sudden move — runs off into the bushes |
+| **Playful** | Not affection but chase: move the cursor nearby and they run after it | Spins, sideways hops, wide pupils | Grabbing at them — they lose interest |
+| **Lazy** | Very slow, very long stroking | Lies down, barely moves, eyes half shut | Fast scratching — they just walk off to sleep |
+| **Grumpy** | Scratching behind the ear; an offered belly is a trap | The tail starts thumping the ground = stop | Petting the belly — a nip, then ten seconds away |
+| **Proud** | Sit nearby and **do not touch** until they come | Stares at you, keeps their distance | Reaching first — they turn away |
 
-Правило дизайна: у каждого характера есть **читаемый телесный сигнал** (хвост, уши, поза) и
-**инверсия основной механики**. Пугливому и ленивому нужно медленно — ровно наоборот тому,
-чему игра учила в первые минуты. Это и есть момент «а, они разные!».
+The design rule: every temperament has a **readable body signal** (tail, ears, posture) and an
+**inversion of the core mechanic**. The shy and the lazy cat need slowness — the exact opposite of
+what the game taught in the first minutes. That is the "oh, they are all different!" moment.
 
-Язык сигналов, общий для всех:
+The shared vocabulary of signals:
 
-- **хвост трубой** — рад, можно;
-- **хвост бьёт по земле** — стоп, ещё чуть-чуть и уйдёт;
-- **уши прижаты** — страшно, замри;
-- **щёлочки глаз** — блаженство, продолжай;
-- **мурчание** (звук) — всё правильно.
+- **tail up** — happy, go ahead;
+- **tail thumping the ground** — stop, one more move and they leave;
+- **ears flat** — scared, hold still;
+- **eyes narrowed to slits** — bliss, keep going;
+- **purring** (sound) — you are doing it right.
 
-Этому нигде не учат текстом. Игрок учится сам, и в этом удовольствие.
+None of this is taught in text. The player works it out, and that is the pleasure.
 
-## 5. Доверие вместо очков
+## 5. Trust instead of score
 
-У каждого котика своя полоска доверия: **0 → 5 сердечек**.
+Each cat has their own trust bar: **0 → 5 hearts**.
 
-- Правильное взаимодействие: **+1 сердечко** (одно за подход, не больше — не гриндится).
-- Ошибка (испугал, полез не туда): доверие **не падает**, котик просто уходит на время.
-  Наказания нет, есть только более медленный прогресс.
-- **3 сердечка** — котик остаётся на полянке насовсем: получает постоянное имя, любимое
-  место, начинает подходить к тебе сам при появлении.
-- **5 сердечек** — приводит на полянку друга (новый котик, часто другого характера).
+- A correct interaction: **+1 heart** (one per encounter, so it cannot be farmed).
+- A mistake (a scare, the wrong spot): trust **does not drop**, the cat simply leaves for a while.
+  There is no punishment, only slower progress.
+- **3 hearts** — the cat stays in the meadow for good: a permanent name, a favourite spot, and they
+  start walking up to you when you arrive.
+- **5 hearts** — they bring a friend to the meadow (a new cat, often of a different temperament).
 
-Это заменяет и «счёт», и «счастье полянки»: прогресс измеряется тем, сколько котиков стали
-твоими, а не абстрактным числом.
+This replaces both the score and the happiness bar: progress is measured in how many cats became
+yours, not in an abstract number.
 
-**Мурчалки** остаются, но становятся **валютой**, а не очками: капают за мурчание и тратятся
-на обустройство полянки.
+**Purrs** stay, but as a **currency** rather than a score: they trickle in from purring and are
+spent on furnishing the meadow.
 
-## 6. Обустройство полянки
+## 6. Furnishing the meadow
 
-Купленные предметы ставятся на полянку и **меняют поведение котиков** — это не декор.
+Bought items are placed in the meadow and **change how cats behave** — they are not decoration.
 
-| Предмет | Цена | Что делает |
+| Item | Price | What it does |
 | --- | --- | --- |
-| Мисочка | дёшево | Котики заходят чаще, у миски легче начать контакт |
-| Лежанка | дёшево | Ленивые приходят спать; спящего можно гладить с любого подхода |
-| Кустик | средне | Пугливым есть где чувствовать себя безопасно — они начинают заходить |
-| Перьевая удочка | средне | Инструмент для игривых: догонялки становятся полноценной мини-игрой |
-| Домик | дорого | Котики остаются на полянке ночью |
-| Фонарик | дорого | Открывает ночь: светлячки, спящие котики, другой набор гостей |
+| Bowl | cheap | Cats drop by more often; contact is easier to start at the bowl |
+| Cushion | cheap | Lazy cats come to sleep; a sleeping cat can be petted from any approach |
+| Bush | medium | Shy cats have somewhere to feel safe, so they start visiting |
+| Feather wand | medium | A tool for playful cats: chase becomes a proper mini-game |
+| House | expensive | Cats stay in the meadow overnight |
+| Lantern | expensive | Unlocks the night: fireflies, sleeping cats, a different set of visitors |
 
-Смысл: игрок сам решает, каких котиков хочет приманить. Хочешь пугливых — сажай кусты.
+The point: the player decides which cats to attract. Want shy ones? Plant bushes.
 
-## 7. Что видит игрок
+## 7. What the player sees
 
-- Полоска доверия — **над котиком**, а не в HUD, и только когда с ним взаимодействуют.
-- В HUD остаются только мурчалки и маленькая иконка «сколько котиков стали своими».
-- Шкалу «счастье полянки», терпение и таймеры — убрать полностью.
-- Дневник: список знакомых котиков с именем, характером, доверием и датой первой встречи.
-  Именно он даёт ощущение «моего сада».
-- Сохранение в `localStorage`: котики, доверие, купленные предметы.
+- The trust bar sits **above the cat**, not in the HUD, and only while interacting with them.
+- The HUD keeps only the purrs and a small count of how many cats became yours.
+- The happiness bar, patience meters and timers are removed entirely.
+- A diary: known cats with name, temperament, trust and the date you first met.
+  That is what creates the feeling of *my* garden.
+- Saved in `localStorage`: cats, trust, purchased items.
 
-## 8. Дорожная карта
+## 8. Roadmap (as of the pivot)
 
-**v1 — «Они разные». ✅ Сделано.**
-Три характера (ласковый, пугливый, игривый), язык телесных сигналов, доверие и постоянные
-котики с сохранением, мисочка и кустик, удаление терпения / счастья полянки / штрафов.
-Минимальная версия, в которой игра уже про узнавание, а не про реакцию.
+**v1 — "They are all different". ✅ Done.**
+Three temperaments (affectionate, shy, playful), the body-signal vocabulary, trust and permanent
+cats with saving, a bowl and a bush, removal of patience meters, the happiness bar and penalties.
+The minimum version where the game is already about recognition rather than reaction.
 
-Что выяснилось при реализации:
-- Бинарный порог «слишком резко» оказался хрупким: одно случайное движение обрывало контакт.
-  Заменён накоплением напряжения — котик сначала заметно напрягается, и это видно по пунктиру.
-- Между «замер рядом» и «начал гладить» рука неизбежно дёргается. Понадобилось окно доверия
-  в 1.5 секунды после обнюхивания, иначе игра наказывала за правильную игру.
-- Доверие снижает пугливость: знакомый котик спокойнее относится к резким движениям.
-  Прогресс чувствуется не только цифрой, но и поведением.
+What we learned while building it:
+- A binary "too sudden" threshold turned out to be brittle: one accidental movement broke the
+  contact. It was replaced with accumulated tension — the cat visibly tenses up first, shown by a
+  dashed ring.
+- Between "held still nearby" and "started petting" the hand inevitably jerks. A 1.5-second grace
+  window after the sniff was needed, otherwise the game punished the player for playing correctly.
+- Trust reduces skittishness: a familiar cat takes sudden movements more calmly. Progress is felt
+  in behaviour, not only in a number.
 
-**v2 — «Мой сад».**
-Остальные три характера, магазин и расстановка предметов, дневник знакомств, перьевая удочка
-как отдельный инструмент.
+**v2 — "My garden".** The other three temperaments, a shop and item placement, the diary, the
+feather wand as a separate tool.
 
-**v3 — «Настроение».**
-День и ночь, дождь (котики прячутся под лопух), сезоны, светлячки, котики скучали, пока тебя
-не было.
+**v3 — "Mood".** Day and night, rain (cats hide under a burdock leaf), seasons, fireflies, cats
+missing you while you were away.
 
-## 9. Решённое и открытое
+## 9. Decided and open
 
-Решения, принятые при реализации v1 (менять их — нормально, но осознанно):
+Decisions taken during v1 (changing them is fine, but deliberately):
 
-- **Сколько котиков.** 4–6 одновременно. Ощущение «кучи» набирается не количеством на экране,
-  а тем, что котики постоянные и знакомые. Больше шести — и внимания на каждого не остаётся.
-- **Офлайн-прогресс** («пока тебя не было, Тофу подружился с Кексом») — отложен. Милая идея,
-  но тянет за собой учёт времени и уведомления, а без них читается как обман.
-- **Предметы** в v1 стоят на полянке сразу, без магазина: мисочка и кустик уже влияют на
-  поведение, а покупка предметов ждёт v2, где будет что выбирать.
+- **How many cats.** 4–6 at a time. The feeling of "a bunch" comes not from the count on screen but
+  from the cats being permanent and familiar. Past six there is no attention left for any of them.
+- **Offline progress** ("while you were away, Tofu made friends with Cupcake") — postponed. A sweet
+  idea, but it drags in time tracking and notifications, and without them it reads as a lie.
+- **Items** in v1 stand in the meadow from the start, with no shop: the bowl and the bush already
+  shape behaviour, and buying things waits for v2 where there is something to choose between.
 
-Открыто:
+Open:
 
-- Мобильное управление: чесание пальцем работает, но «замереть и не трогать» для гордого
-  котика на тач-экране читается хуже. Нужен отдельный сигнал.
-- Куда девать мурчалки до появления магазина — сейчас они просто копятся.
-- Нужен ли котикам сон и ночь, или это ломает «зашёл на пять минут».
+- Touch controls: petting with a finger works, but "hold still and do not touch" for the proud cat
+  reads worse on a touchscreen. It needs its own signal.
+- Where purrs should go before a shop exists — right now they just pile up.
+- Whether cats need sleep and a night cycle, or whether that breaks "drop in for five minutes".
