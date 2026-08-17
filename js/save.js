@@ -1,12 +1,12 @@
-/* Сохранение питомца. Дракончик живёт в localStorage и помнит, когда его навещали. */
+/* Saving the pet. The dragon lives in localStorage and remembers the last visit. */
 window.Save = (function () {
   'use strict';
 
   var KEY = 'dragon.save.v1';
   var VERSION = 1;
 
-  // Сколько времени отсутствия вообще учитывается. Сутки без тебя должны читаться
-  // как «соскучился», а не как катастрофа, поэтому потолок небольшой.
+  // How much time away counts at all. A day without you should read as "missed you",
+  // not as a disaster, so the ceiling is deliberately low.
   var MAX_AWAY_HOURS = 8;
 
   function now() { return Date.now(); }
@@ -31,7 +31,7 @@ window.Save = (function () {
       try {
         var raw = localStorage.getItem(KEY);
         if (raw) data = JSON.parse(raw);
-      } catch (e) { /* приватный режим — играем без сохранения */ }
+      } catch (e) { /* private mode — play without saving */ }
 
       if (!data || data.v !== VERSION || !data.name) return null;
 
@@ -39,12 +39,12 @@ window.Save = (function () {
       data.needs = Object.assign(base.needs, data.needs || {});
       data.bond = Math.max(0, Math.min(1, data.bond || 0));
 
-      // Отыгрываем время, пока игрока не было.
+      // Play out the time the player was away.
       var awayHours = Math.min((now() - (data.lastSeen || now())) / 3600000, MAX_AWAY_HOURS);
       if (awayHours > 0) {
         data.needs.food = Math.max(0.15, data.needs.food - awayHours * 0.055);
         data.needs.fun = Math.max(0.1, data.needs.fun - awayHours * 0.075);
-        // Без игрока дракончик отсыпается, так что бодрость наоборот восстанавливается.
+        // With nobody around the dragon catches up on sleep, so energy goes back up instead.
         data.needs.energy = Math.min(1, data.needs.energy + awayHours * 0.1);
       }
       data.awayHours = awayHours;

@@ -1,88 +1,88 @@
-# 🐉 Дракончик
+# 🐉 Dragon Meadow
 
-Милый low-poly дракончик живёт на летающей лужайке. Он не ждёт нажатий: гуляет сам, гоняется
-за бабочками, обнюхивает траву, копает лапой, зевает и заглядывает тебе в глаза, если ты долго
-ничего не делаешь. Твой виртуальный питомец.
+A cute low-poly dragon lives on a floating meadow. They do not wait for clicks: they wander around,
+chase butterflies, sniff the grass, dig with a paw, yawn — and look you in the eye if you have been
+quiet for too long. Your virtual pet.
 
-**Играть:** https://alxxvine.github.io/cutten/
+**Play:** https://alxxvine.github.io/cutten/
 
-## Что с ним делать
+## What to do
 
-- ✋ **Гладить** — веди мышкой или пальцем по дракончику: жмурится, урчит, вокруг летят сердечки.
-- 🎾 **Играть в мячик** — нажми «Мячик» и ткни в травку: побежит, схватит, притащит обратно.
-- 🍓 **Кормить** — нажми «Вкусняшка» и поднеси ягодку к мордочке. Дожуёт и довольно икнёт искорками.
-- 💤 **Укладывать спать** — устанет и сам свернётся клубочком на лежанке, а лужайка потемнеет.
-- 🖱 **Осматриваться** — тяни по траве, чтобы обойти лужайку кругом, колесо или щипок — зум.
+- ✋ **Pet them** — drag your mouse or finger across the dragon: they squint, rumble, hearts fly up.
+- 🎾 **Play fetch** — press “Ball” and tap the grass: they dash off, grab it and bring it back.
+- 🍓 **Feed them** — press “Treat” and hold the berry up to their snout. They chew and burp sparks.
+- 💤 **Tuck them in** — when tired they curl up on the cushion by themselves and the meadow dims.
+- 🖱 **Look around** — drag across the grass to walk around the meadow, scroll or pinch to zoom.
 
-У дракончика три мягкие шкалы (сытость, бодрость, веселье) и привязанность, которая только растёт.
-Проиграть нельзя: голодный дракончик грустит и заглядывает в глаза, но ничего плохого не случается.
+The dragon has three gentle bars (fullness, energy, fun) and a bond that only ever grows.
+You cannot lose: a hungry dragon looks sad and stares into your eyes, but nothing bad happens.
 
-**Он растёт.** С привязанностью малыш становится подростком, а потом учится летать и нарезает круги
-над лужайкой. Меняются и пропорции: голова становится меньше, крылья — больше.
+**They grow.** With the bond a hatchling becomes a fledgling and then learns to fly, circling above
+the meadow. Proportions change too: the head gets smaller, the wings get bigger.
 
-Всё сохраняется в браузере, включая время последнего визита: вернёшься через день — дракончик
-будет чуть голоднее и очень соскучившимся.
+Everything is stored in the browser, including the time of your last visit — come back a day later
+and your dragon will be a little hungrier and very happy to see you.
 
-## Что внутри
+## What is inside
 
-Ноль зависимостей в рантайме, ноль сборки, ноль внешних моделей и текстур — вся геометрия
-строится кодом.
+Zero runtime dependencies, zero build step, zero external models or textures — all geometry is
+built in code.
 
-| Файл | Что делает |
+| File | What it does |
 | --- | --- |
-| `index.html` / `style.css` | Экран знакомства, HUD, панель занятий |
-| `js/scene.js` | Островок, рельеф, трава с ветром, пруд, свет, тени, день и ночь |
-| `js/dragon.js` | Модель дракончика, риг и вся процедурная анимация |
-| `js/pet.js` | Потребности, поведение, занятия, рост |
-| `js/input.js` | Поглаживание, бросок мячика, угощение, камера |
-| `js/audio.js` | Звук на WebAudio: урчание, трели, хлопки крыльев, сопение |
-| `js/save.js` | Сохранение и учёт времени между визитами |
-| `vendor/three.min.js` | three.js, собранный в один файл (см. ниже) |
+| `index.html` / `style.css` | Hatching screen, HUD, activity bar |
+| `js/scene.js` | Island, terrain, grass with wind, pond, light, shadows, day and night |
+| `js/dragon.js` | The dragon model, its rig and all the procedural animation |
+| `js/pet.js` | Needs, behaviour, activities, growth |
+| `js/input.js` | Petting, ball throwing, treats, camera |
+| `js/audio.js` | WebAudio sound: rumbling, trills, wing beats, snoring |
+| `js/save.js` | Saving, and accounting for the time between visits |
+| `vendor/three.min.js` | three.js bundled into a single file (see below) |
 
-Замысел, характер дракончика и планы — в [DESIGN.md](DESIGN.md).
-Предыстория проекта (2D-игра про котиков) — в [docs/DESIGN-cats.md](docs/DESIGN-cats.md).
+The design, the dragon's character and the plans live in [DESIGN.md](DESIGN.md).
+The prehistory of this project (a 2D game about cats) is in [docs/DESIGN-cats.md](docs/DESIGN-cats.md).
 
-### Почему three.js лежит в репозитории
+### Why three.js is committed to the repository
 
-Страница должна открываться где угодно, включая окружения со строгим CSP, где внешние CDN
-запрещены. Поэтому three.js собран в один IIFE-файл с глобальным `THREE` и закоммичен.
-Пересобрать (нужен только для этого шага npm):
+The page has to open anywhere, including environments with a strict CSP where external CDNs are
+blocked. So three.js is bundled into a single IIFE file exposing a global `THREE` and committed.
+To rebuild it (npm is only needed for this step):
 
 ```bash
 npm install
 npm run vendor
 ```
 
-## Игра одним файлом
+## The game as a single file
 
-`dragon.html` — вся игра в одном самодостаточном файле (~820 КБ): скачай и открой двойным кликом.
-Работает без сервера и без интернета, внешних запросов не делает вообще. Удобно закинуть на любой
-хостинг или отправить кому-нибудь.
+`dragon.html` is the whole game in one self-contained file (~820 KB): download it and open it with
+a double click. It runs without a server and without internet, and makes no external requests at
+all. Handy for dropping onto any host or sending to a friend.
 
-Пересобрать после изменений в коде:
+Rebuild it after changing the code:
 
 ```bash
 npm run build:single
 ```
 
-Скрипт `tools/build-single.js` берёт порядок подключения скриптов из `index.html`, так что про него
-можно не вспоминать, когда файлов станет больше.
+`tools/build-single.js` takes the script order from `index.html`, so you never have to think about
+it as more files are added.
 
-## Запуск локально
+## Running locally
 
 ```bash
 git clone https://github.com/alxxvine/cutten.git
 cd cutten
 python3 -m http.server 8000
-# открыть http://localhost:8000
+# open http://localhost:8000
 ```
 
-Нужен браузер с WebGL — то есть любой современный.
+You need a browser with WebGL — that is, any modern one.
 
-## Деплой
+## Deployment
 
-`.github/workflows/pages.yml` публикует содержимое репозитория на GitHub Pages при пуше в `main`.
-Один раз нужно включить Pages: **Settings → Pages → Source: GitHub Actions**.
+`.github/workflows/pages.yml` publishes the repository to GitHub Pages on every push to `main`.
+The workflow enables Pages itself, so nothing has to be switched on by hand.
 
-Репозиторий открытый в том числе поэтому: для публичных репозиториев GitHub Pages и минуты Actions
-бесплатны, а для приватных Pages требует платный план.
+The repository is public partly for this reason: GitHub Pages and Actions minutes are free for
+public repositories, while Pages on a private repository requires a paid plan.

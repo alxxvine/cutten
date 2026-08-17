@@ -1,4 +1,4 @@
-/* Склейка: экран знакомства, игровой цикл, HUD и сохранение. */
+/* Glue: the meet-your-dragon screen, the game loop, the HUD and saving. */
 (function () {
   'use strict';
 
@@ -31,10 +31,10 @@
     loading: document.getElementById('loading')
   };
 
-  var NAME_IDEAS = ['Пыхтик', 'Уголёк', 'Искорка', 'Пузырь', 'Тучка', 'Фыр', 'Мятик', 'Персик'];
+  var NAME_IDEAS = ['Puff', 'Ember', 'Sparky', 'Bubble', 'Cloud', 'Pip', 'Minty', 'Peach'];
 
-  var state = null;      // данные текущей сессии
-  var savedData = null;  // найденное сохранение (если дракончик уже был)
+  var state = null;      // data for the current session
+  var savedData = null;  // the save we found (if a dragon already existed)
   var pet = null;
   var running = false;
   var lastTime = 0;
@@ -75,7 +75,7 @@
     setBar(ui.needEnergy, pet.needs.energy);
     setBar(ui.needFun, pet.needs.fun);
 
-    // Эмодзи-мысль висит над головой дракончика.
+    // The emoji thought floats above the dragon head.
     if (pet.mood) {
       var head = pet.dragon.headWorldPosition();
       head.y += 0.9;
@@ -106,7 +106,7 @@
     toastTimer = setTimeout(function () { ui.toast.classList.remove('show'); }, 2800);
   }
 
-  /* ---------- запуск ---------- */
+  /* ---------- start-up ---------- */
 
   function startGame(saveData, isNew) {
     if (pet) World.scene.remove(pet.dragon.root);
@@ -115,8 +115,8 @@
     pet.onToast = showToast;
     pet.onGrow = function (stage) {
       var text = stage === 'teen'
-        ? pet.name + ' подрос! Теперь он подпрыгивает на крыльях'
-        : pet.name + ' вырос и научился летать! 🐉';
+        ? pet.name + ' grew up! They can hop on their wings now'
+        : pet.name + ' grew up and learned to fly! 🐉';
       showToast(text);
       hudCache.stage = null;
     };
@@ -125,7 +125,7 @@
     Input.onMode = function (mode) {
       ui.ballBtn.classList.toggle('active', mode === 'aimBall');
       ui.treatBtn.classList.toggle('active', mode === 'treat');
-      if (mode === 'aimBall') showToast('Ткни в травку — дракончик побежит за мячиком');
+      if (mode === 'aimBall') showToast('Tap the grass — your dragon will chase the ball');
     };
 
     ui.hud.hidden = false;
@@ -136,17 +136,17 @@
     window.Audio3D.unlock();
 
     if (isNew) {
-      showToast('Знакомься: это ' + pet.name + '!');
+      showToast('Say hello to ' + pet.name + '!');
     } else if (saveData.awayHours > 0.5) {
-      showToast(pet.name + ' соскучился, пока тебя не было');
+      showToast(pet.name + ' missed you while you were away');
     } else {
-      showToast('С возвращением!');
+      showToast('Welcome back!');
     }
   }
 
   ui.nameForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (running) return;              // второй раз питомца не заводим
+    if (running) return;              // never hatch a second pet
     ui.startScreen.classList.add('hidden');
     if (savedData) {
       startGame(savedData, false);
@@ -181,7 +181,7 @@
     pet.putToBed();
   });
 
-  /* ---------- цикл ---------- */
+  /* ---------- loop ---------- */
 
   function frame(now) {
     var dt = lastTime ? (now - lastTime) / 1000 : 0.016;
@@ -208,7 +208,7 @@
     requestAnimationFrame(frame);
   }
 
-  /* ---------- качество под железо ---------- */
+  /* ---------- quality for the hardware ---------- */
 
   var perf = { avg: 60, samples: 0, decided: false };
 
@@ -216,7 +216,7 @@
     if (perf.decided || dt <= 0) return;
     perf.avg = perf.avg * 0.94 + (1 / dt) * 0.06;
     perf.samples++;
-    // Первые секунды не считаем — там прогрев шейдеров.
+    // Skip the first seconds — shaders are still warming up.
     if (perf.samples > 90 && perf.avg < 30) {
       perf.decided = true;
       World.setQuality('low');
@@ -225,13 +225,13 @@
     }
   }
 
-  /* ---------- старт ---------- */
+  /* ---------- boot ---------- */
 
   function boot() {
     try {
       World.init(ui.canvas);
     } catch (err) {
-      ui.loading.textContent = 'Кажется, браузер не умеет 3D 😿';
+      ui.loading.textContent = 'Looks like this browser cannot do 3D 😿';
       console.error(err);
       return;
     }
@@ -253,12 +253,12 @@
 
     savedData = Save.load();
     if (savedData) {
-      // Дракончик уже есть — на экране знакомства сразу зовём к нему.
+      // A dragon already exists — the welcome screen invites you straight back to them.
       ui.eggArt.textContent = '🐉';
-      ui.startTitle.textContent = 'С возвращением!';
-      ui.startSub.textContent = savedData.name + ' ждал тебя на лужайке.';
+      ui.startTitle.textContent = 'Welcome back!';
+      ui.startSub.textContent = savedData.name + ' has been waiting for you in the meadow.';
       ui.nameInput.hidden = true;
-      ui.startBtn.textContent = 'Пойти к ' + savedData.name;
+      ui.startBtn.textContent = 'Go to ' + savedData.name;
     }
 
     ui.loading.classList.add('gone');
@@ -268,7 +268,7 @@
 
   boot();
 
-  // Для отладки и автотестов.
+  // For debugging and automated tests.
   window.__dragon = {
     get pet() { return pet; },
     get world() { return World; },
@@ -276,7 +276,7 @@
     save: Save,
     startNew: function (name) {
       ui.startScreen.classList.add('hidden');
-      startGame(Save.fresh(name || 'Тест'), true);
+      startGame(Save.fresh(name || 'Test'), true);
     }
   };
 })();

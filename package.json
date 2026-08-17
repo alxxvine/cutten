@@ -2,7 +2,7 @@
   "name": "cutten",
   "version": "2.0.0",
   "private": true,
-  "description": "Дракончик — 3D low-poly виртуальный питомец",
+  "description": "Dragon Meadow — a 3D low-poly virtual pet",
   "scripts": {
     "vendor": "echo \"export * from 'three';\" > .three-entry.js && esbuild .three-entry.js --bundle --minify --format=iife --global-name=THREE --outfile=vendor/three.min.js --legal-comments=none && rm .three-entry.js",
     "serve": "python3 -m http.server 8000",

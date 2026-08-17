@@ -117,7 +117,7 @@ html, body {
 .icon-btn:hover { transform: translateY(-2px); }
 .icon-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(110, 95, 140, .2); }
 
-/* ---------- Мысль дракончика ---------- */
+/* ---------- Dragon thought ---------- */
 
 .mood {
   position: absolute;
@@ -132,7 +132,7 @@ html, body {
 }
 .mood.show { opacity: 1; }
 
-/* ---------- Панель занятий ---------- */
+/* ---------- Activity bar ---------- */
 
 .toolbar {
   position: absolute;
@@ -198,7 +198,7 @@ html, body {
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-/* ---------- Оверлеи ---------- */
+/* ---------- Overlays ---------- */
 
 .overlay {
   position: absolute;

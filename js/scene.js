@@ -1,5 +1,5 @@
-/* Лужайка: летающий островок, свет, трава, пруд и вся мелочь вокруг дракончика.
-   Вся геометрия строится кодом — никаких внешних моделей и текстур. */
+/* The meadow: a floating island, light, grass, a pond and all the small things around the dragon.
+   Every bit of geometry is built in code — no external models and no textures. */
 window.World = (function () {
   'use strict';
 
@@ -11,22 +11,22 @@ window.World = (function () {
   var clockUniform = { value: 0 };
   var canvas;
 
-  var ISLAND_R = 12.5;      // радиус лужайки
-  var WALK_R = 10.2;        // куда дракончику можно бегать
+  var ISLAND_R = 12.5;      // meadow radius
+  var WALK_R = 10.2;        // how far the dragon may roam
 
-  // Камера: уютный ракурс три четверти, вращается перетаскиванием.
+  // Camera: a cosy three-quarter view, orbited by dragging.
   var cam = {
     azimuth: -0.65, polar: 0.95, distance: 7.6,
     targetAzimuth: -0.65, targetPolar: 0.95, targetDistance: 7.6,
     target: null, desiredTarget: null, sway: 0
   };
 
-  var night = 0;            // 0 — день, 1 — ночь
+  var night = 0;            // 0 is day, 1 is night
   var nightTarget = 0;
 
-  /* ---------- рельеф ---------- */
+  /* ---------- terrain ---------- */
 
-  /** Высота лужайки в точке. Аналитическая, поэтому по ней легко ходить. */
+  /** Meadow height at a point. Analytic, which makes walking on it easy. */
   function heightAt(x, z) {
     var d = Math.sqrt(x * x + z * z);
     var edge = 1 - smoothstep(ISLAND_R * 0.72, ISLAND_R, d);
@@ -43,7 +43,7 @@ window.World = (function () {
 
   function rand(a, b) { return a + Math.random() * (b - a); }
 
-  /* ---------- материалы ---------- */
+  /* ---------- materials ---------- */
 
   function mat(color, opts) {
     return new THREE.MeshLambertMaterial(Object.assign({ color: color, flatShading: true }, opts || {}));
@@ -62,7 +62,7 @@ window.World = (function () {
     cushion: 0xf0a7b4
   };
 
-  /* ---------- сборка мира ---------- */
+  /* ---------- building the world ---------- */
 
   function buildSky() {
     var geo = new THREE.SphereGeometry(90, 20, 14);
@@ -103,7 +103,7 @@ window.World = (function () {
     ground.receiveShadow = true;
     scene.add(ground);
 
-    // Скалистое донышко — островок парит в воздухе.
+    // A rocky underside — the island floats in the air.
     var under = new THREE.ConeGeometry(ISLAND_R * 0.98, 9.5, 13, 3);
     var upos = under.attributes.position;
     for (var j = 0; j < upos.count; j++) {
@@ -116,8 +116,8 @@ window.World = (function () {
     }
     under.computeVertexNormals();
     var underMesh = new THREE.Mesh(under, mat(PALETTE.soil));
-    underMesh.rotation.x = Math.PI;   // вершиной вниз
-    underMesh.position.y = -6.05;     // основание конуса уходит под край лужайки
+    underMesh.rotation.x = Math.PI;   // tip pointing down
+    underMesh.position.y = -6.05;     // the cone base sits below the meadow rim
     scene.add(underMesh);
   }
 
@@ -126,7 +126,7 @@ window.World = (function () {
     blade.translate(0, 0.15, 0);
 
     grassMat = new THREE.MeshLambertMaterial({ color: 0x86cf62, flatShading: true });
-    // Ветер: верхушки травинок качаются в вершинном шейдере.
+    // Wind: blade tips sway in the vertex shader.
     grassMat.onBeforeCompile = function (shader) {
       shader.uniforms.uTime = clockUniform;
       shader.vertexShader = 'uniform float uTime;\n' + shader.vertexShader.replace(
@@ -158,7 +158,7 @@ window.World = (function () {
       var a = Math.random() * TAU;
       var r = Math.sqrt(Math.random()) * (ISLAND_R - 0.5);
       var x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (Math.hypot(x - 5.4, z - 4.2) < 2.9) continue;      // не растёт в пруду
+      if (Math.hypot(x - 5.4, z - 4.2) < 2.9) continue;      // nothing grows in the pond
       dummy.position.set(x, heightAt(x, z) - 0.03, z);
       dummy.rotation.set(rand(-0.13, 0.13), Math.random() * TAU, rand(-0.13, 0.13));
       var s = rand(0.7, 1.3);
@@ -243,14 +243,14 @@ window.World = (function () {
     water.receiveShadow = false;
     scene.add(water);
 
-    // Бережок из камушков.
+    // A pebble shoreline.
     for (var i = 0; i < 9; i++) {
       var a = (i / 9) * TAU + rand(-0.15, 0.15);
       buildRock(5.4 + Math.cos(a) * rand(2.6, 3.0), 4.2 + Math.sin(a) * rand(2.6, 3.0), rand(0.16, 0.3));
     }
   }
 
-  /** Лежанка — сюда дракончик приходит спать. */
+  /** The bed — where the dragon comes to sleep. */
   function buildBed() {
     bed = new THREE.Group();
     var pad = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.35, 0.22, 12), mat(PALETTE.cushion));
@@ -326,7 +326,7 @@ window.World = (function () {
     }
   }
 
-  /* ---------- частицы ---------- */
+  /* ---------- particles ---------- */
 
   function makeSpriteTexture(draw) {
     var c = document.createElement('canvas');
@@ -439,7 +439,7 @@ window.World = (function () {
     }
   }
 
-  /* ---------- камера ---------- */
+  /* ---------- camera ---------- */
 
   function updateCamera(dt) {
     cam.azimuth += (cam.targetAzimuth - cam.azimuth) * Math.min(1, dt * 6);
@@ -448,7 +448,7 @@ window.World = (function () {
 
     if (cam.desiredTarget) cam.target.lerp(cam.desiredTarget, Math.min(1, dt * 1.4));
 
-    // Солнце едет за дракончиком: маленькой карты теней хватает на всё важное.
+    // The sun follows the dragon, so a small shadow map covers everything that matters.
     sun.position.set(cam.target.x + 9, 14, cam.target.z + 6);
     sun.target.position.set(cam.target.x, 0, cam.target.z);
     sun.target.updateMatrixWorld();
@@ -465,7 +465,7 @@ window.World = (function () {
     camera.lookAt(cam.target.x, cam.target.y + 0.7, cam.target.z);
   }
 
-  /* ---------- публичное ---------- */
+  /* ---------- public API ---------- */
 
   var raycaster = new THREE.Raycaster();
 
@@ -533,9 +533,9 @@ window.World = (function () {
       camera.updateProjectionMatrix();
     },
 
-    /* --- камера --- */
+    /* --- camera --- */
 
-    /** Поставить камеру в конкретный ракурс — нужно для отладки и автотестов. */
+    /** Places the camera at an exact angle — used by debugging and automated tests. */
     setCamera: function (opts) {
       if (opts.azimuth !== undefined) cam.azimuth = cam.targetAzimuth = opts.azimuth;
       if (opts.polar !== undefined) cam.polar = cam.targetPolar = opts.polar;
@@ -555,9 +555,9 @@ window.World = (function () {
       cam.desiredTarget.set(vec.x * 0.9, heightAt(vec.x, vec.z) * 0.5 + 0.5, vec.z * 0.9);
     },
 
-    /* --- время суток --- */
+    /* --- time of day --- */
 
-    /** Понижает качество на слабых устройствах: тени и часть травы уходят, плавность остаётся. */
+    /** Drops quality on weak devices: shadows and some grass go, smoothness stays. */
     qualityLevel: 'high',
     setQuality: function (level) {
       if (this.qualityLevel === level) return;
@@ -577,9 +577,9 @@ window.World = (function () {
     setNight: function (value) { nightTarget = Math.max(0, Math.min(1, value)); },
     get night() { return night; },
 
-    /* --- лучи --- */
+    /* --- raycasting --- */
 
-    /** Точка на лужайке под курсором (ndc: {x, y} в диапазоне -1..1). */
+    /** The meadow point under the cursor (ndc: {x, y} in the -1..1 range). */
     groundPoint: function (ndc) {
       raycaster.setFromCamera(ndc, camera);
       var hits = raycaster.intersectObject(ground, false);
@@ -591,7 +591,7 @@ window.World = (function () {
       return raycaster.intersectObjects(objects, true);
     },
 
-    /** Экранные координаты точки мира — для эмодзи-мысли над головой. */
+    /** Screen coordinates of a world point — used by the emoji thought above the head. */
     toScreen: function (vec3) {
       var v = vec3.clone().project(camera);
       return {
@@ -601,7 +601,7 @@ window.World = (function () {
       };
     },
 
-    /* --- эффекты --- */
+    /* --- effects --- */
 
     fx: {
       hearts: function (pos, count) {
@@ -630,14 +630,14 @@ window.World = (function () {
       }
     },
 
-    /* --- кадр --- */
+    /* --- frame --- */
 
     update: function (dt, time) {
       clockUniform.value = time;
 
       night += (nightTarget - night) * Math.min(1, dt * 0.7);
 
-      // Свет и небо мягко уходят в сумерки.
+      // Light and sky drift gently into dusk.
       var dayColor = new THREE.Color(0xfff2d6);
       var nightColor = new THREE.Color(0x8fa8ff);
       sun.color.copy(dayColor).lerp(nightColor, night);
@@ -661,7 +661,7 @@ window.World = (function () {
         }
       }
 
-      // Бабочки прячутся на ночь.
+      // Butterflies hide for the night.
       butterflies.forEach(function (b) {
         var u = b.userData;
         u.angle += u.speed * dt;
@@ -677,12 +677,12 @@ window.World = (function () {
         b.visible = night < 0.55;
       });
 
-      // Цветочки покачиваются.
+      // Flowers sway.
       for (var i = 0; i < flowers.length; i++) {
         flowers[i].rotation.z = Math.sin(time * 1.1 + flowers[i].userData.phase) * 0.09;
       }
 
-      // Рябь на пруду.
+      // Ripples on the pond.
       if (water) {
         var wp = water.geometry.attributes.position;
         for (var k = 0; k < wp.count; k++) {

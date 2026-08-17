@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Дракончик 🐉</title>
+<title>Dragon Meadow 🐉</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
 <style>
 :root {
@@ -125,7 +125,7 @@ html, body {
 .icon-btn:hover { transform: translateY(-2px); }
 .icon-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(110, 95, 140, .2); }
 
-/* ---------- Мысль дракончика ---------- */
+/* ---------- Dragon thought ---------- */
 
 .mood {
   position: absolute;
@@ -140,7 +140,7 @@ html, body {
 }
 .mood.show { opacity: 1; }
 
-/* ---------- Панель занятий ---------- */
+/* ---------- Activity bar ---------- */
 
 .toolbar {
   position: absolute;
@@ -206,7 +206,7 @@ html, body {
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
-/* ---------- Оверлеи ---------- */
+/* ---------- Overlays ---------- */
 
 .overlay {
   position: absolute;
@@ -329,20 +329,20 @@ html, body {
   <header class="hud" id="hud" hidden>
     <div class="panel pet-panel">
       <div class="pet-top">
-        <span class="pet-name" id="petName">Дракончик</span>
-        <span class="pet-stage" id="petStage">малыш</span>
+        <span class="pet-name" id="petName">Dragon</span>
+        <span class="pet-stage" id="petStage">hatchling</span>
       </div>
-      <div class="bond" id="bond" title="Привязанность"></div>
+      <div class="bond" id="bond" title="Bond"></div>
       <div class="needs">
-        <div class="need" title="Сытость"><span class="need-icon">🍓</span><div class="need-bar"><i id="needFood"></i></div></div>
-        <div class="need" title="Бодрость"><span class="need-icon">⚡</span><div class="need-bar"><i id="needEnergy"></i></div></div>
-        <div class="need" title="Веселье"><span class="need-icon">🎾</span><div class="need-bar"><i id="needFun"></i></div></div>
+        <div class="need" title="Fullness"><span class="need-icon">🍓</span><div class="need-bar"><i id="needFood"></i></div></div>
+        <div class="need" title="Energy"><span class="need-icon">⚡</span><div class="need-bar"><i id="needEnergy"></i></div></div>
+        <div class="need" title="Fun"><span class="need-icon">🎾</span><div class="need-bar"><i id="needFun"></i></div></div>
       </div>
     </div>
 
     <div class="panel buttons">
-      <button class="icon-btn" id="soundBtn" title="Звук" aria-label="Звук">🔊</button>
-      <button class="icon-btn" id="helpBtn" title="Что делать" aria-label="Что делать">?</button>
+      <button class="icon-btn" id="soundBtn" title="Sound" aria-label="Sound">🔊</button>
+      <button class="icon-btn" id="helpBtn" title="What to do" aria-label="What to do">?</button>
     </div>
   </header>
 
@@ -351,15 +351,15 @@ html, body {
   <div class="toolbar" id="toolbar" hidden>
     <button class="tool" id="treatBtn">
       <span class="tool-icon">🍓</span>
-      <span class="tool-label">Вкусняшка</span>
+      <span class="tool-label">Treat</span>
     </button>
     <button class="tool" id="ballBtn">
       <span class="tool-icon">🎾</span>
-      <span class="tool-label">Мячик</span>
+      <span class="tool-label">Ball</span>
     </button>
     <button class="tool" id="sleepBtn">
       <span class="tool-icon">💤</span>
-      <span class="tool-label">Спать</span>
+      <span class="tool-label">Sleep</span>
     </button>
   </div>
 
@@ -368,32 +368,32 @@ html, body {
   <div class="overlay" id="startScreen">
     <div class="card">
       <div class="egg" id="eggArt">🥚</div>
-      <h1 id="startTitle">У тебя вылупился дракончик</h1>
-      <p class="sub" id="startSub">Он совсем малыш и пока никого не знает. Как его зовут?</p>
+      <h1 id="startTitle">Your dragon just hatched</h1>
+      <p class="sub" id="startSub">They are tiny and do not know anyone yet. What is their name?</p>
       <form class="name-form" id="nameForm">
-        <input id="nameInput" type="text" maxlength="16" autocomplete="off" placeholder="Имя дракончика" aria-label="Имя дракончика">
-        <button class="big-btn" type="submit" id="startBtn">Познакомиться</button>
+        <input id="nameInput" type="text" maxlength="16" autocomplete="off" placeholder="Name your dragon" aria-label="Name your dragon">
+        <button class="big-btn" type="submit" id="startBtn">Say hello</button>
       </form>
-      <p class="hint">Работает мышкой и пальцем. Проиграть нельзя — дракончик всегда тебе рад.</p>
+      <p class="hint">Works with a mouse and with a finger. You cannot lose — your dragon is always happy to see you.</p>
     </div>
   </div>
 
   <div class="overlay hidden" id="helpScreen">
     <div class="card">
-      <h1>Что тут делать</h1>
+      <h1>What to do here</h1>
       <ul class="rules">
-        <li><span>✋</span> <b>Гладить.</b> Веди пальцем или мышкой по дракончику — он жмурится, подставляет шею и урчит.</li>
-        <li><span>🎾</span> <b>Играть.</b> Нажми «Мячик», потом ткни в травку — он побежит, схватит и притащит обратно.</li>
-        <li><span>🍓</span> <b>Кормить.</b> Нажми «Вкусняшка» и поднеси ягодку к мордочке.</li>
-        <li><span>💤</span> <b>Укладывать.</b> Когда устанет — зевает и сам сворачивается клубочком. Или нажми «Спать».</li>
-        <li><span>🖱</span> <b>Осмотреться.</b> Тяни по траве, чтобы обойти лужайку кругом.</li>
+        <li><span>✋</span> <b>Pet them.</b> Drag your finger or mouse across the dragon — they squint, lean in and rumble.</li>
+        <li><span>🎾</span> <b>Play fetch.</b> Press “Ball”, then tap the grass: they dash off, grab it and bring it back.</li>
+        <li><span>🍓</span> <b>Feed them.</b> Press “Treat” and hold the berry up to their snout.</li>
+        <li><span>💤</span> <b>Tuck them in.</b> When tired they yawn and curl up on their own. Or press “Sleep”.</li>
+        <li><span>🖱</span> <b>Look around.</b> Drag across the grass to walk around the meadow, scroll or pinch to zoom.</li>
       </ul>
-      <p class="sub">Чем больше вы вместе, тем больше он к тебе привязывается — и растёт. Подросший дракончик учится взлетать.</p>
-      <button class="big-btn" id="closeHelpBtn">Понятно</button>
+      <p class="sub">The more time you spend together, the more attached your dragon gets — and the more they grow. A grown dragon learns to fly.</p>
+      <button class="big-btn" id="closeHelpBtn">Got it</button>
     </div>
   </div>
 
-  <div class="loading" id="loading">Лужайка просыпается…</div>
+  <div class="loading" id="loading">The meadow is waking up…</div>
 </div>
 
 <script>
@@ -4507,7 +4507,7 @@ void main() {
 }`,Zd=class{constructor(){this.texture=null,this.mesh=null,this.depthNear=0,this.depthFar=0}init(t,e){if(this.texture===null){let n=new rr(t.texture);(t.depthNear!==e.depthNear||t.depthFar!==e.depthFar)&&(this.depthNear=t.depthNear,this.depthFar=t.depthFar),this.texture=n}}getMesh(t){if(this.texture!==null&&this.mesh===null){let e=t.cameras[0].viewport,n=new je({vertexShader:kM,fragmentShader:GM,uniforms:{depthColor:{value:this.texture},depthWidth:{value:e.z},depthHeight:{value:e.w}}});this.mesh=new ve(new cs(20,20),n)}return this.mesh}reset(){this.texture=null,this.mesh=null}getDepthTexture(){return this.texture}},Jd=class extends an{constructor(t,e){super();let n=this,i=null,r=1,a=null,o="local-floor",l=1,c=null,h=null,d=null,u=null,f=null,p=null,_=typeof XRWebGLBinding<"u",g=new Zd,m={},M=e.getContextAttributes(),S=null,v=null,E=[],T=[],R=new Q,x=null,A=new Re;A.viewport=new ce;let I=new Re;I.viewport=new ce;let P=[A,I],N=new To,H=null,X=null;this.cameraAutoUpdate=!0,this.enabled=!1,this.isPresenting=!1,this.getController=function(J){let ct=E[J];return ct===void 0&&(ct=new ss,E[J]=ct),ct.getTargetRaySpace()},this.getControllerGrip=function(J){let ct=E[J];return ct===void 0&&(ct=new ss,E[J]=ct),ct.getGripSpace()},this.getHand=function(J){let ct=E[J];return ct===void 0&&(ct=new ss,E[J]=ct),ct.getHandSpace()};function O(J){let ct=T.indexOf(J.inputSource);if(ct===-1)return;let st=E[ct];st!==void 0&&(st.update(J.inputSource,J.frame,c||a),st.dispatchEvent({type:J.type,data:J.inputSource}))}function W(){i.removeEventListener("select",O),i.removeEventListener("selectstart",O),i.removeEventListener("selectend",O),i.removeEventListener("squeeze",O),i.removeEventListener("squeezestart",O),i.removeEventListener("squeezeend",O),i.removeEventListener("end",W),i.removeEventListener("inputsourceschange",G);for(let J=0;J<E.length;J++){let ct=T[J];ct!==null&&(T[J]=null,E[J].disconnect(ct))}H=null,X=null,g.reset();for(let J in m)delete m[J];t.setRenderTarget(S),f=null,u=null,d=null,i=null,v=null,ne.stop(),n.isPresenting=!1,t.setPixelRatio(x),t.setSize(R.width,R.height,!1),n.dispatchEvent({type:"sessionend"})}this.setFramebufferScaleFactor=function(J){r=J,n.isPresenting===!0&&at("WebXRManager: Cannot change framebuffer scale while presenting.")},this.setReferenceSpaceType=function(J){o=J,n.isPresenting===!0&&at("WebXRManager: Cannot change reference space type while presenting.")},this.getReferenceSpace=function(){return c||a},this.setReferenceSpace=function(J){c=J},this.getBaseLayer=function(){return u!==null?u:f},this.getBinding=function(){return d===null&&_&&(d=new XRWebGLBinding(i,e)),d},this.getFrame=function(){return p},this.getSession=function(){return i},this.setSession=async function(J){if(i=J,i!==null){if(S=t.getRenderTarget(),i.addEventListener("select",O),i.addEventListener("selectstart",O),i.addEventListener("selectend",O),i.addEventListener("squeeze",O),i.addEventListener("squeezestart",O),i.addEventListener("squeezeend",O),i.addEventListener("end",W),i.addEventListener("inputsourceschange",G),M.xrCompatible!==!0&&await e.makeXRCompatible(),x=t.getPixelRatio(),t.getSize(R),_&&"createProjectionLayer"in XRWebGLBinding.prototype){let st=null,Nt=null,Gt=null;M.depth&&(Gt=M.stencil?e.DEPTH24_STENCIL8:e.DEPTH_COMPONENT24,st=M.stencil?ui:wn,Nt=M.stencil?_s:fn);let Ot={colorFormat:e.RGBA8,depthFormat:Gt,scaleFactor:r};d=this.getBinding(),u=d.createProjectionLayer(Ot),i.updateRenderState({layers:[u]}),t.setPixelRatio(1),t.setSize(u.textureWidth,u.textureHeight,!1),v=new Xe(u.textureWidth,u.textureHeight,{format:We,type:en,depthTexture:new Hn(u.textureWidth,u.textureHeight,Nt,void 0,void 0,void 0,void 0,void 0,void 0,st),stencilBuffer:M.stencil,colorSpace:t.outputColorSpace,samples:M.antialias?4:0,resolveDepthBuffer:u.ignoreDepthValues===!1,resolveStencilBuffer:u.ignoreDepthValues===!1})}else{let st={antialias:M.antialias,alpha:!0,depth:M.depth,stencil:M.stencil,framebufferScaleFactor:r};f=new XRWebGLLayer(i,e,st),i.updateRenderState({baseLayer:f}),t.setPixelRatio(1),t.setSize(f.framebufferWidth,f.framebufferHeight,!1),v=new Xe(f.framebufferWidth,f.framebufferHeight,{format:We,type:en,colorSpace:t.outputColorSpace,stencilBuffer:M.stencil,resolveDepthBuffer:f.ignoreDepthValues===!1,resolveStencilBuffer:f.ignoreDepthValues===!1})}v.isXRRenderTarget=!0,this.setFoveation(l),c=null,a=await i.requestReferenceSpace(o),ne.setContext(i),ne.start(),n.isPresenting=!0,n.dispatchEvent({type:"sessionstart"})}},this.getEnvironmentBlendMode=function(){if(i!==null)return i.environmentBlendMode},this.getDepthTexture=function(){return g.getDepthTexture()};function G(J){for(let ct=0;ct<J.removed.length;ct++){let st=J.removed[ct],Nt=T.indexOf(st);Nt>=0&&(T[Nt]=null,E[Nt].disconnect(st))}for(let ct=0;ct<J.added.length;ct++){let st=J.added[ct],Nt=T.indexOf(st);if(Nt===-1){for(let Ot=0;Ot<E.length;Ot++)if(Ot>=T.length){T.push(st),Nt=Ot;break}else if(T[Ot]===null){T[Ot]=st,Nt=Ot;break}if(Nt===-1)break}let Gt=E[Nt];Gt&&Gt.connect(st)}}let K=new C,it=new C;function ut(J,ct,st){K.setFromMatrixPosition(ct.matrixWorld),it.setFromMatrixPosition(st.matrixWorld);let Nt=K.distanceTo(it),Gt=ct.projectionMatrix.elements,Ot=st.projectionMatrix.elements,re=Gt[14]/(Gt[10]-1),Wt=Gt[14]/(Gt[10]+1),j=(Gt[9]+1)/Gt[5],nt=(Gt[9]-1)/Gt[5],et=(Gt[8]-1)/Gt[0],xt=(Ot[8]+1)/Ot[0],gt=re*et,Bt=re*xt,Pt=Nt/(-et+xt),Ht=Pt*-et;if(ct.matrixWorld.decompose(J.position,J.quaternion,J.scale),J.translateX(Ht),J.translateZ(Pt),J.matrixWorld.compose(J.position,J.quaternion,J.scale),J.matrixWorldInverse.copy(J.matrixWorld).invert(),Gt[10]===-1)J.projectionMatrix.copy(ct.projectionMatrix),J.projectionMatrixInverse.copy(ct.projectionMatrixInverse);else{let Yt=re+Pt,L=Wt+Pt,he=gt-Ht,ee=Bt+(Nt-Ht),w=j*Wt/L*Yt,y=nt*Wt/L*Yt;J.projectionMatrix.makePerspective(he,ee,w,y,Yt,L),J.projectionMatrixInverse.copy(J.projectionMatrix).invert()}}function lt(J,ct){ct===null?J.matrixWorld.copy(J.matrix):J.matrixWorld.multiplyMatrices(ct.matrixWorld,J.matrix),J.matrixWorldInverse.copy(J.matrixWorld).invert()}this.updateCamera=function(J){if(i===null)return;let ct=J.near,st=J.far;g.texture!==null&&(g.depthNear>0&&(ct=g.depthNear),g.depthFar>0&&(st=g.depthFar)),N.near=I.near=A.near=ct,N.far=I.far=A.far=st,(H!==N.near||X!==N.far)&&(i.updateRenderState({depthNear:N.near,depthFar:N.far}),H=N.near,X=N.far),N.layers.mask=J.layers.mask|6,A.layers.mask=N.layers.mask&-5,I.layers.mask=N.layers.mask&-3;let Nt=J.parent,Gt=N.cameras;lt(N,Nt);for(let Ot=0;Ot<Gt.length;Ot++)lt(Gt[Ot],Nt);Gt.length===2?ut(N,A,I):N.projectionMatrix.copy(A.projectionMatrix),Tt(J,N,Nt)};function Tt(J,ct,st){st===null?J.matrix.copy(ct.matrixWorld):(J.matrix.copy(st.matrixWorld),J.matrix.invert(),J.matrix.multiply(ct.matrixWorld)),J.matrix.decompose(J.position,J.quaternion,J.scale),J.updateMatrixWorld(!0),J.projectionMatrix.copy(ct.projectionMatrix),J.projectionMatrixInverse.copy(ct.projectionMatrixInverse),J.isPerspectiveCamera&&(J.fov=ts*2*Math.atan(1/J.projectionMatrix.elements[5]),J.zoom=1)}this.getCamera=function(){return N},this.getFoveation=function(){if(!(u===null&&f===null))return l},this.setFoveation=function(J){l=J,u!==null&&(u.fixedFoveation=J),f!==null&&f.fixedFoveation!==void 0&&(f.fixedFoveation=J)},this.hasDepthSensing=function(){return g.texture!==null},this.getDepthSensingMesh=function(){return g.getMesh(N)},this.getCameraTexture=function(J){return m[J]};let Qt=null;function de(J,ct){if(h=ct.getViewerPose(c||a),p=ct,h!==null){let st=h.views;f!==null&&(t.setRenderTargetFramebuffer(v,f.framebuffer),t.setRenderTarget(v));let Nt=!1;st.length!==N.cameras.length&&(N.cameras.length=0,Nt=!0);for(let Wt=0;Wt<st.length;Wt++){let j=st[Wt],nt=null;if(f!==null)nt=f.getViewport(j);else{let xt=d.getViewSubImage(u,j);nt=xt.viewport,Wt===0&&(t.setRenderTargetTextures(v,xt.colorTexture,xt.depthStencilTexture),t.setRenderTarget(v))}let et=P[Wt];et===void 0&&(et=new Re,et.layers.enable(Wt),et.viewport=new ce,P[Wt]=et),et.matrix.fromArray(j.transform.matrix),et.matrix.decompose(et.position,et.quaternion,et.scale),et.projectionMatrix.fromArray(j.projectionMatrix),et.projectionMatrixInverse.copy(et.projectionMatrix).invert(),et.viewport.set(nt.x,nt.y,nt.width,nt.height),Wt===0&&(N.matrix.copy(et.matrix),N.matrix.decompose(N.position,N.quaternion,N.scale)),Nt===!0&&N.cameras.push(et)}let Gt=i.enabledFeatures;if(Gt&&Gt.includes("depth-sensing")&&i.depthUsage=="gpu-optimized"&&_){d=n.getBinding();let Wt=d.getDepthInformation(st[0]);Wt&&Wt.isValid&&Wt.texture&&g.init(Wt,i.renderState)}if(Gt&&Gt.includes("camera-access")&&_){t.state.unbindTexture(),d=n.getBinding();for(let Wt=0;Wt<st.length;Wt++){let j=st[Wt].camera;if(j){let nt=m[j];nt||(nt=new rr,m[j]=nt);let et=d.getCameraImage(j);nt.sourceTexture=et}}}}for(let st=0;st<E.length;st++){let Nt=T[st],Gt=E[st];Nt!==null&&Gt!==void 0&&Gt.update(Nt,ct,c||a)}Qt&&Qt(J,ct),ct.detectedPlanes&&n.dispatchEvent({type:"planesdetected",data:ct}),p=null}let ne=new Ym;ne.setAnimationLoop(de),this.setAnimationLoop=function(J){Qt=J},this.dispose=function(){}}},HM=new kt,tg=new Xt;tg.set(-1,0,0,0,1,0,0,0,1);function WM(s,t){function e(g,m){g.matrixAutoUpdate===!0&&g.updateMatrix(),m.value.copy(g.matrix)}function n(g,m){m.color.getRGB(g.fogColor.value,Id(s)),m.isFog?(g.fogNear.value=m.near,g.fogFar.value=m.far):m.isFogExp2&&(g.fogDensity.value=m.density)}function i(g,m,M,S,v){m.isNodeMaterial?m.uniformsNeedUpdate=!1:m.isMeshBasicMaterial?r(g,m):m.isMeshLambertMaterial?(r(g,m),m.envMap&&(g.envMapIntensity.value=m.envMapIntensity)):m.isMeshToonMaterial?(r(g,m),d(g,m)):m.isMeshPhongMaterial?(r(g,m),h(g,m),m.envMap&&(g.envMapIntensity.value=m.envMapIntensity)):m.isMeshStandardMaterial?(r(g,m),u(g,m),m.isMeshPhysicalMaterial&&f(g,m,v)):m.isMeshMatcapMaterial?(r(g,m),p(g,m)):m.isMeshDepthMaterial?r(g,m):m.isMeshDistanceMaterial?(r(g,m),_(g,m)):m.isMeshNormalMaterial?r(g,m):m.isLineBasicMaterial?(a(g,m),m.isLineDashedMaterial&&o(g,m)):m.isPointsMaterial?l(g,m,M,S):m.isSpriteMaterial?c(g,m):m.isShadowMaterial?(g.color.value.copy(m.color),g.opacity.value=m.opacity):m.isShaderMaterial&&(m.uniformsNeedUpdate=!1)}function r(g,m){g.opacity.value=m.opacity,m.color&&g.diffuse.value.copy(m.color),m.emissive&&g.emissive.value.copy(m.emissive).multiplyScalar(m.emissiveIntensity),m.map&&(g.map.value=m.map,e(m.map,g.mapTransform)),m.alphaMap&&(g.alphaMap.value=m.alphaMap,e(m.alphaMap,g.alphaMapTransform)),m.bumpMap&&(g.bumpMap.value=m.bumpMap,e(m.bumpMap,g.bumpMapTransform),g.bumpScale.value=m.bumpScale,m.side===qe&&(g.bumpScale.value*=-1)),m.normalMap&&(g.normalMap.value=m.normalMap,e(m.normalMap,g.normalMapTransform),g.normalScale.value.copy(m.normalScale),m.side===qe&&g.normalScale.value.negate()),m.displacementMap&&(g.displacementMap.value=m.displacementMap,e(m.displacementMap,g.displacementMapTransform),g.displacementScale.value=m.displacementScale,g.displacementBias.value=m.displacementBias),m.emissiveMap&&(g.emissiveMap.value=m.emissiveMap,e(m.emissiveMap,g.emissiveMapTransform)),m.specularMap&&(g.specularMap.value=m.specularMap,e(m.specularMap,g.specularMapTransform)),m.alphaTest>0&&(g.alphaTest.value=m.alphaTest);let M=t.get(m),S=M.envMap,v=M.envMapRotation;S&&(g.envMap.value=S,g.envMapRotation.value.setFromMatrix4(HM.makeRotationFromEuler(v)).transpose(),S.isCubeTexture&&S.isRenderTargetTexture===!1&&g.envMapRotation.value.premultiply(tg),g.reflectivity.value=m.reflectivity,g.ior.value=m.ior,g.refractionRatio.value=m.refractionRatio),m.lightMap&&(g.lightMap.value=m.lightMap,g.lightMapIntensity.value=m.lightMapIntensity,e(m.lightMap,g.lightMapTransform)),m.aoMap&&(g.aoMap.value=m.aoMap,g.aoMapIntensity.value=m.aoMapIntensity,e(m.aoMap,g.aoMapTransform))}function a(g,m){g.diffuse.value.copy(m.color),g.opacity.value=m.opacity,m.map&&(g.map.value=m.map,e(m.map,g.mapTransform))}function o(g,m){g.dashSize.value=m.dashSize,g.totalSize.value=m.dashSize+m.gapSize,g.scale.value=m.scale}function l(g,m,M,S){g.diffuse.value.copy(m.color),g.opacity.value=m.opacity,g.size.value=m.size*M,g.scale.value=S*.5,m.map&&(g.map.value=m.map,e(m.map,g.uvTransform)),m.alphaMap&&(g.alphaMap.value=m.alphaMap,e(m.alphaMap,g.alphaMapTransform)),m.alphaTest>0&&(g.alphaTest.value=m.alphaTest)}function c(g,m){g.diffuse.value.copy(m.color),g.opacity.value=m.opacity,g.rotation.value=m.rotation,m.map&&(g.map.value=m.map,e(m.map,g.mapTransform)),m.alphaMap&&(g.alphaMap.value=m.alphaMap,e(m.alphaMap,g.alphaMapTransform)),m.alphaTest>0&&(g.alphaTest.value=m.alphaTest)}function h(g,m){g.specular.value.copy(m.specular),g.shininess.value=Math.max(m.shininess,1e-4)}function d(g,m){m.gradientMap&&(g.gradientMap.value=m.gradientMap)}function u(g,m){g.metalness.value=m.metalness,m.metalnessMap&&(g.metalnessMap.value=m.metalnessMap,e(m.metalnessMap,g.metalnessMapTransform)),g.roughness.value=m.roughness,m.roughnessMap&&(g.roughnessMap.value=m.roughnessMap,e(m.roughnessMap,g.roughnessMapTransform)),m.envMap&&(g.envMapIntensity.value=m.envMapIntensity)}function f(g,m,M){g.ior.value=m.ior,m.sheen>0&&(g.sheenColor.value.copy(m.sheenColor).multiplyScalar(m.sheen),g.sheenRoughness.value=m.sheenRoughness,m.sheenColorMap&&(g.sheenColorMap.value=m.sheenColorMap,e(m.sheenColorMap,g.sheenColorMapTransform)),m.sheenRoughnessMap&&(g.sheenRoughnessMap.value=m.sheenRoughnessMap,e(m.sheenRoughnessMap,g.sheenRoughnessMapTransform))),m.clearcoat>0&&(g.clearcoat.value=m.clearcoat,g.clearcoatRoughness.value=m.clearcoatRoughness,m.clearcoatMap&&(g.clearcoatMap.value=m.clearcoatMap,e(m.clearcoatMap,g.clearcoatMapTransform)),m.clearcoatRoughnessMap&&(g.clearcoatRoughnessMap.value=m.clearcoatRoughnessMap,e(m.clearcoatRoughnessMap,g.clearcoatRoughnessMapTransform)),m.clearcoatNormalMap&&(g.clearcoatNormalMap.value=m.clearcoatNormalMap,e(m.clearcoatNormalMap,g.clearcoatNormalMapTransform),g.clearcoatNormalScale.value.copy(m.clearcoatNormalScale),m.side===qe&&g.clearcoatNormalScale.value.negate())),m.dispersion>0&&(g.dispersion.value=m.dispersion),m.iridescence>0&&(g.iridescence.value=m.iridescence,g.iridescenceIOR.value=m.iridescenceIOR,g.iridescenceThicknessMinimum.value=m.iridescenceThicknessRange[0],g.iridescenceThicknessMaximum.value=m.iridescenceThicknessRange[1],m.iridescenceMap&&(g.iridescenceMap.value=m.iridescenceMap,e(m.iridescenceMap,g.iridescenceMapTransform)),m.iridescenceThicknessMap&&(g.iridescenceThicknessMap.value=m.iridescenceThicknessMap,e(m.iridescenceThicknessMap,g.iridescenceThicknessMapTransform))),m.transmission>0&&(g.transmission.value=m.transmission,g.transmissionSamplerMap.value=M.texture,g.transmissionSamplerSize.value.set(M.width,M.height),m.transmissionMap&&(g.transmissionMap.value=m.transmissionMap,e(m.transmissionMap,g.transmissionMapTransform)),g.thickness.value=m.thickness,m.thicknessMap&&(g.thicknessMap.value=m.thicknessMap,e(m.thicknessMap,g.thicknessMapTransform)),g.attenuationDistance.value=m.attenuationDistance,g.attenuationColor.value.copy(m.attenuationColor)),m.anisotropy>0&&(g.anisotropyVector.value.set(m.anisotropy*Math.cos(m.anisotropyRotation),m.anisotropy*Math.sin(m.anisotropyRotation)),m.anisotropyMap&&(g.anisotropyMap.value=m.anisotropyMap,e(m.anisotropyMap,g.anisotropyMapTransform))),g.specularIntensity.value=m.specularIntensity,g.specularColor.value.copy(m.specularColor),m.specularColorMap&&(g.specularColorMap.value=m.specularColorMap,e(m.specularColorMap,g.specularColorMapTransform)),m.specularIntensityMap&&(g.specularIntensityMap.value=m.specularIntensityMap,e(m.specularIntensityMap,g.specularIntensityMapTransform))}function p(g,m){m.matcap&&(g.matcap.value=m.matcap)}function _(g,m){let M=t.get(m).light;g.referencePosition.value.setFromMatrixPosition(M.matrixWorld),g.nearDistance.value=M.shadow.camera.near,g.farDistance.value=M.shadow.camera.far}return{refreshFogUniforms:n,refreshMaterialUniforms:i}}function XM(s,t,e,n){let i={},r={},a=[],o=s.getParameter(s.MAX_UNIFORM_BUFFER_BINDINGS);function l(v,E){let T=E.program;n.uniformBlockBinding(v,T)}function c(v,E){let T=i[v.id];T===void 0&&(g(v),T=h(v),i[v.id]=T,v.addEventListener("dispose",M));let R=E.program;n.updateUBOMapping(v,R);let x=t.render.frame;r[v.id]!==x&&(u(v),r[v.id]=x)}function h(v){let E=d();v.__bindingPointIndex=E;let T=s.createBuffer(),R=v.__size,x=v.usage;return s.bindBuffer(s.UNIFORM_BUFFER,T),s.bufferData(s.UNIFORM_BUFFER,R,x),s.bindBuffer(s.UNIFORM_BUFFER,null),s.bindBufferBase(s.UNIFORM_BUFFER,E,T),T}function d(){for(let v=0;v<o;v++)if(a.indexOf(v)===-1)return a.push(v),v;return Ct("WebGLRenderer: Maximum number of simultaneously usable uniforms groups reached."),0}function u(v){let E=i[v.id],T=v.uniforms,R=v.__cache;s.bindBuffer(s.UNIFORM_BUFFER,E);for(let x=0,A=T.length;x<A;x++){let I=T[x];if(Array.isArray(I))for(let P=0,N=I.length;P<N;P++)f(I[P],x,P,R);else f(I,x,0,R)}s.bindBuffer(s.UNIFORM_BUFFER,null)}function f(v,E,T,R){if(_(v,E,T,R)===!0){let x=v.__offset,A=v.value;if(Array.isArray(A)){let I=0;for(let P=0;P<A.length;P++){let N=A[P],H=m(N);p(N,v.__data,I),typeof N!="number"&&typeof N!="boolean"&&!N.isMatrix3&&!ArrayBuffer.isView(N)&&(I+=H.storage/Float32Array.BYTES_PER_ELEMENT)}}else p(A,v.__data,0);s.bufferSubData(s.UNIFORM_BUFFER,x,v.__data)}}function p(v,E,T){typeof v=="number"||typeof v=="boolean"?E[0]=v:v.isMatrix3?(E[0]=v.elements[0],E[1]=v.elements[1],E[2]=v.elements[2],E[3]=0,E[4]=v.elements[3],E[5]=v.elements[4],E[6]=v.elements[5],E[7]=0,E[8]=v.elements[6],E[9]=v.elements[7],E[10]=v.elements[8],E[11]=0):ArrayBuffer.isView(v)?E.set(new v.constructor(v.buffer,v.byteOffset,E.length)):v.toArray(E,T)}function _(v,E,T,R){let x=v.value,A=E+"_"+T;if(R[A]===void 0)return typeof x=="number"||typeof x=="boolean"?R[A]=x:ArrayBuffer.isView(x)?R[A]=x.slice():R[A]=x.clone(),!0;{let I=R[A];if(typeof x=="number"||typeof x=="boolean"){if(I!==x)return R[A]=x,!0}else{if(ArrayBuffer.isView(x))return!0;if(I.equals(x)===!1)return I.copy(x),!0}}return!1}function g(v){let E=v.uniforms,T=0,R=16;for(let A=0,I=E.length;A<I;A++){let P=Array.isArray(E[A])?E[A]:[E[A]];for(let N=0,H=P.length;N<H;N++){let X=P[N],O=Array.isArray(X.value)?X.value:[X.value];for(let W=0,G=O.length;W<G;W++){let K=O[W],it=m(K),ut=T%R,lt=ut%it.boundary,Tt=ut+lt;T+=lt,Tt!==0&&R-Tt<it.storage&&(T+=R-Tt),X.__data=new Float32Array(it.storage/Float32Array.BYTES_PER_ELEMENT),X.__offset=T,T+=it.storage}}}let x=T%R;return x>0&&(T+=R-x),v.__size=T,v.__cache={},this}function m(v){let E={boundary:0,storage:0};return typeof v=="number"||typeof v=="boolean"?(E.boundary=4,E.storage=4):v.isVector2?(E.boundary=8,E.storage=8):v.isVector3||v.isColor?(E.boundary=16,E.storage=12):v.isVector4?(E.boundary=16,E.storage=16):v.isMatrix3?(E.boundary=48,E.storage=48):v.isMatrix4?(E.boundary=64,E.storage=64):v.isTexture?at("WebGLRenderer: Texture samplers can not be part of an uniforms group."):ArrayBuffer.isView(v)?(E.boundary=16,E.storage=v.byteLength):at("WebGLRenderer: Unsupported uniform value type.",v),E}function M(v){let E=v.target;E.removeEventListener("dispose",M);let T=a.indexOf(E.__bindingPointIndex);a.splice(T,1),s.deleteBuffer(i[E.id]),delete i[E.id],delete r[E.id]}function S(){for(let v in i)s.deleteBuffer(i[v]);a=[],i={},r={}}return{bind:l,update:c,dispose:S}}var qM=new Uint16Array([12469,15057,12620,14925,13266,14620,13807,14376,14323,13990,14545,13625,14713,13328,14840,12882,14931,12528,14996,12233,15039,11829,15066,11525,15080,11295,15085,10976,15082,10705,15073,10495,13880,14564,13898,14542,13977,14430,14158,14124,14393,13732,14556,13410,14702,12996,14814,12596,14891,12291,14937,11834,14957,11489,14958,11194,14943,10803,14921,10506,14893,10278,14858,9960,14484,14039,14487,14025,14499,13941,14524,13740,14574,13468,14654,13106,14743,12678,14818,12344,14867,11893,14889,11509,14893,11180,14881,10751,14852,10428,14812,10128,14765,9754,14712,9466,14764,13480,14764,13475,14766,13440,14766,13347,14769,13070,14786,12713,14816,12387,14844,11957,14860,11549,14868,11215,14855,10751,14825,10403,14782,10044,14729,9651,14666,9352,14599,9029,14967,12835,14966,12831,14963,12804,14954,12723,14936,12564,14917,12347,14900,11958,14886,11569,14878,11247,14859,10765,14828,10401,14784,10011,14727,9600,14660,9289,14586,8893,14508,8533,15111,12234,15110,12234,15104,12216,15092,12156,15067,12010,15028,11776,14981,11500,14942,11205,14902,10752,14861,10393,14812,9991,14752,9570,14682,9252,14603,8808,14519,8445,14431,8145,15209,11449,15208,11451,15202,11451,15190,11438,15163,11384,15117,11274,15055,10979,14994,10648,14932,10343,14871,9936,14803,9532,14729,9218,14645,8742,14556,8381,14461,8020,14365,7603,15273,10603,15272,10607,15267,10619,15256,10631,15231,10614,15182,10535,15118,10389,15042,10167,14963,9787,14883,9447,14800,9115,14710,8665,14615,8318,14514,7911,14411,7507,14279,7198,15314,9675,15313,9683,15309,9712,15298,9759,15277,9797,15229,9773,15166,9668,15084,9487,14995,9274,14898,8910,14800,8539,14697,8234,14590,7790,14479,7409,14367,7067,14178,6621,15337,8619,15337,8631,15333,8677,15325,8769,15305,8871,15264,8940,15202,8909,15119,8775,15022,8565,14916,8328,14804,8009,14688,7614,14569,7287,14448,6888,14321,6483,14088,6171,15350,7402,15350,7419,15347,7480,15340,7613,15322,7804,15287,7973,15229,8057,15148,8012,15046,7846,14933,7611,14810,7357,14682,7069,14552,6656,14421,6316,14251,5948,14007,5528,15356,5942,15356,5977,15353,6119,15348,6294,15332,6551,15302,6824,15249,7044,15171,7122,15070,7050,14949,6861,14818,6611,14679,6349,14538,6067,14398,5651,14189,5311,13935,4958,15359,4123,15359,4153,15356,4296,15353,4646,15338,5160,15311,5508,15263,5829,15188,6042,15088,6094,14966,6001,14826,5796,14678,5543,14527,5287,14377,4985,14133,4586,13869,4257,15360,1563,15360,1642,15358,2076,15354,2636,15341,3350,15317,4019,15273,4429,15203,4732,15105,4911,14981,4932,14836,4818,14679,4621,14517,4386,14359,4156,14083,3795,13808,3437,15360,122,15360,137,15358,285,15355,636,15344,1274,15322,2177,15281,2765,15215,3223,15120,3451,14995,3569,14846,3567,14681,3466,14511,3305,14344,3121,14037,2800,13753,2467,15360,0,15360,1,15359,21,15355,89,15346,253,15325,479,15287,796,15225,1148,15133,1492,15008,1749,14856,1882,14685,1886,14506,1783,14324,1608,13996,1398,13702,1183]),Zn=null;function YM(){return Zn===null&&(Zn=new Qe(qM,16,16,di,Un),Zn.name="DFG_LUT",Zn.minFilter=_e,Zn.magFilter=_e,Zn.wrapS=Ke,Zn.wrapT=Ke,Zn.generateMipmaps=!1,Zn.needsUpdate=!0),Zn}var $d=class{constructor(t={}){let{canvas:e=wd(),context:n=null,depth:i=!0,stencil:r=!1,alpha:a=!1,antialias:o=!1,premultipliedAlpha:l=!0,preserveDrawingBuffer:c=!1,powerPreference:h="default",failIfMajorPerformanceCaveat:d=!1,reversedDepthBuffer:u=!1,outputBufferType:f=en}=t;this.isWebGLRenderer=!0;let p;if(n!==null){if(typeof WebGLRenderingContext<"u"&&n instanceof WebGLRenderingContext)throw new Error("THREE.WebGLRenderer: WebGL 1 is not supported since r163.");p=n.getContextAttributes().alpha}else p=a;let _=f,g=new Set([Fo,Uo,Lr]),m=new Set([en,fn,gs,_s,Lo,Do]),M=new Uint32Array(4),S=new Int32Array(4),v=new C,E=null,T=null,R=[],x=[],A=null;this.domElement=e,this.debug={checkShaderErrors:!0,onShaderError:null},this.autoClear=!0,this.autoClearColor=!0,this.autoClearDepth=!0,this.autoClearStencil=!0,this.sortObjects=!0,this.clippingPlanes=[],this.localClippingEnabled=!1,this.toneMapping=vn,this.toneMappingExposure=1,this.transmissionResolutionScale=1;let I=this,P=!1,N=null,H=null,X=null,O=null;this._outputColorSpace=Je;let W=0,G=0,K=null,it=-1,ut=null,lt=new ce,Tt=new ce,Qt=null,de=new St(0),ne=0,J=e.width,ct=e.height,st=1,Nt=null,Gt=null,Ot=new ce(0,0,J,ct),re=new ce(0,0,J,ct),Wt=!1,j=new Gn,nt=!1,et=!1,xt=new kt,gt=new C,Bt=new ce,Pt={background:null,fog:null,environment:null,overrideMaterial:null,isScene:!0},Ht=!1;function Yt(){return K===null?st:1}let L=n;function he(b,U){return e.getContext(b,U)}try{let b={alpha:!0,depth:i,stencil:r,antialias:o,premultipliedAlpha:l,preserveDrawingBuffer:c,powerPreference:h,failIfMajorPerformanceCaveat:d};if("setAttribute"in e&&e.setAttribute("data-engine",`three.js r${"185"}`),e.addEventListener("webglcontextlost",ye,!1),e.addEventListener("webglcontextrestored",me,!1),e.addEventListener("webglcontextcreationerror",On,!1),L===null){let U="webgl2";if(L=he(U,b),L===null)throw he(U)?new Error("THREE.WebGLRenderer: Error creating WebGL context with your selected attributes."):new Error("THREE.WebGLRenderer: Error creating WebGL context.")}}catch(b){throw Ct("WebGLRenderer: "+b.message),b}let ee,w,y,F,V,q,rt,ot,Y,$,dt,Lt,_t,ft,Ft,zt,Zt,D,ht,Z,pt,Mt,tt;function It(){ee=new ey(L),ee.init(),pt=new jm(L,ee),w=new Yv(L,ee,t,pt),y=new zM(L,ee),w.reversedDepthBuffer&&u&&y.buffers.depth.setReversed(!0),H=L.createFramebuffer(),X=L.createFramebuffer(),O=L.createFramebuffer(),F=new sy(L),V=new AM,q=new VM(L,ee,y,V,w,pt,F),rt=new ty(I),ot=new l_(L),Mt=new Xv(L,ot),Y=new ny(L,ot,F,Mt),$=new ay(L,Y,ot,Mt,F),D=new ry(L,w,q),Ft=new Zv(V),dt=new TM(I,rt,ee,w,Mt,Ft),Lt=new WM(I,V),_t=new wM,ft=new DM(ee),Zt=new Wv(I,rt,y,$,p,l),zt=new BM(I,$,w),tt=new XM(L,F,w,y),ht=new qv(L,ee,F),Z=new iy(L,ee,F),F.programs=dt.programs,I.capabilities=w,I.extensions=ee,I.properties=V,I.renderLists=_t,I.shadowMap=zt,I.state=y,I.info=F}It(),_!==en&&(A=new ly(_,e.width,e.height,o,i,r));let wt=new Jd(I,L);this.xr=wt,this.getContext=function(){return L},this.getContextAttributes=function(){return L.getContextAttributes()},this.forceContextLoss=function(){let b=ee.get("WEBGL_lose_context");b&&b.loseContext()},this.forceContextRestore=function(){let b=ee.get("WEBGL_lose_context");b&&b.restoreContext()},this.getPixelRatio=function(){return st},this.setPixelRatio=function(b){b!==void 0&&(st=b,this.setSize(J,ct,!1))},this.getSize=function(b){return b.set(J,ct)},this.setSize=function(b,U,k=!0){if(wt.isPresenting){at("WebGLRenderer: Can't change size while VR device is presenting.");return}J=b,ct=U,e.width=Math.floor(b*st),e.height=Math.floor(U*st),k===!0&&(e.style.width=b+"px",e.style.height=U+"px"),A!==null&&A.setSize(e.width,e.height),this.setViewport(0,0,b,U)},this.getDrawingBufferSize=function(b){return b.set(J*st,ct*st).floor()},this.setDrawingBufferSize=function(b,U,k){J=b,ct=U,st=k,e.width=Math.floor(b*k),e.height=Math.floor(U*k),this.setViewport(0,0,b,U)},this.setEffects=function(b){if(_===en){Ct("WebGLRenderer: setEffects() requires outputBufferType set to HalfFloatType or FloatType.");return}if(b){for(let U=0;U<b.length;U++)if(b[U].isOutputPass===!0){at("WebGLRenderer: OutputPass is not needed in setEffects(). Tone mapping and color space conversion are applied automatically.");break}}A.setEffects(b||[])},this.getCurrentViewport=function(b){return b.copy(lt)},this.getViewport=function(b){return b.copy(Ot)},this.setViewport=function(b,U,k,B){b.isVector4?Ot.set(b.x,b.y,b.z,b.w):Ot.set(b,U,k,B),y.viewport(lt.copy(Ot).multiplyScalar(st).round())},this.getScissor=function(b){return b.copy(re)},this.setScissor=function(b,U,k,B){b.isVector4?re.set(b.x,b.y,b.z,b.w):re.set(b,U,k,B),y.scissor(Tt.copy(re).multiplyScalar(st).round())},this.getScissorTest=function(){return Wt},this.setScissorTest=function(b){y.setScissorTest(Wt=b)},this.setOpaqueSort=function(b){Nt=b},this.setTransparentSort=function(b){Gt=b},this.getClearColor=function(b){return b.copy(Zt.getClearColor())},this.setClearColor=function(){Zt.setClearColor(...arguments)},this.getClearAlpha=function(){return Zt.getClearAlpha()},this.setClearAlpha=function(){Zt.setClearAlpha(...arguments)},this.clear=function(b=!0,U=!0,k=!0){let B=0;if(b){let z=!1;if(K!==null){let yt=K.texture.format;z=g.has(yt)}if(z){let yt=K.texture.type,Et=m.has(yt),vt=Zt.getClearColor(),Rt=Zt.getClearAlpha(),Dt=vt.r,Jt=vt.g,jt=vt.b;Et?(M[0]=Dt,M[1]=Jt,M[2]=jt,M[3]=Rt,L.clearBufferuiv(L.COLOR,0,M)):(S[0]=Dt,S[1]=Jt,S[2]=jt,S[3]=Rt,L.clearBufferiv(L.COLOR,0,S))}else B|=L.COLOR_BUFFER_BIT}U&&(B|=L.DEPTH_BUFFER_BIT,this.state.buffers.depth.setMask(!0)),k&&(B|=L.STENCIL_BUFFER_BIT,this.state.buffers.stencil.setMask(4294967295)),B!==0&&L.clear(B)},this.clearColor=function(){this.clear(!0,!1,!1)},this.clearDepth=function(){this.clear(!1,!0,!1)},this.clearStencil=function(){this.clear(!1,!1,!0)},this.setNodesHandler=function(b){b.setRenderer(this),N=b},this.dispose=function(){e.removeEventListener("webglcontextlost",ye,!1),e.removeEventListener("webglcontextrestored",me,!1),e.removeEventListener("webglcontextcreationerror",On,!1),Zt.dispose(),_t.dispose(),ft.dispose(),V.dispose(),rt.dispose(),$.dispose(),Mt.dispose(),tt.dispose(),dt.dispose(),wt.dispose(),wt.removeEventListener("sessionstart",Qd),wt.removeEventListener("sessionend",jd),zi.stop()};function ye(b){b.preventDefault(),Qs("WebGLRenderer: Context Lost."),P=!0}function me(){Qs("WebGLRenderer: Context Restored."),P=!1;let b=F.autoReset,U=zt.enabled,k=zt.autoUpdate,B=zt.needsUpdate,z=zt.type;It(),F.autoReset=b,zt.enabled=U,zt.autoUpdate=k,zt.needsUpdate=B,zt.type=z}function On(b){Ct("WebGLRenderer: A WebGL context could not be created. Reason: ",b.statusMessage)}function Bn(b){let U=b.target;U.removeEventListener("dispose",Bn),eg(U)}function eg(b){ng(b),V.remove(b)}function ng(b){let U=V.get(b).programs;U!==void 0&&(U.forEach(function(k){dt.releaseProgram(k)}),b.isShaderMaterial&&dt.releaseShaderCache(b))}this.renderBufferDirect=function(b,U,k,B,z,yt){U===null&&(U=Pt);let Et=z.isMesh&&z.matrixWorld.determinantAffine()<0,vt=rg(b,U,k,B,z);y.setMaterial(B,Et);let Rt=k.index,Dt=1;if(B.wireframe===!0){if(Rt=Y.getWireframeAttribute(k),Rt===void 0)return;Dt=2}let Jt=k.drawRange,jt=k.attributes.position,Ut=Jt.start*Dt,ue=(Jt.start+Jt.count)*Dt;yt!==null&&(Ut=Math.max(Ut,yt.start*Dt),ue=Math.min(ue,(yt.start+yt.count)*Dt)),Rt!==null?(Ut=Math.max(Ut,0),ue=Math.min(ue,Rt.count)):jt!=null&&(Ut=Math.max(Ut,0),ue=Math.min(ue,jt.count));let Ae=ue-Ut;if(Ae<0||Ae===1/0)return;Mt.setup(z,B,vt,k,Rt);let Me,fe=ht;if(Rt!==null&&(Me=ot.get(Rt),fe=Z,fe.setIndex(Me)),z.isMesh)B.wireframe===!0?(y.setLineWidth(B.wireframeLinewidth*Yt()),fe.setMode(L.LINES)):fe.setMode(L.TRIANGLES);else if(z.isLine){let ze=B.linewidth;ze===void 0&&(ze=1),y.setLineWidth(ze*Yt()),z.isLineSegments?fe.setMode(L.LINES):z.isLineLoop?fe.setMode(L.LINE_LOOP):fe.setMode(L.LINE_STRIP)}else z.isPoints?fe.setMode(L.POINTS):z.isSprite&&fe.setMode(L.TRIANGLES);if(z.isBatchedMesh)if(ee.get("WEBGL_multi_draw"))fe.renderMultiDraw(z._multiDrawStarts,z._multiDrawCounts,z._multiDrawCount);else{let ze=z._multiDrawStarts,At=z._multiDrawCounts,ln=z._multiDrawCount,ie=Rt?ot.get(Rt).bytesPerElement:1,pn=V.get(B).currentProgram.getUniforms();for(let zn=0;zn<ln;zn++)pn.setValue(L,"_gl_DrawID",zn),fe.render(ze[zn]/ie,At[zn])}else if(z.isInstancedMesh)fe.renderInstances(Ut,Ae,z.count);else if(k.isInstancedBufferGeometry){let ze=k._maxInstanceCount!==void 0?k._maxInstanceCount:1/0,At=Math.min(k.instanceCount,ze);fe.renderInstances(Ut,Ae,At)}else fe.render(Ut,Ae)};function Kd(b,U,k){b.transparent===!0&&b.side===Pn&&b.forceSinglePass===!1?(b.side=qe,b.needsUpdate=!0,Sl(b,U,k),b.side=kn,b.needsUpdate=!0,Sl(b,U,k),b.side=Pn):Sl(b,U,k)}this.compile=function(b,U,k=null){k===null&&(k=b),T=ft.get(k),T.init(U),x.push(T),k.traverseVisible(function(z){z.isLight&&z.layers.test(U.layers)&&(T.pushLight(z),z.castShadow&&T.pushShadow(z))}),b!==k&&b.traverseVisible(function(z){z.isLight&&z.layers.test(U.layers)&&(T.pushLight(z),z.castShadow&&T.pushShadow(z))}),T.setupLights();let B=new Set;return b.traverse(function(z){if(!(z.isMesh||z.isPoints||z.isLine||z.isSprite))return;let yt=z.material;if(yt)if(Array.isArray(yt))for(let Et=0;Et<yt.length;Et++){let vt=yt[Et];Kd(vt,k,z),B.add(vt)}else Kd(yt,k,z),B.add(yt)}),T=x.pop(),B},this.compileAsync=function(b,U,k=null){let B=this.compile(b,U,k);return new Promise(z=>{function yt(){if(B.forEach(function(Et){V.get(Et).currentProgram.isReady()&&B.delete(Et)}),B.size===0){z(b);return}setTimeout(yt,10)}ee.get("KHR_parallel_shader_compile")!==null?yt():setTimeout(yt,10)})};let qh=null;function ig(b){qh&&qh(b)}function Qd(){zi.stop()}function jd(){zi.start()}let zi=new Ym;zi.setAnimationLoop(ig),typeof self<"u"&&zi.setContext(self),this.setAnimationLoop=function(b){qh=b,wt.setAnimationLoop(b),b===null?zi.stop():zi.start()},wt.addEventListener("sessionstart",Qd),wt.addEventListener("sessionend",jd),this.render=function(b,U){if(U!==void 0&&U.isCamera!==!0){Ct("WebGLRenderer.render: camera is not an instance of THREE.Camera.");return}if(P===!0)return;N!==null&&N.renderStart(b,U);let k=wt.enabled===!0&&wt.isPresenting===!0,B=A!==null&&(K===null||k)&&A.begin(I,K);if(b.matrixWorldAutoUpdate===!0&&b.updateMatrixWorld(),U.parent===null&&U.matrixWorldAutoUpdate===!0&&U.updateMatrixWorld(),wt.enabled===!0&&wt.isPresenting===!0&&(A===null||A.isCompositing()===!1)&&(wt.cameraAutoUpdate===!0&&wt.updateCamera(U),U=wt.getCamera()),b.isScene===!0&&b.onBeforeRender(I,b,U,K),T=ft.get(b,x.length),T.init(U),T.state.textureUnits=q.getTextureUnits(),x.push(T),xt.multiplyMatrices(U.projectionMatrix,U.matrixWorldInverse),j.setFromProjectionMatrix(xt,rn,U.reversedDepth),et=this.localClippingEnabled,nt=Ft.init(this.clippingPlanes,et),E=_t.get(b,R.length),E.init(),R.push(E),wt.enabled===!0&&wt.isPresenting===!0){let Et=I.xr.getDepthSensingMesh();Et!==null&&Yh(Et,U,-1/0,I.sortObjects)}Yh(b,U,0,I.sortObjects),E.finish(),I.sortObjects===!0&&E.sort(Nt,Gt,U.reversedDepth),Ht=wt.enabled===!1||wt.isPresenting===!1||wt.hasDepthSensing()===!1,Ht&&Zt.addToRenderList(E,b),this.info.render.frame++,this.info.autoReset===!0&&this.info.reset(),nt===!0&&Ft.beginShadows();let z=T.state.shadowsArray;if(zt.render(z,b,U),nt===!0&&Ft.endShadows(),(B&&A.hasRenderPass())===!1){let Et=E.opaque,vt=E.transmissive;if(T.setupLights(),U.isArrayCamera){let Rt=U.cameras;if(vt.length>0)for(let Dt=0,Jt=Rt.length;Dt<Jt;Dt++){let jt=Rt[Dt];ef(Et,vt,b,jt)}Ht&&Zt.render(b);for(let Dt=0,Jt=Rt.length;Dt<Jt;Dt++){let jt=Rt[Dt];tf(E,b,jt,jt.viewport)}}else vt.length>0&&ef(Et,vt,b,U),Ht&&Zt.render(b),tf(E,b,U)}K!==null&&G===0&&(q.updateMultisampleRenderTarget(K),q.updateRenderTargetMipmap(K)),B&&A.end(I),b.isScene===!0&&b.onAfterRender(I,b,U),Mt.resetDefaultState(),it=-1,ut=null,x.pop(),x.length>0?(T=x[x.length-1],q.setTextureUnits(T.state.textureUnits),nt===!0&&Ft.setGlobalState(I.clippingPlanes,T.state.camera)):T=null,R.pop(),R.length>0?E=R[R.length-1]:E=null,N!==null&&N.renderEnd()};function Yh(b,U,k,B){if(b.visible===!1)return;if(b.layers.test(U.layers)){if(b.isGroup)k=b.renderOrder;else if(b.isLOD)b.autoUpdate===!0&&b.update(U);else if(b.isLightProbeGrid)T.pushLightProbeGrid(b);else if(b.isLight)T.pushLight(b),b.castShadow&&T.pushShadow(b);else if(b.isSprite){if(!b.frustumCulled||j.intersectsSprite(b)){B&&Bt.setFromMatrixPosition(b.matrixWorld).applyMatrix4(xt);let Et=$.update(b),vt=b.material;vt.visible&&E.push(b,Et,vt,k,Bt.z,null)}}else if((b.isMesh||b.isLine||b.isPoints)&&(!b.frustumCulled||j.intersectsObject(b))){let Et=$.update(b),vt=b.material;if(B&&(b.boundingSphere!==void 0?(b.boundingSphere===null&&b.computeBoundingSphere(),Bt.copy(b.boundingSphere.center)):(Et.boundingSphere===null&&Et.computeBoundingSphere(),Bt.copy(Et.boundingSphere.center)),Bt.applyMatrix4(b.matrixWorld).applyMatrix4(xt)),Array.isArray(vt)){let Rt=Et.groups;for(let Dt=0,Jt=Rt.length;Dt<Jt;Dt++){let jt=Rt[Dt],Ut=vt[jt.materialIndex];Ut&&Ut.visible&&E.push(b,Et,Ut,k,Bt.z,jt)}}else vt.visible&&E.push(b,Et,vt,k,Bt.z,null)}}let yt=b.children;for(let Et=0,vt=yt.length;Et<vt;Et++)Yh(yt[Et],U,k,B)}function tf(b,U,k,B){let{opaque:z,transmissive:yt,transparent:Et}=b;T.setupLightsView(k),nt===!0&&Ft.setGlobalState(I.clippingPlanes,k),B&&y.viewport(lt.copy(B)),z.length>0&&Ml(z,U,k),yt.length>0&&Ml(yt,U,k),Et.length>0&&Ml(Et,U,k),y.buffers.depth.setTest(!0),y.buffers.depth.setMask(!0),y.buffers.color.setMask(!0),y.setPolygonOffset(!1)}function ef(b,U,k,B){if((k.isScene===!0?k.overrideMaterial:null)!==null)return;if(T.state.transmissionRenderTarget[B.id]===void 0){let Ut=ee.has("EXT_color_buffer_half_float")||ee.has("EXT_color_buffer_float");T.state.transmissionRenderTarget[B.id]=new Xe(1,1,{generateMipmaps:!0,type:Ut?Un:en,minFilter:Nn,samples:Math.max(4,w.samples),stencilBuffer:r,resolveDepthBuffer:!1,resolveStencilBuffer:!1,colorSpace:te.workingColorSpace})}let yt=T.state.transmissionRenderTarget[B.id],Et=B.viewport||lt;yt.setSize(Et.z*I.transmissionResolutionScale,Et.w*I.transmissionResolutionScale);let vt=I.getRenderTarget(),Rt=I.getActiveCubeFace(),Dt=I.getActiveMipmapLevel();I.setRenderTarget(yt),I.getClearColor(de),ne=I.getClearAlpha(),ne<1&&I.setClearColor(16777215,.5),I.clear(),Ht&&Zt.render(k);let Jt=I.toneMapping;I.toneMapping=vn;let jt=B.viewport;if(B.viewport!==void 0&&(B.viewport=void 0),T.setupLightsView(B),nt===!0&&Ft.setGlobalState(I.clippingPlanes,B),Ml(b,k,B),q.updateMultisampleRenderTarget(yt),q.updateRenderTargetMipmap(yt),ee.has("WEBGL_multisampled_render_to_texture")===!1){let Ut=!1;for(let ue=0,Ae=U.length;ue<Ae;ue++){let Me=U[ue],{object:fe,geometry:ze,material:At,group:ln}=Me;if(At.side===Pn&&fe.layers.test(B.layers)){let ie=At.side;At.side=qe,At.needsUpdate=!0,nf(fe,k,B,ze,At,ln),At.side=ie,At.needsUpdate=!0,Ut=!0}}Ut===!0&&(q.updateMultisampleRenderTarget(yt),q.updateRenderTargetMipmap(yt))}I.setRenderTarget(vt,Rt,Dt),I.setClearColor(de,ne),jt!==void 0&&(B.viewport=jt),I.toneMapping=Jt}function Ml(b,U,k){let B=U.isScene===!0?U.overrideMaterial:null;for(let z=0,yt=b.length;z<yt;z++){let Et=b[z],{object:vt,geometry:Rt,group:Dt}=Et,Jt=Et.material;Jt.allowOverride===!0&&B!==null&&(Jt=B),vt.layers.test(k.layers)&&nf(vt,U,k,Rt,Jt,Dt)}}function nf(b,U,k,B,z,yt){b.onBeforeRender(I,U,k,B,z,yt),b.modelViewMatrix.multiplyMatrices(k.matrixWorldInverse,b.matrixWorld),b.normalMatrix.getNormalMatrix(b.modelViewMatrix),z.onBeforeRender(I,U,k,B,b,yt),z.transparent===!0&&z.side===Pn&&z.forceSinglePass===!1?(z.side=qe,z.needsUpdate=!0,I.renderBufferDirect(k,U,B,z,b,yt),z.side=kn,z.needsUpdate=!0,I.renderBufferDirect(k,U,B,z,b,yt),z.side=Pn):I.renderBufferDirect(k,U,B,z,b,yt),b.onAfterRender(I,U,k,B,z,yt)}function Sl(b,U,k){U.isScene!==!0&&(U=Pt);let B=V.get(b),z=T.state.lights,yt=T.state.shadowsArray,Et=z.state.version,vt=dt.getParameters(b,z.state,yt,U,k,T.state.lightProbeGridArray),Rt=dt.getProgramCacheKey(vt),Dt=B.programs;B.environment=b.isMeshStandardMaterial||b.isMeshLambertMaterial||b.isMeshPhongMaterial?U.environment:null,B.fog=U.fog;let Jt=b.isMeshStandardMaterial||b.isMeshLambertMaterial&&!b.envMap||b.isMeshPhongMaterial&&!b.envMap;B.envMap=rt.get(b.envMap||B.environment,Jt),B.envMapRotation=B.environment!==null&&b.envMap===null?U.environmentRotation:b.envMapRotation,Dt===void 0&&(b.addEventListener("dispose",Bn),Dt=new Map,B.programs=Dt);let jt=Dt.get(Rt);if(jt!==void 0){if(B.currentProgram===jt&&B.lightsStateVersion===Et)return rf(b,vt),jt}else vt.uniforms=dt.getUniforms(b),N!==null&&b.isNodeMaterial&&N.build(b,k,vt),b.onBeforeCompile(vt,I),jt=dt.acquireProgram(vt,Rt),Dt.set(Rt,jt),B.uniforms=vt.uniforms;let Ut=B.uniforms;return(!b.isShaderMaterial&&!b.isRawShaderMaterial||b.clipping===!0)&&(Ut.clippingPlanes=Ft.uniform),rf(b,vt),B.needsLights=og(b),B.lightsStateVersion=Et,B.needsLights&&(Ut.ambientLightColor.value=z.state.ambient,Ut.lightProbe.value=z.state.probe,Ut.directionalLights.value=z.state.directional,Ut.directionalLightShadows.value=z.state.directionalShadow,Ut.spotLights.value=z.state.spot,Ut.spotLightShadows.value=z.state.spotShadow,Ut.rectAreaLights.value=z.state.rectArea,Ut.ltc_1.value=z.state.rectAreaLTC1,Ut.ltc_2.value=z.state.rectAreaLTC2,Ut.pointLights.value=z.state.point,Ut.pointLightShadows.value=z.state.pointShadow,Ut.hemisphereLights.value=z.state.hemi,Ut.directionalShadowMatrix.value=z.state.directionalShadowMatrix,Ut.spotLightMatrix.value=z.state.spotLightMatrix,Ut.spotLightMap.value=z.state.spotLightMap,Ut.pointShadowMatrix.value=z.state.pointShadowMatrix),B.lightProbeGrid=T.state.lightProbeGridArray.length>0,B.currentProgram=jt,B.uniformsList=null,jt}function sf(b){if(b.uniformsList===null){let U=b.currentProgram.getUniforms();b.uniformsList=Vr.seqWithValue(U.seq,b.uniforms)}return b.uniformsList}function rf(b,U){let k=V.get(b);k.outputColorSpace=U.outputColorSpace,k.batching=U.batching,k.batchingColor=U.batchingColor,k.instancing=U.instancing,k.instancingColor=U.instancingColor,k.instancingMorph=U.instancingMorph,k.skinning=U.skinning,k.morphTargets=U.morphTargets,k.morphNormals=U.morphNormals,k.morphColors=U.morphColors,k.morphTargetsCount=U.morphTargetsCount,k.numClippingPlanes=U.numClippingPlanes,k.numIntersection=U.numClipIntersection,k.vertexAlphas=U.vertexAlphas,k.vertexTangents=U.vertexTangents,k.toneMapping=U.toneMapping}function sg(b,U){if(b.length===0)return null;if(b.length===1)return b[0].texture!==null?b[0]:null;v.setFromMatrixPosition(U.matrixWorld);for(let k=0,B=b.length;k<B;k++){let z=b[k];if(z.texture!==null&&z.boundingBox.containsPoint(v))return z}return null}function rg(b,U,k,B,z){U.isScene!==!0&&(U=Pt),q.resetTextureUnits();let yt=U.fog,Et=B.isMeshStandardMaterial||B.isMeshLambertMaterial||B.isMeshPhongMaterial?U.environment:null,vt=K===null?I.outputColorSpace:K.isXRRenderTarget===!0?K.texture.colorSpace:te.workingColorSpace,Rt=B.isMeshStandardMaterial||B.isMeshLambertMaterial&&!B.envMap||B.isMeshPhongMaterial&&!B.envMap,Dt=rt.get(B.envMap||Et,Rt),Jt=B.vertexColors===!0&&!!k.attributes.color&&k.attributes.color.itemSize===4,jt=!!k.attributes.tangent&&(!!B.normalMap||B.anisotropy>0),Ut=!!k.morphAttributes.position,ue=!!k.morphAttributes.normal,Ae=!!k.morphAttributes.color,Me=vn;B.toneMapped&&(K===null||K.isXRRenderTarget===!0)&&(Me=I.toneMapping);let fe=k.morphAttributes.position||k.morphAttributes.normal||k.morphAttributes.color,ze=fe!==void 0?fe.length:0,At=V.get(B),ln=T.state.lights;if(nt===!0&&(et===!0||b!==ut)){let ge=b===ut&&B.id===it;Ft.setState(B,b,ge)}let ie=!1;B.version===At.__version?(At.needsLights&&At.lightsStateVersion!==ln.state.version||At.outputColorSpace!==vt||z.isBatchedMesh&&At.batching===!1||!z.isBatchedMesh&&At.batching===!0||z.isBatchedMesh&&At.batchingColor===!0&&z.colorTexture===null||z.isBatchedMesh&&At.batchingColor===!1&&z.colorTexture!==null||z.isInstancedMesh&&At.instancing===!1||!z.isInstancedMesh&&At.instancing===!0||z.isSkinnedMesh&&At.skinning===!1||!z.isSkinnedMesh&&At.skinning===!0||z.isInstancedMesh&&At.instancingColor===!0&&z.instanceColor===null||z.isInstancedMesh&&At.instancingColor===!1&&z.instanceColor!==null||z.isInstancedMesh&&At.instancingMorph===!0&&z.morphTexture===null||z.isInstancedMesh&&At.instancingMorph===!1&&z.morphTexture!==null||At.envMap!==Dt||B.fog===!0&&At.fog!==yt||At.numClippingPlanes!==void 0&&(At.numClippingPlanes!==Ft.numPlanes||At.numIntersection!==Ft.numIntersection)||At.vertexAlphas!==Jt||At.vertexTangents!==jt||At.morphTargets!==Ut||At.morphNormals!==ue||At.morphColors!==Ae||At.toneMapping!==Me||At.morphTargetsCount!==ze||!!At.lightProbeGrid!=T.state.lightProbeGridArray.length>0)&&(ie=!0):(ie=!0,At.__version=B.version);let pn=At.currentProgram;ie===!0&&(pn=Sl(B,U,z),N&&B.isNodeMaterial&&N.onUpdateProgram(B,pn,At));let zn=!1,fi=!1,ys=!1,pe=pn.getUniforms(),Ee=At.uniforms;if(y.useProgram(pn.program)&&(zn=!0,fi=!0,ys=!0),B.id!==it&&(it=B.id,fi=!0),At.needsLights){let ge=sg(T.state.lightProbeGridArray,z);At.lightProbeGrid!==ge&&(At.lightProbeGrid=ge,fi=!0)}if(zn||ut!==b){y.buffers.depth.getReversed()&&b.reversedDepth!==!0&&(b._reversedDepth=!0,b.updateProjectionMatrix()),pe.setValue(L,"projectionMatrix",b.projectionMatrix),pe.setValue(L,"viewMatrix",b.matrixWorldInverse);let mi=pe.map.cameraPosition;mi!==void 0&&mi.setValue(L,gt.setFromMatrixPosition(b.matrixWorld)),w.logarithmicDepthBuffer&&pe.setValue(L,"logDepthBufFC",2/(Math.log(b.far+1)/Math.LN2)),(B.isMeshPhongMaterial||B.isMeshToonMaterial||B.isMeshLambertMaterial||B.isMeshBasicMaterial||B.isMeshStandardMaterial||B.isShaderMaterial)&&pe.setValue(L,"isOrthographic",b.isOrthographicCamera===!0),ut!==b&&(ut=b,fi=!0,ys=!0)}if(At.needsLights&&(ln.state.directionalShadowMap.length>0&&pe.setValue(L,"directionalShadowMap",ln.state.directionalShadowMap,q),ln.state.spotShadowMap.length>0&&pe.setValue(L,"spotShadowMap",ln.state.spotShadowMap,q),ln.state.pointShadowMap.length>0&&pe.setValue(L,"pointShadowMap",ln.state.pointShadowMap,q)),z.isSkinnedMesh){pe.setOptional(L,z,"bindMatrix"),pe.setOptional(L,z,"bindMatrixInverse");let ge=z.skeleton;ge&&(ge.boneTexture===null&&ge.computeBoneTexture(),pe.setValue(L,"boneTexture",ge.boneTexture,q))}z.isBatchedMesh&&(pe.setOptional(L,z,"batchingTexture"),pe.setValue(L,"batchingTexture",z._matricesTexture,q),pe.setOptional(L,z,"batchingIdTexture"),pe.setValue(L,"batchingIdTexture",z._indirectTexture,q),pe.setOptional(L,z,"batchingColorTexture"),z._colorsTexture!==null&&pe.setValue(L,"batchingColorTexture",z._colorsTexture,q));let pi=k.morphAttributes;if((pi.position!==void 0||pi.normal!==void 0||pi.color!==void 0)&&D.update(z,k,pn),(fi||At.receiveShadow!==z.receiveShadow)&&(At.receiveShadow=z.receiveShadow,pe.setValue(L,"receiveShadow",z.receiveShadow)),(B.isMeshStandardMaterial||B.isMeshLambertMaterial||B.isMeshPhongMaterial)&&B.envMap===null&&U.environment!==null&&(Ee.envMapIntensity.value=U.environmentIntensity),Ee.dfgLUT!==void 0&&(Ee.dfgLUT.value=YM()),fi){if(pe.setValue(L,"toneMappingExposure",I.toneMappingExposure),At.needsLights&&ag(Ee,ys),yt&&B.fog===!0&&Lt.refreshFogUniforms(Ee,yt),Lt.refreshMaterialUniforms(Ee,B,st,ct,T.state.transmissionRenderTarget[b.id]),At.needsLights&&At.lightProbeGrid){let ge=At.lightProbeGrid;Ee.probesSH.value=ge.texture,Ee.probesMin.value.copy(ge.boundingBox.min),Ee.probesMax.value.copy(ge.boundingBox.max),Ee.probesResolution.value.copy(ge.resolution)}Vr.upload(L,sf(At),Ee,q)}if(B.isShaderMaterial&&B.uniformsNeedUpdate===!0&&(Vr.upload(L,sf(At),Ee,q),B.uniformsNeedUpdate=!1),B.isSpriteMaterial&&pe.setValue(L,"center",z.center),pe.setValue(L,"modelViewMatrix",z.modelViewMatrix),pe.setValue(L,"normalMatrix",z.normalMatrix),pe.setValue(L,"modelMatrix",z.matrixWorld),B.uniformsGroups!==void 0){let ge=B.uniformsGroups;for(let mi=0,Ms=ge.length;mi<Ms;mi++){let af=ge[mi];tt.update(af,pn),tt.bind(af,pn)}}return pn}function ag(b,U){b.ambientLightColor.needsUpdate=U,b.lightProbe.needsUpdate=U,b.directionalLights.needsUpdate=U,b.directionalLightShadows.needsUpdate=U,b.pointLights.needsUpdate=U,b.pointLightShadows.needsUpdate=U,b.spotLights.needsUpdate=U,b.spotLightShadows.needsUpdate=U,b.rectAreaLights.needsUpdate=U,b.hemisphereLights.needsUpdate=U}function og(b){return b.isMeshLambertMaterial||b.isMeshToonMaterial||b.isMeshPhongMaterial||b.isMeshStandardMaterial||b.isShadowMaterial||b.isShaderMaterial&&b.lights===!0}this.getActiveCubeFace=function(){return W},this.getActiveMipmapLevel=function(){return G},this.getRenderTarget=function(){return K},this.setRenderTargetTextures=function(b,U,k){let B=V.get(b);B.__autoAllocateDepthBuffer=b.resolveDepthBuffer===!1,B.__autoAllocateDepthBuffer===!1&&(B.__useRenderToTexture=!1),V.get(b.texture).__webglTexture=U,V.get(b.depthTexture).__webglTexture=B.__autoAllocateDepthBuffer?void 0:k,B.__hasExternalTextures=!0},this.setRenderTargetFramebuffer=function(b,U){let k=V.get(b);k.__webglFramebuffer=U,k.__useDefaultFramebuffer=U===void 0},this.setRenderTarget=function(b,U=0,k=0){K=b,W=U,G=k;let B=null,z=!1,yt=!1;if(b){let vt=V.get(b);if(vt.__useDefaultFramebuffer!==void 0){y.bindFramebuffer(L.FRAMEBUFFER,vt.__webglFramebuffer),lt.copy(b.viewport),Tt.copy(b.scissor),Qt=b.scissorTest,y.viewport(lt),y.scissor(Tt),y.setScissorTest(Qt),it=-1;return}else if(vt.__webglFramebuffer===void 0)q.setupRenderTarget(b);else if(vt.__hasExternalTextures)q.rebindTextures(b,V.get(b.texture).__webglTexture,V.get(b.depthTexture).__webglTexture);else if(b.depthBuffer){let Jt=b.depthTexture;if(vt.__boundDepthTexture!==Jt){if(Jt!==null&&V.has(Jt)&&(b.width!==Jt.image.width||b.height!==Jt.image.height))throw new Error("THREE.WebGLRenderer: Attached DepthTexture is initialized to the incorrect size.");q.setupDepthRenderbuffer(b)}}let Rt=b.texture;(Rt.isData3DTexture||Rt.isDataArrayTexture||Rt.isCompressedArrayTexture)&&(yt=!0);let Dt=V.get(b).__webglFramebuffer;b.isWebGLCubeRenderTarget?(Array.isArray(Dt[U])?B=Dt[U][k]:B=Dt[U],z=!0):b.samples>0&&q.useMultisampledRTT(b)===!1?B=V.get(b).__webglMultisampledFramebuffer:Array.isArray(Dt)?B=Dt[k]:B=Dt,lt.copy(b.viewport),Tt.copy(b.scissor),Qt=b.scissorTest}else lt.copy(Ot).multiplyScalar(st).floor(),Tt.copy(re).multiplyScalar(st).floor(),Qt=Wt;if(k!==0&&(B=H),y.bindFramebuffer(L.FRAMEBUFFER,B)&&y.drawBuffers(b,B),y.viewport(lt),y.scissor(Tt),y.setScissorTest(Qt),z){let vt=V.get(b.texture);L.framebufferTexture2D(L.FRAMEBUFFER,L.COLOR_ATTACHMENT0,L.TEXTURE_CUBE_MAP_POSITIVE_X+U,vt.__webglTexture,k)}else if(yt){let vt=U;for(let Rt=0;Rt<b.textures.length;Rt++){let Dt=V.get(b.textures[Rt]);L.framebufferTextureLayer(L.FRAMEBUFFER,L.COLOR_ATTACHMENT0+Rt,Dt.__webglTexture,k,vt)}}else if(b!==null&&k!==0){let vt=V.get(b.texture);L.framebufferTexture2D(L.FRAMEBUFFER,L.COLOR_ATTACHMENT0,L.TEXTURE_2D,vt.__webglTexture,k)}it=-1},this.readRenderTargetPixels=function(b,U,k,B,z,yt,Et,vt=0){if(!(b&&b.isWebGLRenderTarget)){Ct("WebGLRenderer.readRenderTargetPixels: renderTarget is not THREE.WebGLRenderTarget.");return}let Rt=V.get(b).__webglFramebuffer;if(b.isWebGLCubeRenderTarget&&Et!==void 0&&(Rt=Rt[Et]),Rt){y.bindFramebuffer(L.FRAMEBUFFER,Rt);try{let Dt=b.textures[vt],Jt=Dt.format,jt=Dt.type;if(b.textures.length>1&&L.readBuffer(L.COLOR_ATTACHMENT0+vt),!w.textureFormatReadable(Jt)){Ct("WebGLRenderer.readRenderTargetPixels: renderTarget is not in RGBA or implementation defined format.");return}if(!w.textureTypeReadable(jt)){Ct("WebGLRenderer.readRenderTargetPixels: renderTarget is not in UnsignedByteType or implementation defined type.");return}U>=0&&U<=b.width-B&&k>=0&&k<=b.height-z&&L.readPixels(U,k,B,z,pt.convert(Jt),pt.convert(jt),yt)}finally{let Dt=K!==null?V.get(K).__webglFramebuffer:null;y.bindFramebuffer(L.FRAMEBUFFER,Dt)}}},this.readRenderTargetPixelsAsync=async function(b,U,k,B,z,yt,Et,vt=0){if(!(b&&b.isWebGLRenderTarget))throw new Error("THREE.WebGLRenderer.readRenderTargetPixels: renderTarget is not THREE.WebGLRenderTarget.");let Rt=V.get(b).__webglFramebuffer;if(b.isWebGLCubeRenderTarget&&Et!==void 0&&(Rt=Rt[Et]),Rt)if(U>=0&&U<=b.width-B&&k>=0&&k<=b.height-z){y.bindFramebuffer(L.FRAMEBUFFER,Rt);let Dt=b.textures[vt],Jt=Dt.format,jt=Dt.type;if(b.textures.length>1&&L.readBuffer(L.COLOR_ATTACHMENT0+vt),!w.textureFormatReadable(Jt))throw new Error("THREE.WebGLRenderer.readRenderTargetPixelsAsync: renderTarget is not in RGBA or implementation defined format.");if(!w.textureTypeReadable(jt))throw new Error("THREE.WebGLRenderer.readRenderTargetPixelsAsync: renderTarget is not in UnsignedByteType or implementation defined type.");let Ut=L.createBuffer();L.bindBuffer(L.PIXEL_PACK_BUFFER,Ut),L.bufferData(L.PIXEL_PACK_BUFFER,yt.byteLength,L.STREAM_READ),L.readPixels(U,k,B,z,pt.convert(Jt),pt.convert(jt),0);let ue=K!==null?V.get(K).__webglFramebuffer:null;y.bindFramebuffer(L.FRAMEBUFFER,ue);let Ae=L.fenceSync(L.SYNC_GPU_COMMANDS_COMPLETE,0);return L.flush(),await fm(L,Ae,4),L.bindBuffer(L.PIXEL_PACK_BUFFER,Ut),L.getBufferSubData(L.PIXEL_PACK_BUFFER,0,yt),L.deleteBuffer(Ut),L.deleteSync(Ae),yt}else throw new Error("THREE.WebGLRenderer.readRenderTargetPixelsAsync: requested read bounds are out of range.")},this.copyFramebufferToTexture=function(b,U=null,k=0){let B=Math.pow(2,-k),z=Math.floor(b.image.width*B),yt=Math.floor(b.image.height*B),Et=U!==null?U.x:0,vt=U!==null?U.y:0;q.setTexture2D(b,0),L.copyTexSubImage2D(L.TEXTURE_2D,k,0,0,Et,vt,z,yt),y.unbindTexture()},this.copyTextureToTexture=function(b,U,k=null,B=null,z=0,yt=0){let Et,vt,Rt,Dt,Jt,jt,Ut,ue,Ae,Me=b.isCompressedTexture?b.mipmaps[yt]:b.image;if(k!==null)Et=k.max.x-k.min.x,vt=k.max.y-k.min.y,Rt=k.isBox3?k.max.z-k.min.z:1,Dt=k.min.x,Jt=k.min.y,jt=k.isBox3?k.min.z:0;else{let Ee=Math.pow(2,-z);Et=Math.floor(Me.width*Ee),vt=Math.floor(Me.height*Ee),b.isDataArrayTexture?Rt=Me.depth:b.isData3DTexture?Rt=Math.floor(Me.depth*Ee):Rt=1,Dt=0,Jt=0,jt=0}B!==null?(Ut=B.x,ue=B.y,Ae=B.z):(Ut=0,ue=0,Ae=0);let fe=pt.convert(U.format),ze=pt.convert(U.type),At;U.isData3DTexture?(q.setTexture3D(U,0),At=L.TEXTURE_3D):U.isDataArrayTexture||U.isCompressedArrayTexture?(q.setTexture2DArray(U,0),At=L.TEXTURE_2D_ARRAY):(q.setTexture2D(U,0),At=L.TEXTURE_2D),y.activeTexture(L.TEXTURE0),y.pixelStorei(L.UNPACK_FLIP_Y_WEBGL,U.flipY),y.pixelStorei(L.UNPACK_PREMULTIPLY_ALPHA_WEBGL,U.premultiplyAlpha),y.pixelStorei(L.UNPACK_ALIGNMENT,U.unpackAlignment);let ln=y.getParameter(L.UNPACK_ROW_LENGTH),ie=y.getParameter(L.UNPACK_IMAGE_HEIGHT),pn=y.getParameter(L.UNPACK_SKIP_PIXELS),zn=y.getParameter(L.UNPACK_SKIP_ROWS),fi=y.getParameter(L.UNPACK_SKIP_IMAGES);y.pixelStorei(L.UNPACK_ROW_LENGTH,Me.width),y.pixelStorei(L.UNPACK_IMAGE_HEIGHT,Me.height),y.pixelStorei(L.UNPACK_SKIP_PIXELS,Dt),y.pixelStorei(L.UNPACK_SKIP_ROWS,Jt),y.pixelStorei(L.UNPACK_SKIP_IMAGES,jt);let ys=b.isDataArrayTexture||b.isData3DTexture,pe=U.isDataArrayTexture||U.isData3DTexture;if(b.isDepthTexture){let Ee=V.get(b),pi=V.get(U),ge=V.get(Ee.__renderTarget),mi=V.get(pi.__renderTarget);y.bindFramebuffer(L.READ_FRAMEBUFFER,ge.__webglFramebuffer),y.bindFramebuffer(L.DRAW_FRAMEBUFFER,mi.__webglFramebuffer);for(let Ms=0;Ms<Rt;Ms++)ys&&(L.framebufferTextureLayer(L.READ_FRAMEBUFFER,L.COLOR_ATTACHMENT0,V.get(b).__webglTexture,z,jt+Ms),L.framebufferTextureLayer(L.DRAW_FRAMEBUFFER,L.COLOR_ATTACHMENT0,V.get(U).__webglTexture,yt,Ae+Ms)),L.blitFramebuffer(Dt,Jt,Et,vt,Ut,ue,Et,vt,L.DEPTH_BUFFER_BIT,L.NEAREST);y.bindFramebuffer(L.READ_FRAMEBUFFER,null),y.bindFramebuffer(L.DRAW_FRAMEBUFFER,null)}else if(z!==0||b.isRenderTargetTexture||V.has(b)){let Ee=V.get(b),pi=V.get(U);y.bindFramebuffer(L.READ_FRAMEBUFFER,X),y.bindFramebuffer(L.DRAW_FRAMEBUFFER,O);for(let ge=0;ge<Rt;ge++)ys?L.framebufferTextureLayer(L.READ_FRAMEBUFFER,L.COLOR_ATTACHMENT0,Ee.__webglTexture,z,jt+ge):L.framebufferTexture2D(L.READ_FRAMEBUFFER,L.COLOR_ATTACHMENT0,L.TEXTURE_2D,Ee.__webglTexture,z),pe?L.framebufferTextureLayer(L.DRAW_FRAMEBUFFER,L.COLOR_ATTACHMENT0,pi.__webglTexture,yt,Ae+ge):L.framebufferTexture2D(L.DRAW_FRAMEBUFFER,L.COLOR_ATTACHMENT0,L.TEXTURE_2D,pi.__webglTexture,yt),z!==0?L.blitFramebuffer(Dt,Jt,Et,vt,Ut,ue,Et,vt,L.COLOR_BUFFER_BIT,L.NEAREST):pe?L.copyTexSubImage3D(At,yt,Ut,ue,Ae+ge,Dt,Jt,Et,vt):L.copyTexSubImage2D(At,yt,Ut,ue,Dt,Jt,Et,vt);y.bindFramebuffer(L.READ_FRAMEBUFFER,null),y.bindFramebuffer(L.DRAW_FRAMEBUFFER,null)}else pe?b.isDataTexture||b.isData3DTexture?L.texSubImage3D(At,yt,Ut,ue,Ae,Et,vt,Rt,fe,ze,Me.data):U.isCompressedArrayTexture?L.compressedTexSubImage3D(At,yt,Ut,ue,Ae,Et,vt,Rt,fe,Me.data):L.texSubImage3D(At,yt,Ut,ue,Ae,Et,vt,Rt,fe,ze,Me):b.isDataTexture?L.texSubImage2D(L.TEXTURE_2D,yt,Ut,ue,Et,vt,fe,ze,Me.data):b.isCompressedTexture?L.compressedTexSubImage2D(L.TEXTURE_2D,yt,Ut,ue,Me.width,Me.height,fe,Me.data):L.texSubImage2D(L.TEXTURE_2D,yt,Ut,ue,Et,vt,fe,ze,Me);y.pixelStorei(L.UNPACK_ROW_LENGTH,ln),y.pixelStorei(L.UNPACK_IMAGE_HEIGHT,ie),y.pixelStorei(L.UNPACK_SKIP_PIXELS,pn),y.pixelStorei(L.UNPACK_SKIP_ROWS,zn),y.pixelStorei(L.UNPACK_SKIP_IMAGES,fi),yt===0&&U.generateMipmaps&&L.generateMipmap(At),y.unbindTexture()},this.initRenderTarget=function(b){V.get(b).__webglFramebuffer===void 0&&q.setupRenderTarget(b)},this.initTexture=function(b){b.isCubeTexture?q.setTextureCube(b,0):b.isData3DTexture?q.setTexture3D(b,0):b.isDataArrayTexture||b.isCompressedArrayTexture?q.setTexture2DArray(b,0):q.setTexture2D(b,0),y.unbindTexture()},this.resetState=function(){W=0,G=0,K=null,y.reset(),Mt.reset()},typeof __THREE_DEVTOOLS__<"u"&&__THREE_DEVTOOLS__.dispatchEvent(new CustomEvent("observe",{detail:this}))}get coordinateSystem(){return rn}get outputColorSpace(){return this._outputColorSpace}set outputColorSpace(t){this._outputColorSpace=t;let e=this.getContext();e.drawingBufferColorSpace=te._getDrawingBufferColorSpace(t),e.unpackColorSpace=te._getUnpackColorSpace()}};return fg(ZM);})();
 </script>
 <script>
-/* Звук дракончика. Никаких файлов — всё синтезируется на лету через WebAudio. */
+/* Dragon sounds. No audio files — everything is synthesised on the fly with WebAudio. */
 window.Audio3D = (function () {
   'use strict';
 
@@ -4519,7 +4519,7 @@ window.Audio3D = (function () {
   try {
     var stored = localStorage.getItem('dragon.sound');
     if (stored !== null) enabled = JSON.parse(stored);
-  } catch (e) { /* приватный режим */ }
+  } catch (e) { /* private mode */ }
 
   function unlock() {
     if (!enabled) return;
@@ -4536,7 +4536,7 @@ window.Audio3D = (function () {
 
   function ready() { return enabled && ac; }
 
-  /** Короткая нота с огибающей. */
+  /** A short note with an envelope. */
   function tone(opts) {
     if (!ready()) return;
     var now = ac.currentTime + (opts.delay || 0);
@@ -4556,7 +4556,7 @@ window.Audio3D = (function () {
     osc.stop(now + opts.dur + 0.05);
   }
 
-  /** Шумовой всплеск — крылья, шаги, сопение. */
+  /** A burst of noise — wings, footsteps, snoring. */
   function noise(opts) {
     if (!ready()) return;
     var now = ac.currentTime + (opts.delay || 0);
@@ -4600,14 +4600,14 @@ window.Audio3D = (function () {
       }
     },
 
-    /** Приветственная трель. */
+    /** A greeting trill. */
     chirp: function (pitch) {
       pitch = pitch || 1;
       tone({ from: 440 * pitch, to: 880 * pitch, dur: 0.16, volume: 0.09, type: 'triangle' });
       tone({ from: 660 * pitch, to: 1180 * pitch, dur: 0.14, volume: 0.05, type: 'sine', delay: 0.1 });
     },
 
-    /** Довольное «мрр-ау». */
+    /** A pleased "mrr-ow". */
     happy: function (pitch) {
       pitch = pitch || 1;
       [0, 0.09, 0.19].forEach(function (d, i) {
@@ -4615,13 +4615,13 @@ window.Audio3D = (function () {
       });
     },
 
-    /** Вопросительное «мрм?» — когда чего-то хочет. */
+    /** A questioning "mrm?" — when they want something. */
     query: function (pitch) {
       pitch = pitch || 1;
       tone({ from: 300 * pitch, to: 520 * pitch, dur: 0.26, volume: 0.08, type: 'sawtooth' });
     },
 
-    /** Грустноватое «уу». */
+    /** A slightly sad "oow". */
     whine: function (pitch) {
       pitch = pitch || 1;
       tone({ from: 420 * pitch, to: 250 * pitch, dur: 0.45, volume: 0.07, type: 'sine' });
@@ -4653,7 +4653,7 @@ window.Audio3D = (function () {
       tone({ from: 900, to: 1500, dur: 0.1, volume: 0.07, type: 'sine' });
     },
 
-    /** Непрерывное урчание, пока гладят. */
+    /** A continuous rumble while being petted. */
     purr: function (active) {
       if (!ready()) return;
       if (active && !purrGain) {
@@ -4690,15 +4690,15 @@ window.Audio3D = (function () {
 })();
 </script>
 <script>
-/* Сохранение питомца. Дракончик живёт в localStorage и помнит, когда его навещали. */
+/* Saving the pet. The dragon lives in localStorage and remembers the last visit. */
 window.Save = (function () {
   'use strict';
 
   var KEY = 'dragon.save.v1';
   var VERSION = 1;
 
-  // Сколько времени отсутствия вообще учитывается. Сутки без тебя должны читаться
-  // как «соскучился», а не как катастрофа, поэтому потолок небольшой.
+  // How much time away counts at all. A day without you should read as "missed you",
+  // not as a disaster, so the ceiling is deliberately low.
   var MAX_AWAY_HOURS = 8;
 
   function now() { return Date.now(); }
@@ -4723,7 +4723,7 @@ window.Save = (function () {
       try {
         var raw = localStorage.getItem(KEY);
         if (raw) data = JSON.parse(raw);
-      } catch (e) { /* приватный режим — играем без сохранения */ }
+      } catch (e) { /* private mode — play without saving */ }
 
       if (!data || data.v !== VERSION || !data.name) return null;
 
@@ -4731,12 +4731,12 @@ window.Save = (function () {
       data.needs = Object.assign(base.needs, data.needs || {});
       data.bond = Math.max(0, Math.min(1, data.bond || 0));
 
-      // Отыгрываем время, пока игрока не было.
+      // Play out the time the player was away.
       var awayHours = Math.min((now() - (data.lastSeen || now())) / 3600000, MAX_AWAY_HOURS);
       if (awayHours > 0) {
         data.needs.food = Math.max(0.15, data.needs.food - awayHours * 0.055);
         data.needs.fun = Math.max(0.1, data.needs.fun - awayHours * 0.075);
-        // Без игрока дракончик отсыпается, так что бодрость наоборот восстанавливается.
+        // With nobody around the dragon catches up on sleep, so energy goes back up instead.
         data.needs.energy = Math.min(1, data.needs.energy + awayHours * 0.1);
       }
       data.awayHours = awayHours;
@@ -4765,8 +4765,8 @@ window.Save = (function () {
 })();
 </script>
 <script>
-/* Лужайка: летающий островок, свет, трава, пруд и вся мелочь вокруг дракончика.
-   Вся геометрия строится кодом — никаких внешних моделей и текстур. */
+/* The meadow: a floating island, light, grass, a pond and all the small things around the dragon.
+   Every bit of geometry is built in code — no external models and no textures. */
 window.World = (function () {
   'use strict';
 
@@ -4778,22 +4778,22 @@ window.World = (function () {
   var clockUniform = { value: 0 };
   var canvas;
 
-  var ISLAND_R = 12.5;      // радиус лужайки
-  var WALK_R = 10.2;        // куда дракончику можно бегать
+  var ISLAND_R = 12.5;      // meadow radius
+  var WALK_R = 10.2;        // how far the dragon may roam
 
-  // Камера: уютный ракурс три четверти, вращается перетаскиванием.
+  // Camera: a cosy three-quarter view, orbited by dragging.
   var cam = {
     azimuth: -0.65, polar: 0.95, distance: 7.6,
     targetAzimuth: -0.65, targetPolar: 0.95, targetDistance: 7.6,
     target: null, desiredTarget: null, sway: 0
   };
 
-  var night = 0;            // 0 — день, 1 — ночь
+  var night = 0;            // 0 is day, 1 is night
   var nightTarget = 0;
 
-  /* ---------- рельеф ---------- */
+  /* ---------- terrain ---------- */
 
-  /** Высота лужайки в точке. Аналитическая, поэтому по ней легко ходить. */
+  /** Meadow height at a point. Analytic, which makes walking on it easy. */
   function heightAt(x, z) {
     var d = Math.sqrt(x * x + z * z);
     var edge = 1 - smoothstep(ISLAND_R * 0.72, ISLAND_R, d);
@@ -4810,7 +4810,7 @@ window.World = (function () {
 
   function rand(a, b) { return a + Math.random() * (b - a); }
 
-  /* ---------- материалы ---------- */
+  /* ---------- materials ---------- */
 
   function mat(color, opts) {
     return new THREE.MeshLambertMaterial(Object.assign({ color: color, flatShading: true }, opts || {}));
@@ -4829,7 +4829,7 @@ window.World = (function () {
     cushion: 0xf0a7b4
   };
 
-  /* ---------- сборка мира ---------- */
+  /* ---------- building the world ---------- */
 
   function buildSky() {
     var geo = new THREE.SphereGeometry(90, 20, 14);
@@ -4870,7 +4870,7 @@ window.World = (function () {
     ground.receiveShadow = true;
     scene.add(ground);
 
-    // Скалистое донышко — островок парит в воздухе.
+    // A rocky underside — the island floats in the air.
     var under = new THREE.ConeGeometry(ISLAND_R * 0.98, 9.5, 13, 3);
     var upos = under.attributes.position;
     for (var j = 0; j < upos.count; j++) {
@@ -4883,8 +4883,8 @@ window.World = (function () {
     }
     under.computeVertexNormals();
     var underMesh = new THREE.Mesh(under, mat(PALETTE.soil));
-    underMesh.rotation.x = Math.PI;   // вершиной вниз
-    underMesh.position.y = -6.05;     // основание конуса уходит под край лужайки
+    underMesh.rotation.x = Math.PI;   // tip pointing down
+    underMesh.position.y = -6.05;     // the cone base sits below the meadow rim
     scene.add(underMesh);
   }
 
@@ -4893,7 +4893,7 @@ window.World = (function () {
     blade.translate(0, 0.15, 0);
 
     grassMat = new THREE.MeshLambertMaterial({ color: 0x86cf62, flatShading: true });
-    // Ветер: верхушки травинок качаются в вершинном шейдере.
+    // Wind: blade tips sway in the vertex shader.
     grassMat.onBeforeCompile = function (shader) {
       shader.uniforms.uTime = clockUniform;
       shader.vertexShader = 'uniform float uTime;\n' + shader.vertexShader.replace(
@@ -4925,7 +4925,7 @@ window.World = (function () {
       var a = Math.random() * TAU;
       var r = Math.sqrt(Math.random()) * (ISLAND_R - 0.5);
       var x = Math.cos(a) * r, z = Math.sin(a) * r;
-      if (Math.hypot(x - 5.4, z - 4.2) < 2.9) continue;      // не растёт в пруду
+      if (Math.hypot(x - 5.4, z - 4.2) < 2.9) continue;      // nothing grows in the pond
       dummy.position.set(x, heightAt(x, z) - 0.03, z);
       dummy.rotation.set(rand(-0.13, 0.13), Math.random() * TAU, rand(-0.13, 0.13));
       var s = rand(0.7, 1.3);
@@ -5010,14 +5010,14 @@ window.World = (function () {
     water.receiveShadow = false;
     scene.add(water);
 
-    // Бережок из камушков.
+    // A pebble shoreline.
     for (var i = 0; i < 9; i++) {
       var a = (i / 9) * TAU + rand(-0.15, 0.15);
       buildRock(5.4 + Math.cos(a) * rand(2.6, 3.0), 4.2 + Math.sin(a) * rand(2.6, 3.0), rand(0.16, 0.3));
     }
   }
 
-  /** Лежанка — сюда дракончик приходит спать. */
+  /** The bed — where the dragon comes to sleep. */
   function buildBed() {
     bed = new THREE.Group();
     var pad = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.35, 0.22, 12), mat(PALETTE.cushion));
@@ -5093,7 +5093,7 @@ window.World = (function () {
     }
   }
 
-  /* ---------- частицы ---------- */
+  /* ---------- particles ---------- */
 
   function makeSpriteTexture(draw) {
     var c = document.createElement('canvas');
@@ -5206,7 +5206,7 @@ window.World = (function () {
     }
   }
 
-  /* ---------- камера ---------- */
+  /* ---------- camera ---------- */
 
   function updateCamera(dt) {
     cam.azimuth += (cam.targetAzimuth - cam.azimuth) * Math.min(1, dt * 6);
@@ -5215,7 +5215,7 @@ window.World = (function () {
 
     if (cam.desiredTarget) cam.target.lerp(cam.desiredTarget, Math.min(1, dt * 1.4));
 
-    // Солнце едет за дракончиком: маленькой карты теней хватает на всё важное.
+    // The sun follows the dragon, so a small shadow map covers everything that matters.
     sun.position.set(cam.target.x + 9, 14, cam.target.z + 6);
     sun.target.position.set(cam.target.x, 0, cam.target.z);
     sun.target.updateMatrixWorld();
@@ -5232,7 +5232,7 @@ window.World = (function () {
     camera.lookAt(cam.target.x, cam.target.y + 0.7, cam.target.z);
   }
 
-  /* ---------- публичное ---------- */
+  /* ---------- public API ---------- */
 
   var raycaster = new THREE.Raycaster();
 
@@ -5300,9 +5300,9 @@ window.World = (function () {
       camera.updateProjectionMatrix();
     },
 
-    /* --- камера --- */
+    /* --- camera --- */
 
-    /** Поставить камеру в конкретный ракурс — нужно для отладки и автотестов. */
+    /** Places the camera at an exact angle — used by debugging and automated tests. */
     setCamera: function (opts) {
       if (opts.azimuth !== undefined) cam.azimuth = cam.targetAzimuth = opts.azimuth;
       if (opts.polar !== undefined) cam.polar = cam.targetPolar = opts.polar;
@@ -5322,9 +5322,9 @@ window.World = (function () {
       cam.desiredTarget.set(vec.x * 0.9, heightAt(vec.x, vec.z) * 0.5 + 0.5, vec.z * 0.9);
     },
 
-    /* --- время суток --- */
+    /* --- time of day --- */
 
-    /** Понижает качество на слабых устройствах: тени и часть травы уходят, плавность остаётся. */
+    /** Drops quality on weak devices: shadows and some grass go, smoothness stays. */
     qualityLevel: 'high',
     setQuality: function (level) {
       if (this.qualityLevel === level) return;
@@ -5344,9 +5344,9 @@ window.World = (function () {
     setNight: function (value) { nightTarget = Math.max(0, Math.min(1, value)); },
     get night() { return night; },
 
-    /* --- лучи --- */
+    /* --- raycasting --- */
 
-    /** Точка на лужайке под курсором (ndc: {x, y} в диапазоне -1..1). */
+    /** The meadow point under the cursor (ndc: {x, y} in the -1..1 range). */
     groundPoint: function (ndc) {
       raycaster.setFromCamera(ndc, camera);
       var hits = raycaster.intersectObject(ground, false);
@@ -5358,7 +5358,7 @@ window.World = (function () {
       return raycaster.intersectObjects(objects, true);
     },
 
-    /** Экранные координаты точки мира — для эмодзи-мысли над головой. */
+    /** Screen coordinates of a world point — used by the emoji thought above the head. */
     toScreen: function (vec3) {
       var v = vec3.clone().project(camera);
       return {
@@ -5368,7 +5368,7 @@ window.World = (function () {
       };
     },
 
-    /* --- эффекты --- */
+    /* --- effects --- */
 
     fx: {
       hearts: function (pos, count) {
@@ -5397,14 +5397,14 @@ window.World = (function () {
       }
     },
 
-    /* --- кадр --- */
+    /* --- frame --- */
 
     update: function (dt, time) {
       clockUniform.value = time;
 
       night += (nightTarget - night) * Math.min(1, dt * 0.7);
 
-      // Свет и небо мягко уходят в сумерки.
+      // Light and sky drift gently into dusk.
       var dayColor = new THREE.Color(0xfff2d6);
       var nightColor = new THREE.Color(0x8fa8ff);
       sun.color.copy(dayColor).lerp(nightColor, night);
@@ -5428,7 +5428,7 @@ window.World = (function () {
         }
       }
 
-      // Бабочки прячутся на ночь.
+      // Butterflies hide for the night.
       butterflies.forEach(function (b) {
         var u = b.userData;
         u.angle += u.speed * dt;
@@ -5444,12 +5444,12 @@ window.World = (function () {
         b.visible = night < 0.55;
       });
 
-      // Цветочки покачиваются.
+      // Flowers sway.
       for (var i = 0; i < flowers.length; i++) {
         flowers[i].rotation.z = Math.sin(time * 1.1 + flowers[i].userData.phase) * 0.09;
       }
 
-      // Рябь на пруду.
+      // Ripples on the pond.
       if (water) {
         var wp = water.geometry.attributes.position;
         for (var k = 0; k < wp.count; k++) {
@@ -5470,10 +5470,10 @@ window.World = (function () {
 })();
 </script>
 <script>
-/* Дракончик: низкополигональная модель, риг и процедурная анимация.
-   Ни одной готовой модели и ни одного клипа анимации — всё считается каждый кадр.
-   Живость складывается из мелочей: дыхание, моргание, слежение головой, запаздывание
-   хвоста и шеи, перенос веса с лапы на лапу. */
+/* The dragon: a low-poly model, a rig and procedural animation.
+   Not a single prebuilt model and not a single animation clip — everything is computed per frame.
+   The feeling of being alive comes from small things: breathing, blinking, head tracking,
+   the tail and neck lagging behind, weight shifting from paw to paw. */
 window.Dragon = (function () {
   'use strict';
 
@@ -5491,12 +5491,12 @@ window.Dragon = (function () {
   };
 
   var STAGES = {
-    baby: { root: 0.95, head: 1.08, wing: 0.6, leg: 1, label: 'малыш' },
-    teen: { root: 1.2, head: 1.0, wing: 0.85, leg: 1.08, label: 'подросток' },
-    flyer: { root: 1.45, head: 0.94, wing: 1.15, leg: 1.14, label: 'летун' }
+    baby: { root: 0.95, head: 1.08, wing: 0.6, leg: 1, label: 'hatchling' },
+    teen: { root: 1.2, head: 1.0, wing: 0.85, leg: 1.08, label: 'fledgling' },
+    flyer: { root: 1.45, head: 0.94, wing: 1.15, leg: 1.14, label: 'flier' }
   };
 
-  // Целевые значения позы. Всё, что анимируется, живёт здесь и плавно перетекает.
+  // Target values for a pose. Everything animated lives here and blends smoothly.
   var POSES = {
     stand: { height: 0.8, pitch: 0, neck: -0.18, headPitch: 0.06, curl: 0, wing: 0.22, tail: 0.12, eyes: 1, sit: 0, spread: 0 },
     walk: { height: 0.78, pitch: 0.04, neck: -0.1, headPitch: 0.04, curl: 0, wing: 0.16, tail: 0.2, eyes: 1, sit: 0, spread: 0 },
@@ -5530,25 +5530,25 @@ window.Dragon = (function () {
     this.poseName = 'stand';
 
     this.walkPhase = 0;
-    this.speed = 0;           // текущая скорость перемещения (метры/с)
-    this.blink = 0;           // 0 — глаза открыты, 1 — закрыты
+    this.speed = 0;           // current movement speed (metres per second)
+    this.blink = 0;           // 0 means eyes open, 1 means closed
     this.blinkTimer = rand(2, 5);
     this.doubleBlink = false;
     this.jaw = 0;
     this.jawTarget = 0;
-    this.lookTarget = null;   // куда смотрит (Vector3) или null
+    this.lookTarget = null;   // what it looks at (Vector3), or null
     this.lookAmount = 0;
     this.headYaw = 0;
     this.headPitchExtra = 0;
-    this.eyeShift = 0;        // саккады — глаза чуть бегают
+    this.eyeShift = 0;        // saccades — the eyes drift a little
     this.eyeShiftTimer = 1;
     this.earTwitch = 0;
     this.earTimer = rand(3, 7);
     this.shake = 0;
     this.wingFlap = 0;
     this.flapSpeed = 0;
-    this.tailWag = 0;         // амплитуда виляния
-    this.happiness = 0;       // влияет на бодрость хвоста и ушей
+    this.tailWag = 0;         // wag amplitude
+    this.happiness = 0;       // drives how perky the tail and ears are
     this.breath = rand(0, TAU);
     this.stepSound = 0;
 
@@ -5561,7 +5561,7 @@ window.Dragon = (function () {
   Dragon.prototype.build = function () {
     var self = this;
 
-    // --- корпус ---
+    // --- body ---
     this.body = new THREE.Group();
     this.root.add(this.body);
 
@@ -5579,7 +5579,7 @@ window.Dragon = (function () {
     this.bellyMesh.position.set(0, -0.22, 0.06);
     this.torso.add(this.bellyMesh);
 
-    // Гребень вдоль спины.
+    // The crest along the spine.
     this.crest = [];
     for (var i = 0; i < 4; i++) {
       var spike = mesh(new THREE.ConeGeometry(0.09 - i * 0.012, 0.24 - i * 0.03, 4), COLORS.crest);
@@ -5589,7 +5589,7 @@ window.Dragon = (function () {
       this.crest.push(spike);
     }
 
-    // --- шея и голова ---
+    // --- neck and head ---
     this.neck = new THREE.Group();
     this.neck.position.set(0, 0.42, 0.38);
     this.torso.add(this.neck);
@@ -5625,7 +5625,7 @@ window.Dragon = (function () {
       self.head.add(n);
     });
 
-    // Челюсть — открывается, когда зевает, ест или трещит.
+    // The jaw — opens for yawns, meals and chirps.
     this.jawGroup = new THREE.Group();
     this.jawGroup.position.set(0, -0.14, 0.16);
     this.head.add(this.jawGroup);
@@ -5633,7 +5633,7 @@ window.Dragon = (function () {
     jawMesh.position.set(0, -0.04, 0.16);
     this.jawGroup.add(jawMesh);
 
-    // Глаза — крупные, тёмные, с бликом. Моргание — сжатие по вертикали.
+    // Eyes: big, dark, with a highlight. Blinking squashes them vertically.
     this.eyes = [];
     this.pupils = [];
     [-1, 1].forEach(function (side) {
@@ -5656,7 +5656,7 @@ window.Dragon = (function () {
       self.pupils.push({ ball: ball, shine: shine, shine2: shine2 });
     });
 
-    // Румянец.
+    // Blush.
     [-1, 1].forEach(function (side) {
       var blush = mesh(new THREE.SphereGeometry(0.075, 6, 5), COLORS.blush, { transparent: true, opacity: 0.55 });
       blush.scale.set(1, 0.6, 0.4);
@@ -5664,7 +5664,7 @@ window.Dragon = (function () {
       self.head.add(blush);
     });
 
-    // Рожки.
+    // Horns.
     this.horns = [];
     [-1, 1].forEach(function (side) {
       var horn = mesh(new THREE.ConeGeometry(0.07, 0.34, 5), COLORS.horn);
@@ -5674,7 +5674,7 @@ window.Dragon = (function () {
       self.horns.push(horn);
     });
 
-    // Ушки — подрагивают.
+    // Ears — they twitch.
     this.ears = [];
     [-1, 1].forEach(function (side) {
       var ear = new THREE.Group();
@@ -5692,7 +5692,7 @@ window.Dragon = (function () {
       self.ears.push(ear);
     });
 
-    // --- хвост: цепочка сегментов с запаздыванием ---
+    // --- tail: a chain of segments, each lagging behind the previous one ---
     this.tail = [];
     var parent = this.torso;
     for (var t = 0; t < 7; t++) {
@@ -5713,13 +5713,13 @@ window.Dragon = (function () {
       parent = seg;
       this.tail.push(seg);
     }
-    // Кисточка на кончике.
+    // The tuft at the tip.
     var tip = mesh(new THREE.ConeGeometry(0.16, 0.34, 5), COLORS.crest);
     tip.rotation.x = -Math.PI / 2;
     tip.position.z = -0.26;
     this.tail[this.tail.length - 1].add(tip);
 
-    // --- крылья ---
+    // --- wings ---
     this.wings = [];
     [-1, 1].forEach(function (side) {
       var wing = new THREE.Group();
@@ -5749,7 +5749,7 @@ window.Dragon = (function () {
       self.wings.push(wing);
     });
 
-    // --- лапы ---
+    // --- legs ---
     this.legs = [];
     var legDefs = [
       { x: -0.34, z: 0.34, front: true },
@@ -5782,7 +5782,7 @@ window.Dragon = (function () {
       pad.position.z = 0.05;
       foot.add(pad);
 
-      // Коготки.
+      // Claws.
       [-0.07, 0, 0.07].forEach(function (cx) {
         var claw = mesh(new THREE.ConeGeometry(0.025, 0.08, 4), COLORS.horn);
         claw.rotation.x = Math.PI / 2;
@@ -5802,7 +5802,7 @@ window.Dragon = (function () {
     });
   };
 
-  /** Пропорции меняются с возрастом: малыш головастый и коротколапый. */
+  /** Proportions change with age: a hatchling is big-headed and short-legged. */
   Dragon.prototype.applyStage = function (stage) {
     var s = STAGES[stage] || STAGES.baby;
     this.stage = stage;
@@ -5844,7 +5844,7 @@ window.Dragon = (function () {
     return this.head.localToWorld(v);
   };
 
-  /* ---------- кадр анимации ---------- */
+  /* ---------- animation frame ---------- */
 
   Dragon.prototype.update = function (dt, time) {
     var p = this.pose;
@@ -5858,25 +5858,25 @@ window.Dragon = (function () {
     var moving = this.speed > 0.05;
     this.breath += dt * (moving ? 3.4 : 1.7);
 
-    // --- дыхание: бочок раздувается, плечи чуть поднимаются ---
+    // --- breathing: the belly swells, the shoulders lift a little ---
     var breathAmt = Math.sin(this.breath) * (moving ? 0.012 : 0.022);
     this.torsoMesh.scale.set(1 + breathAmt, 1 + breathAmt * 0.7, 1 - breathAmt * 0.4);
     this.bellyMesh.scale.set(1 + breathAmt * 1.4, 1 + breathAmt, 1);
 
-    // --- поза корпуса ---
+    // --- body pose ---
     var bob = moving ? Math.abs(Math.sin(this.walkPhase * 2)) * 0.045 : Math.sin(this.breath * 0.6) * 0.012;
     this.body.position.y = p.height + bob;
     this.torso.rotation.x = p.pitch + (moving ? Math.sin(this.walkPhase * 2 + 1) * 0.03 : 0);
     this.torso.rotation.z = moving ? Math.sin(this.walkPhase) * 0.06 : Math.sin(this.breath * 0.5) * 0.02;
-    // Свернулся клубочком, когда спит.
+    // Curled up when asleep.
     this.torso.rotation.x -= p.curl * 0.25;
 
-    // --- шея и голова ---
+    // --- neck and head ---
     var neckBase = p.neck + p.curl * 0.15;
     this.neck.rotation.x = neckBase + Math.sin(this.breath * 0.7) * 0.02;
     this.neck2.rotation.x = neckBase * 0.5 - p.headPitch * 0.3;
 
-    // Слежение за курсором: голова догоняет цель пружинкой, есть предел поворота.
+    // Cursor tracking: the head springs toward the target, with a limit on how far it turns.
     var wantYaw = 0, wantPitch = 0;
     if (this.lookTarget) {
       var headPos = this.head.getWorldPosition(new THREE.Vector3());
@@ -5902,7 +5902,7 @@ window.Dragon = (function () {
     this.head.rotation.x = p.headPitch + this.headPitchExtra + (moving ? Math.sin(this.walkPhase * 2) * 0.04 : 0);
     this.head.rotation.z = this.headYaw * 0.12 + (this.shake > 0 ? Math.sin(this.shake * 40) * 0.35 : 0);
 
-    // --- моргание и саккады ---
+    // --- blinking and saccades ---
     this.blinkTimer -= dt;
     if (this.blinkTimer <= 0) {
       this.triggerBlink(Math.random() < 0.3);
@@ -5931,7 +5931,7 @@ window.Dragon = (function () {
       pupil.ball.position.x = self.eyeShift * 0.012;
     });
 
-    // --- ушки ---
+    // --- ears ---
     this.earTimer -= dt;
     if (this.earTimer <= 0) {
       this.earTwitch = 1;
@@ -5946,7 +5946,7 @@ window.Dragon = (function () {
       ear.rotation.x = -0.15 + earDroop * 0.5 + Math.sin(time * 1.3 + i) * 0.03;
     });
 
-    // --- челюсть ---
+    // --- jaw ---
     if (this.jawHold > 0) {
       this.jawHold -= dt;
       if (this.jawHold <= 0) this.jawTarget = 0;
@@ -5954,13 +5954,13 @@ window.Dragon = (function () {
     this.jaw = lerp(this.jaw, this.jawTarget, Math.min(1, dt * 9));
     this.jawGroup.rotation.x = this.jaw * 0.55;
 
-    // --- встряхивание всем телом ---
+    // --- a full-body shake ---
     if (this.shake > 0) {
       this.shake -= dt * 1.6;
       this.torso.rotation.z += Math.sin(this.shake * 46) * 0.16;
     }
 
-    // --- хвост: волна с запаздыванием + виляние от радости ---
+    // --- tail: a lagging wave plus a happy wag ---
     var wag = (0.25 + this.happiness * 0.85) * (moving ? 1.3 : 1);
     this.tailWag = lerp(this.tailWag, wag, dt * 3);
     for (var i = 0; i < this.tail.length; i++) {
@@ -5973,7 +5973,7 @@ window.Dragon = (function () {
         - p.curl * 0.32;
     }
 
-    // --- крылья ---
+    // --- wings ---
     this.wingFlap += dt * (6 + this.flapSpeed * 12);
     var flapAmount = p.wing;
     var flap = Math.sin(this.wingFlap) * (0.25 + this.flapSpeed * 1.1);
@@ -5984,7 +5984,7 @@ window.Dragon = (function () {
       wing.rotation.x = -0.1 + flapAmount * 0.45;
     });
 
-    // --- лапы ---
+    // --- legs ---
     var strideSpeed = Math.min(3.2, this.speed);
     if (moving) this.walkPhase += dt * (3.4 + strideSpeed * 2.6);
     var swing = Math.min(0.62, 0.18 + strideSpeed * 0.16);
@@ -5994,7 +5994,7 @@ window.Dragon = (function () {
       var restThigh = leg.front ? 0.1 : 0.16;
       var restShin = leg.front ? -0.2 : -0.34;
 
-      // Сидит и спит — задние лапы подобраны, передние вытянуты.
+      // Sitting and sleeping: hind legs tucked in, front legs stretched out.
       var sitFold = p.sit * (leg.front ? 0.25 : 1.15);
       var curlFold = p.curl * (leg.front ? 1.15 : 0.9);
 
@@ -6006,7 +6006,7 @@ window.Dragon = (function () {
         thigh += Math.sin(ph) * swing;
         shin += Math.max(0, Math.sin(ph + 1.1)) * -swing * 1.1;
       } else {
-        // Стоя переступает и переносит вес — самое «живое» из мелочей.
+        // Standing still, it shifts its weight from paw to paw — the most alive of the small touches.
         thigh += Math.sin(time * 0.7 + l * 1.7) * 0.02;
       }
 
@@ -6016,7 +6016,7 @@ window.Dragon = (function () {
       leg.foot.rotation.x = -(thigh + shin) * 0.85;
     }
 
-    // Шаги слышно, когда лапа опускается.
+    // Footsteps are heard as a paw lands.
     if (moving) {
       var stepPhase = Math.sin(this.walkPhase);
       if (stepPhase < 0 && this.stepSound >= 0) window.Audio3D.step();
@@ -6028,9 +6028,9 @@ window.Dragon = (function () {
 })();
 </script>
 <script>
-/* Дракончик как питомец: потребности, характер, занятия и рост.
-   Правило то же, что в прошлой игре: никаких наказаний и таймеров.
-   Голодный дракончик грустит и заглядывает в глаза, но ничего плохого не случается. */
+/* The dragon as a pet: needs, temperament, activities and growth.
+   Same rule as in the previous game: no punishment and no timers.
+   A hungry dragon looks sad and stares into your eyes, but nothing bad ever happens. */
 window.Pet = (function () {
   'use strict';
 
@@ -6042,7 +6042,7 @@ window.Pet = (function () {
   function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
   function lerp(a, b, t) { return a + (b - a) * t; }
 
-  // Как быстро убывают потребности (за секунду).
+  // How fast needs drain (per second).
   var DECAY = { food: 0.0022, energy: 0.0016, fun: 0.0035 };
 
   var STAGE_AT = { teen: 0.35, flyer: 0.75 };
@@ -6075,7 +6075,7 @@ window.Pet = (function () {
 
     this.happiness = 0.5;
     this.voiceTimer = rand(4, 9);
-    this.idleAttention = 0;     // сколько игрок ничего не делает
+    this.idleAttention = 0;     // how long the player has been idle
     this.mood = '';
 
     this.buildBall();
@@ -6091,7 +6091,7 @@ window.Pet = (function () {
     return 'baby';
   };
 
-  /* ---------- предметы ---------- */
+  /* ---------- props ---------- */
 
   Pet.prototype.buildBall = function () {
     var group = new THREE.Group();
@@ -6139,7 +6139,7 @@ window.Pet = (function () {
     this.treat = { group: group, active: false, position: new V() };
   };
 
-  /* ---------- взаимодействие извне ---------- */
+  /* ---------- interaction from outside ---------- */
 
   Pet.prototype.throwBall = function (point) {
     var b = this.ball;
@@ -6192,7 +6192,7 @@ window.Pet = (function () {
     }
     this.offerTreat(false);
     this.setState('goToBed');
-    this.onToast(this.name + ' идёт укладываться');
+    this.onToast(this.name + ' is heading to bed');
   };
 
   Pet.prototype.wakeUp = function () {
@@ -6202,10 +6202,10 @@ window.Pet = (function () {
     window.Audio3D.chirp(1.1);
   };
 
-  /* ---------- состояния ---------- */
+  /* ---------- states ---------- */
 
   Pet.prototype.setState = function (state, time) {
-    // Отвлёкся на еду, сон или ласку — мячик просто выпадает из пасти.
+    // Distracted by food, sleep or petting — the ball simply drops out of the mouth.
     if (this.ball && this.ball.state === 'carried' && state !== 'returnBall' && state !== 'goToBall') {
       this.dropBall();
     }
@@ -6231,7 +6231,7 @@ window.Pet = (function () {
     return new V(Math.cos(a) * r, 0, Math.sin(a) * r);
   };
 
-  /** Что делать дальше, когда дракончик свободен. */
+  /** What to do next when the dragon has nothing going on. */
   Pet.prototype.chooseIdleBehaviour = function () {
     var n = this.needs;
 
@@ -6273,7 +6273,7 @@ window.Pet = (function () {
     }
   };
 
-  /* ---------- перемещение ---------- */
+  /* ---------- movement ---------- */
 
   Pet.prototype.moveToward = function (dt, target, speed) {
     var dx = target.x - this.position.x;
@@ -6288,7 +6288,7 @@ window.Pet = (function () {
     this.position.z += (dz / dist) * step;
     this.speed = speed;
 
-    // Разворачивается плавно, а не мгновенно.
+    // Turns smoothly rather than instantly.
     var want = Math.atan2(dx, dz);
     var diff = want - this.facing;
     while (diff > Math.PI) diff -= TAU;
@@ -6297,14 +6297,14 @@ window.Pet = (function () {
     return false;
   };
 
-  /* ---------- кадр ---------- */
+  /* ---------- frame ---------- */
 
   Pet.prototype.update = function (dt, time, pointerWorld) {
     var n = this.needs;
     var d = this.dragon;
     var sleeping = this.state === 'sleep';
 
-    // Потребности.
+    // Needs.
     var activity = this.state === 'zoomies' || this.state === 'goToBall' || this.state === 'fly' ? 2.2 : 1;
     if (sleeping) {
       n.energy = clamp01(n.energy + dt * 0.035);
@@ -6318,10 +6318,10 @@ window.Pet = (function () {
     this.happiness = clamp01((n.food + n.energy + n.fun) / 3 * 0.7 + this.bond * 0.3);
     d.happiness = this.happiness;
 
-    // Куда смотреть: на угощение, мячик, руку или на игрока.
+    // Where to look: the treat, the ball, the hand, or the player.
     this.updateGaze(dt, pointerWorld);
 
-    // Голос: изредка что-то говорит сам по себе.
+    // Voice: every so often it says something on its own.
     this.voiceTimer -= dt;
     if (this.voiceTimer <= 0 && !sleeping) {
       this.voiceTimer = rand(7, 16);
@@ -6329,13 +6329,13 @@ window.Pet = (function () {
       else if (this.happiness > 0.6) window.Audio3D.chirp(rand(0.95, 1.15));
     }
 
-    // Скучает, если игрок долго ничего не делает.
+    // Gets bored when the player does nothing for a while.
     this.idleAttention += dt;
 
     this.updateBall(dt);
     this.updateTreat(dt);
 
-    // Ласка перебивает почти всё, кроме сна (спящего гладить тоже можно).
+    // Petting overrides almost everything except sleep (a sleeping dragon can be petted too).
     if (this.petting && this.state !== 'sleep' && this.state !== 'fly') {
       if (this.state !== 'petted') this.setState('petted');
     } else if (this.state === 'petted' && !this.petting) {
@@ -6345,7 +6345,7 @@ window.Pet = (function () {
     this.stateT += dt;
     this[this.stateHandler(this.state)](dt, time);
 
-    // Приземляем на рельеф и отдаём позу модели.
+    // Drop onto the terrain and hand the pose over to the model.
     this.position.x = Math.max(-World.WALK_R, Math.min(World.WALK_R, this.position.x));
     this.position.z = Math.max(-World.WALK_R, Math.min(World.WALK_R, this.position.z));
     var groundY = World.heightAt(this.position.x, this.position.z);
@@ -6381,14 +6381,14 @@ window.Pet = (function () {
       this.lookTimer -= dt;
       d.lookAt(this.lookPoint);
     } else if (this.idleAttention > 8) {
-      // Давно не трогали — заглядывает игроку в глаза.
+      // Nobody has interacted in a while — it looks the player in the eye.
       d.lookAt(World.camera.position);
     } else {
       d.lookAt(null);
     }
   };
 
-  /* ---------- поведения ---------- */
+  /* ---------- behaviours ---------- */
 
   Pet.prototype.state_idle = function (dt) {
     this.pose = 'stand';
@@ -6429,7 +6429,7 @@ window.Pet = (function () {
   Pet.prototype.state_dig = function (dt) {
     this.pose = 'sniff';
     this.speed = 0;
-    // Копает передней лапой — рывками, с землёй из-под лап.
+    // Digs with a front paw in jerky strokes, kicking up dirt.
     var leg = this.dragon.legs[0];
     leg.hip.rotation.x += Math.sin(this.stateT * 16) * 0.35;
     if (Math.random() < dt * 8) {
@@ -6445,7 +6445,7 @@ window.Pet = (function () {
 
   Pet.prototype.state_butterfly = function (dt, time) {
     this.pose = 'walk';
-    // Гоняется за воображаемой бабочкой: цель кружит рядом.
+    // Chases an imaginary butterfly: the target circles nearby.
     var a = time * 1.3;
     if (!this.butterflyCenter) this.butterflyCenter = this.wanderPoint();
     var target = new V(
@@ -6497,7 +6497,7 @@ window.Pet = (function () {
     if (this.stateT > this.stateTime) this.setState('idle', rand(0.5, 1.5));
   };
 
-  /* --- полёт (только для подросшего) --- */
+  /* --- flight (grown-up dragons only) --- */
 
   Pet.prototype.state_fly = function (dt, time) {
     this.pose = 'fly';
@@ -6523,7 +6523,7 @@ window.Pet = (function () {
     }
   };
 
-  /* --- ласка --- */
+  /* --- petting --- */
 
   Pet.prototype.state_petted = function (dt) {
     this.pose = 'pet';
@@ -6543,7 +6543,7 @@ window.Pet = (function () {
     this.checkGrowth();
   };
 
-  /* --- мячик --- */
+  /* --- the ball --- */
 
   Pet.prototype.updateBall = function (dt) {
     var b = this.ball;
@@ -6568,7 +6568,7 @@ window.Pet = (function () {
           b.velocity.set(0, 0, 0);
         }
       }
-      // За край островка мячик не улетает.
+      // The ball never flies off the island.
       var r = Math.hypot(b.group.position.x, b.group.position.z);
       if (r > World.WALK_R) {
         var k = World.WALK_R / r;
@@ -6578,7 +6578,7 @@ window.Pet = (function () {
         b.velocity.z *= -0.4;
       }
 
-      // Страховка: мячик не может лететь вечно.
+      // Safety net: the ball cannot fly forever.
       b.flightTime = (b.flightTime || 0) + dt;
       if (b.flightTime > 5) {
         b.state = 'resting';
@@ -6621,7 +6621,7 @@ window.Pet = (function () {
       this.dropPoint = camDir.multiplyScalar(Math.min(len, 4.5) / len);
     }
 
-    // Мячик потерялся — просто возвращаемся к делам.
+    // The ball got lost — just go back to whatever we were doing.
     if (this.stateT > 14) {
       this.dragon.flapSpeed = 0;
       this.setState('idle');
@@ -6632,7 +6632,7 @@ window.Pet = (function () {
     this.pose = 'walk';
     if (!this.dropPoint) this.dropPoint = new V(0, 0, 0);
 
-    // Донёс — или уже долго идёт, тогда просто кладёт где стоит.
+    // Delivered — or has been walking too long, in which case it drops the ball where it stands.
     if (this.moveToward(dt, this.dropPoint, 1.9) || this.stateT > 8) {
       this.ball.state = 'resting';
       var drop = this.position.clone();
@@ -6645,9 +6645,9 @@ window.Pet = (function () {
     }
   };
 
-  /* --- угощение --- */
+  /* --- the treat --- */
 
-  // Пока дракончик спит, идёт спать или его гладят, угощение не перехватывает управление.
+  // While the dragon sleeps, heads to bed or is being petted, the treat does not take over.
   var TREAT_BLOCKED = { sleep: 1, goToBed: 1, wake: 1, eat: 1, petted: 1, fly: 1 };
 
   Pet.prototype.updateTreat = function (dt) {
@@ -6658,7 +6658,7 @@ window.Pet = (function () {
 
     if (dist < 6 && this.state !== 'eat' && this.state !== 'sleep') {
       if (dist > 1.1) {
-        // Идёт к угощению.
+        // Walking to the treat.
         if (this.state !== 'goToTreat') this.setState('goToTreat');
       } else if (this.state !== 'eat') {
         this.setState('eat', 2.2);
@@ -6684,23 +6684,23 @@ window.Pet = (function () {
       this.offerTreat(false);
       this.needs.food = clamp01(this.needs.food + 0.35);
       this.bond = clamp01(this.bond + 0.02);
-      this.onToast(this.name + ' доволен 🍓');
+      this.onToast(this.name + ' loved that 🍓');
       this.checkGrowth();
     }
 
-    // Жуёт: челюсть ходит вверх-вниз, летят искорки.
+    // Chewing: the jaw works up and down and sparks fly.
     this.dragon.openJaw(0.3 + Math.sin(this.stateT * 18) * 0.28, 0.1);
     if (Math.random() < dt * 5) World.fx.sparkles(this.dragon.mouthWorldPosition(), 1);
 
     if (this.stateT > this.stateTime) {
-      // Довольная отрыжка искорками — маленькая шутка, но она делает его живым.
+      // A happy little burp of sparks — a small joke, but it makes the dragon feel alive.
       World.fx.fire(this.dragon.mouthWorldPosition(), 6);
       window.Audio3D.pop();
       this.setState('idle', rand(0.6, 1.2));
     }
   };
 
-  /* --- сон --- */
+  /* --- sleep --- */
 
   Pet.prototype.state_goToBed = function (dt) {
     this.pose = 'walk';
@@ -6710,7 +6710,7 @@ window.Pet = (function () {
       World.setNight(0.8);
       this.dragon.openJaw(0.8, 1.1);
       window.Audio3D.whine(0.8);
-      this.onToast(this.name + ' засыпает…');
+      this.onToast(this.name + ' is falling asleep…');
     }
   };
 
@@ -6737,7 +6737,7 @@ window.Pet = (function () {
     if (this.stateT > 1.8) this.setState('idle', 0.5);
   };
 
-  /* --- приветствие при заходе --- */
+  /* --- greeting on arrival --- */
 
   Pet.prototype.state_greet = function (dt) {
     this.pose = 'run';
@@ -6753,7 +6753,7 @@ window.Pet = (function () {
     }
   };
 
-  /* ---------- рост ---------- */
+  /* ---------- growth ---------- */
 
   Pet.prototype.checkGrowth = function () {
     var next = this.stageForBond(this.bond);
@@ -6766,7 +6766,7 @@ window.Pet = (function () {
     this.onGrow(next);
   };
 
-  /* ---------- что показать игроку ---------- */
+  /* ---------- what to show the player ---------- */
 
   Pet.prototype.moodEmoji = function () {
     if (this.state === 'sleep') return '💤';
@@ -6792,9 +6792,9 @@ window.Pet = (function () {
 })();
 </script>
 <script>
-/* Ввод: одна и та же логика для мыши и пальца.
-   Скорость указателя сглаживается по времени, а не по кадрам — иначе один кадр
-   с событием даёт ложный пик в сотни пикселей в секунду (напоролись на это в прошлой игре). */
+/* Input: the same logic for mouse and finger.
+   Pointer speed is smoothed over time rather than per frame — otherwise a single frame
+   carrying an event spikes to hundreds of pixels per second (we hit this in the previous game). */
 window.Input = (function () {
   'use strict';
 
@@ -6806,7 +6806,7 @@ window.Input = (function () {
     down: false, inside: false, seen: false, touch: false
   };
 
-  var dragging = false;       // тянем камеру
+  var dragging = false;       // dragging the camera
   var dragStart = { x: 0, y: 0 };
   var dragMoved = 0;
   var overDragon = false;
@@ -6841,7 +6841,7 @@ window.Input = (function () {
     dragStart.x = e.clientX;
     dragStart.y = e.clientY;
     dragMoved = 0;
-    // Камеру крутим только когда потянули мимо дракончика.
+    // The camera only orbits when the drag started away from the dragon.
     dragging = !overDragon && mode === 'idle';
 
     if (canvas.setPointerCapture) {
@@ -6865,7 +6865,7 @@ window.Input = (function () {
     pointer.seen = true;
     updateNdc(e.clientX, e.clientY);
 
-    // Щипок двумя пальцами — зум.
+    // Two-finger pinch — zoom.
     var ids = Object.keys(activePointers);
     if (ids.length === 2) {
       var a = activePointers[ids[0]], b = activePointers[ids[1]];
@@ -6902,7 +6902,7 @@ window.Input = (function () {
           setMode('idle');
         }
       } else if (mode === 'treat') {
-        // Повторное касание отпускает угощение — дракончик всё равно его найдёт.
+        // Tapping again drops the treat — the dragon will find it anyway.
         var p = World.groundPoint(ndc);
         if (p) pet.moveTreat(p);
       }
@@ -6950,7 +6950,7 @@ window.Input = (function () {
       pet.offerTreat(true);
     },
 
-    /** Возвращает точку, на которую сейчас смотрит дракончик (или null). */
+    /** Returns the point the dragon is currently looking at (or null). */
     update: function (dt) {
       var instant = pointer.frameDist / Math.max(dt, 0.001);
       pointer.speed = lerp(pointer.speed, instant, 1 - Math.exp(-dt / 0.1));
@@ -6958,10 +6958,10 @@ window.Input = (function () {
 
       groundPoint = pointer.inside ? World.groundPoint(ndc) : null;
 
-      // Угощение следует за рукой.
+      // The treat follows the hand.
       if (mode === 'treat' && groundPoint) pet.moveTreat(groundPoint);
 
-      // Поглаживание: рука над дракончиком и движется.
+      // Petting: the hand is over the dragon and moving.
       var canPet = overDragon && !dragging && mode === 'idle' &&
         (pointer.touch ? pointer.down : pointer.inside);
       var moving = pointer.speed > 40;
@@ -6997,7 +6997,7 @@ window.Input = (function () {
 })();
 </script>
 <script>
-/* Склейка: экран знакомства, игровой цикл, HUD и сохранение. */
+/* Glue: the meet-your-dragon screen, the game loop, the HUD and saving. */
 (function () {
   'use strict';
 
@@ -7030,10 +7030,10 @@ window.Input = (function () {
     loading: document.getElementById('loading')
   };
 
-  var NAME_IDEAS = ['Пыхтик', 'Уголёк', 'Искорка', 'Пузырь', 'Тучка', 'Фыр', 'Мятик', 'Персик'];
+  var NAME_IDEAS = ['Puff', 'Ember', 'Sparky', 'Bubble', 'Cloud', 'Pip', 'Minty', 'Peach'];
 
-  var state = null;      // данные текущей сессии
-  var savedData = null;  // найденное сохранение (если дракончик уже был)
+  var state = null;      // data for the current session
+  var savedData = null;  // the save we found (if a dragon already existed)
   var pet = null;
   var running = false;
   var lastTime = 0;
@@ -7074,7 +7074,7 @@ window.Input = (function () {
     setBar(ui.needEnergy, pet.needs.energy);
     setBar(ui.needFun, pet.needs.fun);
 
-    // Эмодзи-мысль висит над головой дракончика.
+    // The emoji thought floats above the dragon head.
     if (pet.mood) {
       var head = pet.dragon.headWorldPosition();
       head.y += 0.9;
@@ -7105,7 +7105,7 @@ window.Input = (function () {
     toastTimer = setTimeout(function () { ui.toast.classList.remove('show'); }, 2800);
   }
 
-  /* ---------- запуск ---------- */
+  /* ---------- start-up ---------- */
 
   function startGame(saveData, isNew) {
     if (pet) World.scene.remove(pet.dragon.root);
@@ -7114,8 +7114,8 @@ window.Input = (function () {
     pet.onToast = showToast;
     pet.onGrow = function (stage) {
       var text = stage === 'teen'
-        ? pet.name + ' подрос! Теперь он подпрыгивает на крыльях'
-        : pet.name + ' вырос и научился летать! 🐉';
+        ? pet.name + ' grew up! They can hop on their wings now'
+        : pet.name + ' grew up and learned to fly! 🐉';
       showToast(text);
       hudCache.stage = null;
     };
@@ -7124,7 +7124,7 @@ window.Input = (function () {
     Input.onMode = function (mode) {
       ui.ballBtn.classList.toggle('active', mode === 'aimBall');
       ui.treatBtn.classList.toggle('active', mode === 'treat');
-      if (mode === 'aimBall') showToast('Ткни в травку — дракончик побежит за мячиком');
+      if (mode === 'aimBall') showToast('Tap the grass — your dragon will chase the ball');
     };
 
     ui.hud.hidden = false;
@@ -7135,17 +7135,17 @@ window.Input = (function () {
     window.Audio3D.unlock();
 
     if (isNew) {
-      showToast('Знакомься: это ' + pet.name + '!');
+      showToast('Say hello to ' + pet.name + '!');
     } else if (saveData.awayHours > 0.5) {
-      showToast(pet.name + ' соскучился, пока тебя не было');
+      showToast(pet.name + ' missed you while you were away');
     } else {
-      showToast('С возвращением!');
+      showToast('Welcome back!');
     }
   }
 
   ui.nameForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (running) return;              // второй раз питомца не заводим
+    if (running) return;              // never hatch a second pet
     ui.startScreen.classList.add('hidden');
     if (savedData) {
       startGame(savedData, false);
@@ -7180,7 +7180,7 @@ window.Input = (function () {
     pet.putToBed();
   });
 
-  /* ---------- цикл ---------- */
+  /* ---------- loop ---------- */
 
   function frame(now) {
     var dt = lastTime ? (now - lastTime) / 1000 : 0.016;
@@ -7207,7 +7207,7 @@ window.Input = (function () {
     requestAnimationFrame(frame);
   }
 
-  /* ---------- качество под железо ---------- */
+  /* ---------- quality for the hardware ---------- */
 
   var perf = { avg: 60, samples: 0, decided: false };
 
@@ -7215,7 +7215,7 @@ window.Input = (function () {
     if (perf.decided || dt <= 0) return;
     perf.avg = perf.avg * 0.94 + (1 / dt) * 0.06;
     perf.samples++;
-    // Первые секунды не считаем — там прогрев шейдеров.
+    // Skip the first seconds — shaders are still warming up.
     if (perf.samples > 90 && perf.avg < 30) {
       perf.decided = true;
       World.setQuality('low');
@@ -7224,13 +7224,13 @@ window.Input = (function () {
     }
   }
 
-  /* ---------- старт ---------- */
+  /* ---------- boot ---------- */
 
   function boot() {
     try {
       World.init(ui.canvas);
     } catch (err) {
-      ui.loading.textContent = 'Кажется, браузер не умеет 3D 😿';
+      ui.loading.textContent = 'Looks like this browser cannot do 3D 😿';
       console.error(err);
       return;
     }
@@ -7252,12 +7252,12 @@ window.Input = (function () {
 
     savedData = Save.load();
     if (savedData) {
-      // Дракончик уже есть — на экране знакомства сразу зовём к нему.
+      // A dragon already exists — the welcome screen invites you straight back to them.
       ui.eggArt.textContent = '🐉';
-      ui.startTitle.textContent = 'С возвращением!';
-      ui.startSub.textContent = savedData.name + ' ждал тебя на лужайке.';
+      ui.startTitle.textContent = 'Welcome back!';
+      ui.startSub.textContent = savedData.name + ' has been waiting for you in the meadow.';
       ui.nameInput.hidden = true;
-      ui.startBtn.textContent = 'Пойти к ' + savedData.name;
+      ui.startBtn.textContent = 'Go to ' + savedData.name;
     }
 
     ui.loading.classList.add('gone');
@@ -7267,7 +7267,7 @@ window.Input = (function () {
 
   boot();
 
-  // Для отладки и автотестов.
+  // For debugging and automated tests.
   window.__dragon = {
     get pet() { return pet; },
     get world() { return World; },
@@ -7275,7 +7275,7 @@ window.Input = (function () {
     save: Save,
     startNew: function (name) {
       ui.startScreen.classList.add('hidden');
-      startGame(Save.fresh(name || 'Тест'), true);
+      startGame(Save.fresh(name || 'Test'), true);
     }
   };
 })();

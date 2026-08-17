@@ -1,4 +1,4 @@
-/* Звук дракончика. Никаких файлов — всё синтезируется на лету через WebAudio. */
+/* Dragon sounds. No audio files — everything is synthesised on the fly with WebAudio. */
 window.Audio3D = (function () {
   'use strict';
 
@@ -10,7 +10,7 @@ window.Audio3D = (function () {
   try {
     var stored = localStorage.getItem('dragon.sound');
     if (stored !== null) enabled = JSON.parse(stored);
-  } catch (e) { /* приватный режим */ }
+  } catch (e) { /* private mode */ }
 
   function unlock() {
     if (!enabled) return;
@@ -27,7 +27,7 @@ window.Audio3D = (function () {
 
   function ready() { return enabled && ac; }
 
-  /** Короткая нота с огибающей. */
+  /** A short note with an envelope. */
   function tone(opts) {
     if (!ready()) return;
     var now = ac.currentTime + (opts.delay || 0);
@@ -47,7 +47,7 @@ window.Audio3D = (function () {
     osc.stop(now + opts.dur + 0.05);
   }
 
-  /** Шумовой всплеск — крылья, шаги, сопение. */
+  /** A burst of noise — wings, footsteps, snoring. */
   function noise(opts) {
     if (!ready()) return;
     var now = ac.currentTime + (opts.delay || 0);
@@ -91,14 +91,14 @@ window.Audio3D = (function () {
       }
     },
 
-    /** Приветственная трель. */
+    /** A greeting trill. */
     chirp: function (pitch) {
       pitch = pitch || 1;
       tone({ from: 440 * pitch, to: 880 * pitch, dur: 0.16, volume: 0.09, type: 'triangle' });
       tone({ from: 660 * pitch, to: 1180 * pitch, dur: 0.14, volume: 0.05, type: 'sine', delay: 0.1 });
     },
 
-    /** Довольное «мрр-ау». */
+    /** A pleased "mrr-ow". */
     happy: function (pitch) {
       pitch = pitch || 1;
       [0, 0.09, 0.19].forEach(function (d, i) {
@@ -106,13 +106,13 @@ window.Audio3D = (function () {
       });
     },
 
-    /** Вопросительное «мрм?» — когда чего-то хочет. */
+    /** A questioning "mrm?" — when they want something. */
     query: function (pitch) {
       pitch = pitch || 1;
       tone({ from: 300 * pitch, to: 520 * pitch, dur: 0.26, volume: 0.08, type: 'sawtooth' });
     },
 
-    /** Грустноватое «уу». */
+    /** A slightly sad "oow". */
     whine: function (pitch) {
       pitch = pitch || 1;
       tone({ from: 420 * pitch, to: 250 * pitch, dur: 0.45, volume: 0.07, type: 'sine' });
@@ -144,7 +144,7 @@ window.Audio3D = (function () {
       tone({ from: 900, to: 1500, dur: 0.1, volume: 0.07, type: 'sine' });
     },
 
-    /** Непрерывное урчание, пока гладят. */
+    /** A continuous rumble while being petted. */
     purr: function (active) {
       if (!ready()) return;
       if (active && !purrGain) {

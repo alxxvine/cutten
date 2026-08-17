@@ -1,9 +1,9 @@
-/* Собирает игру в один самодостаточный HTML-файл: dragon.html.
-   Такой файл можно скачать и открыть двойным кликом — без сервера и без интернета.
-   Запуск: npm run build:single
+/* Builds the game into one self-contained HTML file: dragon.html.
+   Download it, double-click it, and it runs — no server and no internet needed.
+   Run with: npm run build:single
 
-   Порядок скриптов берётся из index.html, чтобы сборка не рассыпалась,
-   когда файлов станет больше. */
+   The script order comes from index.html so the build keeps working
+   as more files are added. */
 'use strict';
 
 const fs = require('fs');
@@ -15,21 +15,21 @@ const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
 const html = read('index.html');
 const css = read('style.css');
 
-// Собираем список подключённых скриптов ровно в том порядке, в каком они в разметке.
+// Collect the linked scripts in exactly the order the markup lists them.
 const scriptTag = /<script src="([^"]+)"><\/script>/g;
 const scripts = [];
 let match;
 while ((match = scriptTag.exec(html)) !== null) scripts.push(match[1]);
 
 if (!scripts.length) {
-  console.error('В index.html не нашлось ни одного <script src>. Сборка отменена.');
+  console.error('No <script src> found in index.html. Build aborted.');
   process.exit(1);
 }
 
-const title = (html.match(/<title>([^<]*)<\/title>/) || [, 'Дракончик'])[1];
+const title = (html.match(/<title>([^<]*)<\/title>/) || [, 'Dragon Meadow'])[1];
 const icon = (html.match(/<link rel="icon"[^>]*>/) || [''])[0];
 
-// Тело страницы без тегов скриптов — их подставим уже с содержимым.
+// The page body without script tags — we inline them with their contents below.
 let body = html.split('<body>')[1].split('</body>')[0];
 for (const src of scripts) {
   body = body.replace(`<script src="${src}"></script>`, '');
@@ -61,5 +61,5 @@ ${inlined}
 fs.writeFileSync(path.join(root, 'dragon.html'), out);
 
 const kb = Math.round(Buffer.byteLength(out) / 1024);
-console.log(`dragon.html собран: ${kb} КБ, скриптов внутри: ${scripts.length}`);
-console.log('Файлы: ' + scripts.join(', '));
+console.log(`dragon.html built: ${kb} KB, scripts inlined: ${scripts.length}`);
+console.log('Files: ' + scripts.join(', '));

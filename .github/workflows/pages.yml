@@ -23,8 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      # enablement: true включает Pages и переключает источник на GitHub Actions,
-      # иначе шаг падает с «Get Pages site failed», если в настройках выбран другой источник.
+      # enablement: true turns Pages on and switches the source to GitHub Actions;
+      # without it the step fails with "Get Pages site failed" when another source is selected.
       - uses: actions/configure-pages@v5
         with:
           enablement: true
