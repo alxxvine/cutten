@@ -50,16 +50,17 @@ window.World = (function () {
   }
 
   var PALETTE = {
-    grassLight: 0x9ede72,
-    grassDark: 0x6fbf55,
-    soil: 0x8a6a4a,
-    rock: 0x9a9bad,
-    water: 0x7fd4e8,
-    trunk: 0x9a6b48,
-    leaf: 0x5fb45c,
-    leafWarm: 0x86c95e,
-    petal: [0xfff1f4, 0xffd9e6, 0xfff6c8, 0xe3dcff],
-    cushion: 0xf0a7b4
+    grassLight: 0x3c4a52,
+    grassDark: 0x232c38,
+    soil: 0x1b1a26,
+    rock: 0x39394a,
+    water: 0x16283a,
+    trunk: 0x2b2533,
+    leaf: 0x2f3a3f,
+    leafWarm: 0x3a4148,
+    petal: [0x8fe8d0, 0x7fd4ff, 0xc9b6ff, 0xdfe8ff],   // ghost blooms
+    cushion: 0x2a2436,
+    ember: 0x76f0c8
   };
 
   /* ---------- building the world ---------- */
@@ -68,8 +69,8 @@ window.World = (function () {
     var geo = new THREE.SphereGeometry(90, 20, 14);
     var colors = [];
     var pos = geo.attributes.position;
-    var top = new THREE.Color(0x63b8e8);
-    var bottom = new THREE.Color(0xdff2f6);
+    var top = new THREE.Color(0x080a14);
+    var bottom = new THREE.Color(0x2a2340);
     for (var i = 0; i < pos.count; i++) {
       var t = smoothstep(-20, 55, pos.getY(i));
       var c = bottom.clone().lerp(top, t);
@@ -125,7 +126,7 @@ window.World = (function () {
     var blade = new THREE.ConeGeometry(0.05, 0.3, 3);
     blade.translate(0, 0.15, 0);
 
-    grassMat = new THREE.MeshLambertMaterial({ color: 0x86cf62, flatShading: true });
+    grassMat = new THREE.MeshLambertMaterial({ color: 0x46525c, flatShading: true });
     // Wind: blade tips sway in the vertex shader.
     grassMat.onBeforeCompile = function (shader) {
       shader.uniforms.uTime = clockUniform;
@@ -165,7 +166,8 @@ window.World = (function () {
       dummy.scale.set(s, rand(0.7, 1.35), s);
       dummy.updateMatrix();
       grass.setMatrixAt(placed, dummy.matrix);
-      color.setHSL(0.26 + rand(-0.03, 0.04), rand(0.42, 0.62), rand(0.42, 0.6));
+      // Dead, cold grass with the odd blade catching the soul light.
+      color.setHSL(0.46 + rand(-0.05, 0.06), rand(0.06, 0.22), rand(0.16, 0.34));
       grass.setColorAt(placed, color);
       placed++;
     }
@@ -177,23 +179,34 @@ window.World = (function () {
 
   function buildTree(x, z, scale) {
     var group = new THREE.Group();
-    var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.24, 1.5, 6), mat(PALETTE.trunk));
-    trunk.position.y = 0.75;
+    var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.26, 2.1, 6), mat(PALETTE.trunk));
+    trunk.position.y = 1.05;
+    trunk.rotation.z = rand(-0.12, 0.12);
     trunk.castShadow = true;
     group.add(trunk);
 
-    var tiers = [
-      { r: 1.15, h: 1.5, y: 1.65, c: PALETTE.leaf },
-      { r: 0.9, h: 1.25, y: 2.4, c: PALETTE.leafWarm },
-      { r: 0.6, h: 1.0, y: 3.05, c: PALETTE.leaf }
-    ];
-    tiers.forEach(function (t) {
-      var cone = new THREE.Mesh(new THREE.ConeGeometry(t.r, t.h, 7), mat(t.c));
-      cone.position.y = t.y;
-      cone.rotation.y = rand(0, TAU);
-      cone.castShadow = true;
-      group.add(cone);
-    });
+    // Bare branches instead of a crown: the meadow died a long time ago.
+    var branches = Math.floor(rand(5, 8));
+    for (var b = 0; b < branches; b++) {
+      var len = rand(0.7, 1.5);
+      var branch = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.07, len, 4), mat(PALETTE.trunk));
+      var ang = (b / branches) * TAU + rand(-0.4, 0.4);
+      var lift = 1.0 + rand(0, 0.9);
+      branch.position.set(Math.cos(ang) * len * 0.32, lift + len * 0.32, Math.sin(ang) * len * 0.32);
+      branch.rotation.set(Math.cos(ang) * rand(0.5, 1.1), 0, -Math.sin(ang) * rand(0.5, 1.1));
+      branch.castShadow = true;
+      group.add(branch);
+
+      // A twig or two off each branch.
+      if (Math.random() < 0.7) {
+        var twig = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.03, len * 0.55, 4), mat(PALETTE.trunk));
+        twig.position.set(
+          Math.cos(ang) * len * 0.62, lift + len * 0.72, Math.sin(ang) * len * 0.62
+        );
+        twig.rotation.set(Math.cos(ang + 0.8) * 1.2, 0, -Math.sin(ang + 0.8) * 1.2);
+        group.add(twig);
+      }
+    }
 
     group.position.set(x, heightAt(x, z), z);
     group.scale.setScalar(scale);
@@ -215,15 +228,19 @@ window.World = (function () {
 
   function buildFlower(x, z) {
     var group = new THREE.Group();
-    var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.03, 0.3, 4), mat(0x66b653));
+    var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.03, 0.3, 4), mat(0x2c3a38));
     stem.position.y = 0.15;
     group.add(stem);
     var petalColor = PALETTE.petal[Math.floor(Math.random() * PALETTE.petal.length)];
-    var head = new THREE.Mesh(new THREE.IcosahedronGeometry(0.11, 0), mat(petalColor));
+    var head = new THREE.Mesh(new THREE.IcosahedronGeometry(0.11, 0), new THREE.MeshBasicMaterial({
+      color: petalColor, transparent: true, opacity: 0.5
+    }));
     head.position.y = 0.32;
     head.scale.y = 0.7;
     group.add(head);
-    var core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.05, 0), mat(0xffcc57));
+    var core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.05, 0), new THREE.MeshBasicMaterial({
+      color: 0xdffff4, transparent: true, opacity: 0.8
+    }));
     core.position.y = 0.37;
     group.add(core);
     group.position.set(x, heightAt(x, z), z);
@@ -236,8 +253,9 @@ window.World = (function () {
   function buildPond() {
     var geo = new THREE.CircleGeometry(2.6, 22);
     geo.rotateX(-Math.PI / 2);
-    water = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({
-      color: PALETTE.water, flatShading: true, transparent: true, opacity: 0.85
+    water = new THREE.Mesh(geo, new THREE.MeshPhongMaterial({
+      color: PALETTE.water, flatShading: true, transparent: true, opacity: 0.9,
+      shininess: 90, specular: 0x9fd8ff
     }));
     water.position.set(5.4, heightAt(5.4, 4.2) - 0.12, 4.2);
     water.receiveShadow = false;
@@ -253,23 +271,45 @@ window.World = (function () {
   /** The bed — where the dragon comes to sleep. */
   function buildBed() {
     bed = new THREE.Group();
-    var pad = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.35, 0.22, 12), mat(PALETTE.cushion));
-    pad.receiveShadow = true;
-    pad.castShadow = true;
-    bed.add(pad);
-    var rim = new THREE.Mesh(new THREE.TorusGeometry(1.22, 0.17, 6, 14), mat(0xe08fa0));
-    rim.rotation.x = Math.PI / 2;
-    rim.position.y = 0.1;
-    rim.castShadow = true;
-    bed.add(rim);
-    bed.position.set(-5.2, heightAt(-5.2, -3.4) + 0.1, -3.4);
+    var slab = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.35, 0.22, 9), mat(PALETTE.cushion));
+    slab.receiveShadow = true;
+    slab.castShadow = true;
+    bed.add(slab);
+
+    // A ring of old bones instead of a cushion.
+    for (var b = 0; b < 11; b++) {
+      var a = (b / 11) * TAU;
+      var boneMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.05, 0.05, rand(0.4, 0.7), 4),
+        mat(0xd9d2be)
+      );
+      boneMesh.position.set(Math.cos(a) * 1.16, 0.14, Math.sin(a) * 1.16);
+      boneMesh.rotation.set(Math.PI / 2, 0, -a + rand(-0.3, 0.3));
+      boneMesh.castShadow = true;
+      bed.add(boneMesh);
+
+      var knob = new THREE.Mesh(new THREE.IcosahedronGeometry(0.075, 0), mat(0xd9d2be));
+      knob.position.set(Math.cos(a) * 1.16 + rand(-0.2, 0.2), 0.16, Math.sin(a) * 1.16 + rand(-0.2, 0.2));
+      bed.add(knob);
+    }
+
+    // A candle-like ember marking the resting place.
+    var flame = new THREE.Mesh(new THREE.IcosahedronGeometry(0.13, 0), new THREE.MeshBasicMaterial({
+      color: PALETTE.ember, transparent: true, opacity: 0.85, fog: false
+    }));
+    flame.position.set(0, 0.5, -1.25);
+    bed.add(flame);
+    var flameLight = new THREE.PointLight(PALETTE.ember, 1.4, 5, 2);
+    flameLight.position.copy(flame.position);
+    bed.add(flameLight);
+    bed.userData.flame = flame;    bed.position.set(-5.2, heightAt(-5.2, -3.4) + 0.1, -3.4);
     scene.add(bed);
   }
 
   function buildButterflies() {
     for (var i = 0; i < 5; i++) {
       var g = new THREE.Group();
-      var color = [0xfff0a8, 0xffd0e4, 0xd6e6ff, 0xffc9a8][i % 4];
+      var color = [0x9fb6c9, 0x8aa0b8, 0xb9c6d6, 0x7f93aa][i % 4];
       var wingGeo = new THREE.CircleGeometry(0.16, 4);
       var m = new THREE.MeshLambertMaterial({ color: color, flatShading: true, side: THREE.DoubleSide });
       var left = new THREE.Mesh(wingGeo, m);
@@ -300,7 +340,7 @@ window.World = (function () {
     }
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     fireflies = new THREE.Points(geo, new THREE.PointsMaterial({
-      color: 0xfff0a0, size: 0.16, transparent: true, opacity: 0, depthWrite: false,
+      color: 0x8ff0d8, size: 0.19, transparent: true, opacity: 0.6, depthWrite: false,
       blending: THREE.AdditiveBlending
     }));
     fireflies.userData.phases = Array.from({ length: count }, function () { return rand(0, TAU); });
@@ -344,33 +384,36 @@ window.World = (function () {
 
   function initTextures() {
     textures.heart = makeSpriteTexture(function (g) {
-      g.fillStyle = '#ff7d9e';
+      var grd = g.createRadialGradient(32, 32, 0, 32, 32, 26);
+      grd.addColorStop(0, 'rgba(232, 255, 246, 1)');
+      grd.addColorStop(0.45, 'rgba(118, 240, 200, 0.85)');
+      grd.addColorStop(1, 'rgba(118, 240, 200, 0)');
+      g.fillStyle = grd;
       g.beginPath();
-      g.moveTo(32, 52);
-      g.bezierCurveTo(-6, 28, 10, 4, 32, 22);
-      g.bezierCurveTo(54, 4, 70, 28, 32, 52);
+      g.moveTo(32, 4);
+      g.lineTo(48, 32);
+      g.lineTo(32, 60);
+      g.lineTo(16, 32);
+      g.closePath();
       g.fill();
-      g.strokeStyle = 'rgba(255,255,255,0.9)';
-      g.lineWidth = 3;
-      g.stroke();
     });
     textures.spark = makeSpriteTexture(function (g) {
       var grd = g.createRadialGradient(32, 32, 0, 32, 32, 30);
-      grd.addColorStop(0, 'rgba(255,255,220,1)');
-      grd.addColorStop(0.4, 'rgba(255,220,120,0.9)');
-      grd.addColorStop(1, 'rgba(255,200,80,0)');
+      grd.addColorStop(0, 'rgba(236,255,248,1)');
+      grd.addColorStop(0.4, 'rgba(140,244,208,0.85)');
+      grd.addColorStop(1, 'rgba(118,240,200,0)');
       g.fillStyle = grd;
       g.fillRect(0, 0, 64, 64);
     });
     textures.smoke = makeSpriteTexture(function (g) {
       var grd = g.createRadialGradient(32, 32, 0, 32, 32, 30);
-      grd.addColorStop(0, 'rgba(255,255,255,0.85)');
-      grd.addColorStop(1, 'rgba(230,235,245,0)');
+      grd.addColorStop(0, 'rgba(186,200,225,0.6)');
+      grd.addColorStop(1, 'rgba(150,168,200,0)');
       g.fillStyle = grd;
       g.fillRect(0, 0, 64, 64);
     });
     textures.note = makeSpriteTexture(function (g) {
-      g.fillStyle = '#ffffff';
+      g.fillStyle = '#bff4e4';
       g.font = 'bold 46px system-ui, sans-serif';
       g.textAlign = 'center';
       g.textBaseline = 'middle';
@@ -488,16 +531,16 @@ window.World = (function () {
       renderer.outputColorSpace = THREE.SRGBColorSpace;
 
       scene = new THREE.Scene();
-      scene.fog = new THREE.Fog(0xcfeaf2, 26, 62);
+      scene.fog = new THREE.Fog(0x0e1120, 14, 46);
 
       camera = new THREE.PerspectiveCamera(46, 1, 0.1, 200);
       cam.target = new THREE.Vector3(0, 0.4, 0);
       cam.desiredTarget = new THREE.Vector3(0, 0.4, 0);
 
-      hemi = new THREE.HemisphereLight(0xd9f2ff, 0x76a55a, 1.15);
+      hemi = new THREE.HemisphereLight(0x4a5891, 0x14171f, 1.05);
       scene.add(hemi);
 
-      sun = new THREE.DirectionalLight(0xfff2d6, 1.5);
+      sun = new THREE.DirectionalLight(0xbfd2ff, 1.25);   // moonlight
       sun.position.set(9, 14, 6);
       sun.castShadow = true;
       sun.shadow.mapSize.set(1024, 1024);
@@ -638,20 +681,20 @@ window.World = (function () {
       night += (nightTarget - night) * Math.min(1, dt * 0.7);
 
       // Light and sky drift gently into dusk.
-      var dayColor = new THREE.Color(0xfff2d6);
-      var nightColor = new THREE.Color(0x8fa8ff);
-      sun.color.copy(dayColor).lerp(nightColor, night);
-      sun.intensity = 1.5 - night * 1.05;
-      hemi.intensity = 1.15 - night * 0.6;
-      hemi.color.setHex(0xd9f2ff).lerp(new THREE.Color(0x415c9c), night);
-      hemi.groundColor.setHex(0x76a55a).lerp(new THREE.Color(0x2c3f52), night);
-      sky.material.color.setRGB(1, 1, 1).lerp(new THREE.Color(0x2f4a86), night * 0.92);
-      scene.fog.color.setHex(0xcfeaf2).lerp(new THREE.Color(0x27385f), night);
+      // The world is already dark; "night" deepens it further while the dragon sleeps.
+      var duskColor = new THREE.Color(0xa9c0ff);
+      var deepColor = new THREE.Color(0x5566b0);
+      sun.color.copy(duskColor).lerp(deepColor, night);
+      sun.intensity = 1.25 - night * 0.6;
+      hemi.intensity = 1.05 - night * 0.5;
+      hemi.color.setHex(0x35406b).lerp(new THREE.Color(0x1b2242), night);
+      sky.material.color.setRGB(1, 1, 1).lerp(new THREE.Color(0x4a4870), night * 0.6);
+      scene.fog.color.setHex(0x0e1120).lerp(new THREE.Color(0x06070f), night);
       renderer.setClearColor(scene.fog.color);
 
       if (fireflies) {
-        fireflies.material.opacity = night * 0.9;
-        if (night > 0.05) {
+        fireflies.material.opacity = 0.55 + night * 0.4;
+        {
           var fpos = fireflies.geometry.attributes.position;
           var phases = fireflies.userData.phases;
           for (var f = 0; f < phases.length; f++) {
@@ -674,7 +717,7 @@ window.World = (function () {
         var flap = Math.abs(Math.sin(u.flap)) * 1.1;
         u.left.rotation.y = flap;
         u.right.rotation.y = -flap;
-        b.visible = night < 0.55;
+        b.visible = true;
       });
 
       // Flowers sway.

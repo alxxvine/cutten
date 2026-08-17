@@ -31,7 +31,7 @@
     loading: document.getElementById('loading')
   };
 
-  var NAME_IDEAS = ['Puff', 'Ember', 'Sparky', 'Bubble', 'Cloud', 'Pip', 'Minty', 'Peach'];
+  var NAME_IDEAS = ['Ash', 'Cinder', 'Wisp', 'Marrow', 'Onyx', 'Ember', 'Hollow', 'Rune'];
 
   var state = null;      // data for the current session
   var savedData = null;  // the save we found (if a dragon already existed)
@@ -63,10 +63,9 @@
     if (hudCache.hearts !== hearts) {
       ui.bond.innerHTML = '';
       for (var i = 0; i < 5; i++) {
-        var span = document.createElement('span');
-        span.textContent = '💗';
-        if (i < hearts) span.className = 'on';
-        ui.bond.appendChild(span);
+        var rune = document.createElement('span');
+        if (i < hearts) rune.className = 'on';
+        ui.bond.appendChild(rune);
       }
       hudCache.hearts = hearts;
     }
@@ -75,13 +74,16 @@
     setBar(ui.needEnergy, pet.needs.energy);
     setBar(ui.needFun, pet.needs.fun);
 
-    // The emoji thought floats above the dragon head.
+    // The thought icon floats above the skull.
     if (pet.mood) {
       var head = pet.dragon.headWorldPosition();
       head.y += 0.9;
       var screen = World.toScreen(head);
       ui.mood.hidden = false;
-      ui.mood.textContent = pet.mood;
+      if (hudCache.mood !== pet.mood) {
+        ui.mood.innerHTML = '<svg viewBox="0 0 20 20"><use href="#i-' + pet.mood + '"/></svg>';
+        hudCache.mood = pet.mood;
+      }
       ui.mood.style.left = screen.x + 'px';
       ui.mood.style.top = screen.y + 'px';
       ui.mood.classList.toggle('show', screen.visible);
@@ -115,8 +117,8 @@
     pet.onToast = showToast;
     pet.onGrow = function (stage) {
       var text = stage === 'teen'
-        ? pet.name + ' grew up! They can hop on their wings now'
-        : pet.name + ' grew up and learned to fly! 🐉';
+        ? pet.name + ' has grown — their wings can lift them now'
+        : pet.name + ' has grown into a wraith and taken to the air';
       showToast(text);
       hudCache.stage = null;
     };
@@ -125,7 +127,7 @@
     Input.onMode = function (mode) {
       ui.ballBtn.classList.toggle('active', mode === 'aimBall');
       ui.treatBtn.classList.toggle('active', mode === 'treat');
-      if (mode === 'aimBall') showToast('Tap the grass — your dragon will chase the ball');
+      if (mode === 'aimBall') showToast('Tap the ash — your dragon will chase the wisp');
     };
 
     ui.hud.hidden = false;
@@ -136,11 +138,11 @@
     window.Audio3D.unlock();
 
     if (isNew) {
-      showToast('Say hello to ' + pet.name + '!');
+      showToast(pet.name + ' is listening');
     } else if (saveData.awayHours > 0.5) {
-      showToast(pet.name + ' missed you while you were away');
+      showToast(pet.name + ' waited for you in the dark');
     } else {
-      showToast('Welcome back!');
+      showToast('Welcome back');
     }
   }
 
@@ -171,8 +173,14 @@
 
   ui.soundBtn.addEventListener('click', function () {
     window.Audio3D.setEnabled(!window.Audio3D.enabled);
-    ui.soundBtn.textContent = window.Audio3D.enabled ? '🔊' : '🔇';
+    syncSoundIcon();
   });
+
+  function syncSoundIcon() {
+    var on = window.Audio3D.enabled;
+    ui.soundBtn.classList.toggle('off', !on);
+    ui.soundBtn.innerHTML = '<svg viewBox="0 0 20 20"><use href="#i-' + (on ? 'sound' : 'mute') + '"/></svg>';
+  }
 
   ui.ballBtn.addEventListener('click', function () { Input.toggleBall(); });
   ui.treatBtn.addEventListener('click', function () { Input.toggleTreat(); });
@@ -231,7 +239,7 @@
     try {
       World.init(ui.canvas);
     } catch (err) {
-      ui.loading.textContent = 'Looks like this browser cannot do 3D 😿';
+      ui.loading.textContent = 'This browser cannot show 3D';
       console.error(err);
       return;
     }
@@ -254,12 +262,13 @@
     savedData = Save.load();
     if (savedData) {
       // A dragon already exists — the welcome screen invites you straight back to them.
-      ui.eggArt.textContent = '🐉';
-      ui.startTitle.textContent = 'Welcome back!';
-      ui.startSub.textContent = savedData.name + ' has been waiting for you in the meadow.';
+      ui.startTitle.textContent = 'Welcome back';
+      ui.startSub.textContent = savedData.name + ' has been waiting in the dark, ember still lit.';
       ui.nameInput.hidden = true;
       ui.startBtn.textContent = 'Go to ' + savedData.name;
     }
+
+    syncSoundIcon();
 
     ui.loading.classList.add('gone');
     setTimeout(function () { ui.loading.hidden = true; }, 600);

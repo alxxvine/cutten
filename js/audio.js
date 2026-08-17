@@ -94,16 +94,18 @@ window.Audio3D = (function () {
     /** A greeting trill. */
     chirp: function (pitch) {
       pitch = pitch || 1;
-      tone({ from: 440 * pitch, to: 880 * pitch, dur: 0.16, volume: 0.09, type: 'triangle' });
-      tone({ from: 660 * pitch, to: 1180 * pitch, dur: 0.14, volume: 0.05, type: 'sine', delay: 0.1 });
+      tone({ from: 300 * pitch, to: 560 * pitch, dur: 0.2, volume: 0.08, type: 'triangle' });
+      tone({ from: 150 * pitch, to: 250 * pitch, dur: 0.26, volume: 0.05, type: 'sine', delay: 0.06 });
+      noise({ dur: 0.09, freq: 2400, q: 3, volume: 0.03 });
     },
 
     /** A pleased "mrr-ow". */
     happy: function (pitch) {
       pitch = pitch || 1;
       [0, 0.09, 0.19].forEach(function (d, i) {
-        tone({ from: 520 * pitch * (1 + i * 0.22), to: 760 * pitch * (1 + i * 0.22), dur: 0.18, volume: 0.08, delay: d });
+        tone({ from: 330 * pitch * (1 + i * 0.2), to: 520 * pitch * (1 + i * 0.2), dur: 0.22, volume: 0.075, delay: d });
       });
+      noise({ dur: 0.3, freq: 3200, q: 2, volume: 0.02, swell: true });
     },
 
     /** A questioning "mrm?" — when they want something. */
@@ -123,7 +125,9 @@ window.Audio3D = (function () {
     },
 
     step: function () {
-      noise({ dur: 0.08, freq: 260, q: 1.2, volume: 0.035 });
+      // Bone on stone: a dry click, not a soft footfall.
+      noise({ dur: 0.05, freq: 1600, q: 6, volume: 0.03 });
+      tone({ from: 220, to: 120, dur: 0.06, volume: 0.025, type: 'square' });
     },
 
     munch: function () {

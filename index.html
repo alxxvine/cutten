@@ -4,11 +4,70 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dragon Meadow 🐉</title>
-<meta name="description" content="A cute low-poly dragon lives on a floating meadow: pet them, feed them, play fetch and tuck them in.">
+<meta name="description" content="A little skeletal dragon keeps you company on an ashen island. Pet them, feed them, play fetch and let them rest.">
+<meta name="theme-color" content="#07080f">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐉</text></svg>">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- Line icons live here once and are cloned into the interface. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-bone" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5.5 14.5 14 6"/>
+      <path d="M4.2 12.6a2 2 0 1 1 2.6-2.6 2 2 0 1 1-2.6 2.6Z"/>
+      <path d="M13.2 5.4a2 2 0 1 1 2.6 2.6 2 2 0 1 1-2.6-2.6Z"/>
+    </g>
+    <g id="i-spark" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2.5c1.6 3 3.8 4.2 3.8 7.2A3.8 3.8 0 0 1 10 13.5a3.8 3.8 0 0 1-3.8-3.8c0-3 2.2-4.2 3.8-7.2Z"/>
+      <path d="M10 17.5c2.8 0 4.6-1.4 5.4-3.2M10 17.5c-2.8 0-4.6-1.4-5.4-3.2"/>
+    </g>
+    <g id="i-orb" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="6.5"/>
+      <path d="M4.4 6.6c3.6 1.2 7.6 1.2 11.2 0M4.4 13.4c3.6-1.2 7.6-1.2 11.2 0"/>
+    </g>
+    <g id="i-moon" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 11.6A6.6 6.6 0 0 1 8.4 4a6.9 6.9 0 1 0 7.6 7.6Z"/>
+    </g>
+    <g id="i-hand" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 11V4.6a1.3 1.3 0 0 1 2.6 0V10"/>
+      <path d="M9.6 9.4V3.8a1.3 1.3 0 0 1 2.6 0v5.8"/>
+      <path d="M12.2 9.8V5.4a1.3 1.3 0 0 1 2.6 0V12c0 3.1-2.1 5.4-5 5.4-2.6 0-4.2-1.5-5.1-3.6l-1.2-2.9a1.3 1.3 0 0 1 2.2-1.3L7 11.4"/>
+    </g>
+    <g id="i-sound" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 8v4h2.6L10 15V5L6.6 8H4Z"/>
+      <path d="M12.6 7.6a3.4 3.4 0 0 1 0 4.8M14.8 5.4a6.5 6.5 0 0 1 0 9.2"/>
+    </g>
+    <g id="i-mute" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 8v4h2.6L10 15V5L6.6 8H4Z"/>
+      <path d="m13 8 4 4M17 8l-4 4"/>
+    </g>
+    <g id="i-help" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7.6 7.4a2.5 2.5 0 1 1 3.3 2.4c-.6.2-.9.8-.9 1.4v.5"/>
+      <path d="M10 15.1h.01"/>
+    </g>
+    <g id="i-eye" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.6 10S5.6 5.2 10 5.2 17.4 10 17.4 10s-3 4.8-7.4 4.8S2.6 10 2.6 10Z"/>
+      <circle cx="10" cy="10" r="1.9"/>
+    </g>
+    <g id="i-drag" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 3.2v13.6M3.2 10h13.6"/>
+      <path d="m7.4 5.8 2.6-2.6 2.6 2.6M7.4 14.2l2.6 2.6 2.6-2.6M5.8 7.4 3.2 10l2.6 2.6M14.2 7.4 16.8 10l-2.6 2.6"/>
+    </g>
+    <g id="i-skull" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2.4c-4 0-6.6 2.8-6.6 6.4 0 2.2 1 3.6 2 4.5.5.4.8 1 .8 1.7v.8c0 .9.7 1.6 1.6 1.6h4.4c.9 0 1.6-.7 1.6-1.6V15c0-.7.3-1.3.8-1.7 1-.9 2-2.3 2-4.5 0-3.6-2.6-6.4-6.6-6.4Z"/>
+      <circle cx="7.4" cy="9" r="1.6"/>
+      <circle cx="12.6" cy="9" r="1.6"/>
+      <path d="M10 12v1.6"/>
+    </g>
+    <g id="i-zzz" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 6.5h4l-4 5h4"/>
+      <path d="M11.5 4.5h4l-4 5h4"/>
+      <path d="M11.5 13h3l-3 3.5h3"/>
+    </g>
+  </defs>
+</svg>
 
 <div id="app">
   <canvas id="scene"></canvas>
@@ -17,19 +76,32 @@
     <div class="panel pet-panel">
       <div class="pet-top">
         <span class="pet-name" id="petName">Dragon</span>
-        <span class="pet-stage" id="petStage">hatchling</span>
+        <span class="pet-stage" id="petStage">boneling</span>
       </div>
       <div class="bond" id="bond" title="Bond"></div>
       <div class="needs">
-        <div class="need" title="Fullness"><span class="need-icon">🍓</span><div class="need-bar"><i id="needFood"></i></div></div>
-        <div class="need" title="Energy"><span class="need-icon">⚡</span><div class="need-bar"><i id="needEnergy"></i></div></div>
-        <div class="need" title="Fun"><span class="need-icon">🎾</span><div class="need-bar"><i id="needFun"></i></div></div>
+        <div class="need" title="Fullness">
+          <span class="need-icon"><svg viewBox="0 0 20 20"><use href="#i-bone"/></svg></span>
+          <div class="need-bar"><i id="needFood"></i></div>
+        </div>
+        <div class="need" title="Energy">
+          <span class="need-icon"><svg viewBox="0 0 20 20"><use href="#i-spark"/></svg></span>
+          <div class="need-bar"><i id="needEnergy"></i></div>
+        </div>
+        <div class="need" title="Play">
+          <span class="need-icon"><svg viewBox="0 0 20 20"><use href="#i-orb"/></svg></span>
+          <div class="need-bar"><i id="needFun"></i></div>
+        </div>
       </div>
     </div>
 
     <div class="panel buttons">
-      <button class="icon-btn" id="soundBtn" title="Sound" aria-label="Sound">🔊</button>
-      <button class="icon-btn" id="helpBtn" title="What to do" aria-label="What to do">?</button>
+      <button class="icon-btn" id="soundBtn" title="Sound" aria-label="Sound">
+        <svg viewBox="0 0 20 20"><use href="#i-sound" id="soundIcon"/></svg>
+      </button>
+      <button class="icon-btn" id="helpBtn" title="What to do" aria-label="What to do">
+        <svg viewBox="0 0 20 20"><use href="#i-help"/></svg>
+      </button>
     </div>
   </header>
 
@@ -37,16 +109,16 @@
 
   <div class="toolbar" id="toolbar" hidden>
     <button class="tool" id="treatBtn">
-      <span class="tool-icon">🍓</span>
-      <span class="tool-label">Treat</span>
+      <svg viewBox="0 0 20 20"><use href="#i-bone"/></svg>
+      <span class="tool-label">Marrow</span>
     </button>
     <button class="tool" id="ballBtn">
-      <span class="tool-icon">🎾</span>
-      <span class="tool-label">Ball</span>
+      <svg viewBox="0 0 20 20"><use href="#i-orb"/></svg>
+      <span class="tool-label">Wisp</span>
     </button>
     <button class="tool" id="sleepBtn">
-      <span class="tool-icon">💤</span>
-      <span class="tool-label">Sleep</span>
+      <svg viewBox="0 0 20 20"><use href="#i-moon"/></svg>
+      <span class="tool-label">Rest</span>
     </button>
   </div>
 
@@ -54,14 +126,14 @@
 
   <div class="overlay" id="startScreen">
     <div class="card">
-      <div class="egg" id="eggArt">🥚</div>
-      <h1 id="startTitle">Your dragon just hatched</h1>
-      <p class="sub" id="startSub">They are tiny and do not know anyone yet. What is their name?</p>
+      <div class="sigil" id="eggArt"><svg viewBox="0 0 20 20"><use href="#i-skull"/></svg></div>
+      <h1 id="startTitle">Something small woke up</h1>
+      <p class="sub" id="startSub">A little dragon of bone and emberlight, alone on a dead island. They do not know anyone yet. What is their name?</p>
       <form class="name-form" id="nameForm">
         <input id="nameInput" type="text" maxlength="16" autocomplete="off" placeholder="Name your dragon" aria-label="Name your dragon">
-        <button class="big-btn" type="submit" id="startBtn">Say hello</button>
+        <button class="big-btn" type="submit" id="startBtn">Call them over</button>
       </form>
-      <p class="hint">Works with a mouse and with a finger. You cannot lose — your dragon is always happy to see you.</p>
+      <p class="hint">Mouse or finger, both work. Nothing here can be lost — they are always glad you came.</p>
     </div>
   </div>
 
@@ -69,18 +141,33 @@
     <div class="card">
       <h1>What to do here</h1>
       <ul class="rules">
-        <li><span>✋</span> <b>Pet them.</b> Drag your finger or mouse across the dragon — they squint, lean in and rumble.</li>
-        <li><span>🎾</span> <b>Play fetch.</b> Press “Ball”, then tap the grass: they dash off, grab it and bring it back.</li>
-        <li><span>🍓</span> <b>Feed them.</b> Press “Treat” and hold the berry up to their snout.</li>
-        <li><span>💤</span> <b>Tuck them in.</b> When tired they yawn and curl up on their own. Or press “Sleep”.</li>
-        <li><span>🖱</span> <b>Look around.</b> Drag across the grass to walk around the meadow, scroll or pinch to zoom.</li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-hand"/></svg></span>
+          <span><b>Pet them.</b> Drag across the bones — the ember in their chest flares and they lean into your hand.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-orb"/></svg></span>
+          <span><b>Throw a wisp.</b> Press Wisp, then tap the ash: they will chase it down and carry it back.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-bone"/></svg></span>
+          <span><b>Feed them.</b> Press Marrow and hold it up to their jaws.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-zzz"/></svg></span>
+          <span><b>Let them rest.</b> When tired they curl up by the bone circle and the dark deepens.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-drag"/></svg></span>
+          <span><b>Look around.</b> Drag the ground to circle the island, scroll or pinch to come closer.</span>
+        </li>
       </ul>
-      <p class="sub">The more time you spend together, the more attached your dragon gets — and the more they grow. A grown dragon learns to fly.</p>
+      <p class="sub">The longer you stay, the brighter their ember burns — and the more they grow. A grown dragon takes to the air.</p>
       <button class="big-btn" id="closeHelpBtn">Got it</button>
     </div>
   </div>
 
-  <div class="loading" id="loading">The meadow is waking up…</div>
+  <div class="loading" id="loading">Lighting the ember…</div>
 </div>
 
 <script src="vendor/three.min.js"></script>

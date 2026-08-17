@@ -65,18 +65,18 @@ window.Pet = (function () {
 
   Pet.prototype.buildBall = function () {
     var group = new THREE.Group();
-    var ball = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.22, 1),
-      new THREE.MeshLambertMaterial({ color: 0xffe066, flatShading: true })
+    var core = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(0.16, 0),
+      new THREE.MeshBasicMaterial({ color: 0x9ffbe4, fog: false })
     );
-    ball.castShadow = true;
-    group.add(ball);
-    var stripe = new THREE.Mesh(
-      new THREE.TorusGeometry(0.2, 0.045, 5, 10),
-      new THREE.MeshLambertMaterial({ color: 0xff7f6b, flatShading: true })
+    group.add(core);
+    var halo = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(0.28, 0),
+      new THREE.MeshBasicMaterial({ color: 0x76f0c8, transparent: true, opacity: 0.28, fog: false })
     );
-    stripe.rotation.x = Math.PI / 2;
-    group.add(stripe);
+    group.add(halo);
+    var wispLight = new THREE.PointLight(0x76f0c8, 1.6, 4.5, 2);
+    group.add(wispLight);
     group.visible = false;
     World.scene.add(group);
 
@@ -90,19 +90,18 @@ window.Pet = (function () {
 
   Pet.prototype.buildTreat = function () {
     var group = new THREE.Group();
-    var berry = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.17, 0),
-      new THREE.MeshLambertMaterial({ color: 0xff5d7a, flatShading: true })
-    );
-    berry.castShadow = true;
-    group.add(berry);
-    var leaf = new THREE.Mesh(
-      new THREE.ConeGeometry(0.08, 0.14, 4),
-      new THREE.MeshLambertMaterial({ color: 0x74c46a, flatShading: true })
-    );
-    leaf.position.set(0.04, 0.16, 0);
-    leaf.rotation.z = -0.6;
-    group.add(leaf);
+    var boneMaterial = new THREE.MeshLambertMaterial({ color: 0xe9e2cf, flatShading: true });
+    var shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.34, 5), boneMaterial);
+    shaft.rotation.z = Math.PI / 2;
+    shaft.castShadow = true;
+    group.add(shaft);
+    [-0.17, 0.17].forEach(function (x) {
+      [-1, 1].forEach(function (y) {
+        var knob = new THREE.Mesh(new THREE.IcosahedronGeometry(0.055, 0), boneMaterial);
+        knob.position.set(x, y * 0.045, 0);
+        group.add(knob);
+      });
+    });
     group.visible = false;
     World.scene.add(group);
 
@@ -162,7 +161,7 @@ window.Pet = (function () {
     }
     this.offerTreat(false);
     this.setState('goToBed');
-    this.onToast(this.name + ' is heading to bed');
+    this.onToast(this.name + ' goes to rest');
   };
 
   Pet.prototype.wakeUp = function () {
@@ -325,7 +324,7 @@ window.Pet = (function () {
     d.setPose(this.pose);
     d.update(dt, time);
 
-    this.mood = this.moodEmoji();
+    this.mood = this.moodIcon();
   };
 
   Pet.prototype.stateHandler = function (state) {
@@ -654,7 +653,7 @@ window.Pet = (function () {
       this.offerTreat(false);
       this.needs.food = clamp01(this.needs.food + 0.35);
       this.bond = clamp01(this.bond + 0.02);
-      this.onToast(this.name + ' loved that 🍓');
+      this.onToast(this.name + ' crunches happily');
       this.checkGrowth();
     }
 
@@ -680,7 +679,7 @@ window.Pet = (function () {
       World.setNight(0.8);
       this.dragon.openJaw(0.8, 1.1);
       window.Audio3D.whine(0.8);
-      this.onToast(this.name + ' is falling asleep…');
+      this.onToast(this.name + ' settles among the bones…');
     }
   };
 
@@ -738,16 +737,16 @@ window.Pet = (function () {
 
   /* ---------- what to show the player ---------- */
 
-  Pet.prototype.moodEmoji = function () {
-    if (this.state === 'sleep') return '💤';
-    if (this.state === 'petted') return '💗';
-    if (this.state === 'eat' || this.state === 'goToTreat') return '😋';
-    if (this.state === 'goToBall' || this.state === 'returnBall') return '🎾';
-    if (this.needs.food < 0.25) return '🍓';
-    if (this.needs.energy < 0.22) return '🥱';
-    if (this.needs.fun < 0.25) return '🎾';
-    if (this.idleAttention > 12) return '👀';
-    if (this.happiness > 0.75) return '💛';
+  Pet.prototype.moodIcon = function () {
+    if (this.state === 'sleep') return 'zzz';
+    if (this.state === 'petted') return 'spark';
+    if (this.state === 'eat' || this.state === 'goToTreat') return 'bone';
+    if (this.state === 'goToBall' || this.state === 'returnBall') return 'orb';
+    if (this.needs.food < 0.25) return 'bone';
+    if (this.needs.energy < 0.22) return 'moon';
+    if (this.needs.fun < 0.25) return 'orb';
+    if (this.idleAttention > 12) return 'eye';
+    if (this.happiness > 0.75) return 'spark';
     return '';
   };
 
