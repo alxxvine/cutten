@@ -5,7 +5,8 @@
   "description": "Дракончик — 3D low-poly виртуальный питомец",
   "scripts": {
     "vendor": "echo \"export * from 'three';\" > .three-entry.js && esbuild .three-entry.js --bundle --minify --format=iife --global-name=THREE --outfile=vendor/three.min.js --legal-comments=none && rm .three-entry.js",
-    "serve": "python3 -m http.server 8000"
+    "serve": "python3 -m http.server 8000",
+    "build:single": "node tools/build-single.js"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",
