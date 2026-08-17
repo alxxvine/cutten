@@ -6,17 +6,28 @@
 <title>Dragon Meadow 🐉</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
 <style>
+/* Liquid glass over a dark world: translucent panels, hairline edges,
+   monochrome line icons, no colour except the soul ember. */
+
 :root {
-  --ink: #3f3a52;
-  --ink-soft: #6f6889;
-  --paper: rgba(255, 252, 248, 0.88);
-  --paper-solid: #fffcf8;
-  --mint: #58c8a8;
-  --coral: #ff8f76;
-  --coral-deep: #ef6a4d;
-  --gold: #ffc861;
-  --shadow: 0 6px 0 rgba(90, 75, 110, 0.15), 0 14px 30px rgba(70, 55, 90, 0.2);
-  --radius: 20px;
+  --ink: rgba(255, 255, 255, 0.94);
+  --ink-soft: rgba(233, 236, 245, 0.56);
+  --ink-faint: rgba(233, 236, 245, 0.3);
+
+  --ember: #76f0c8;
+  --ember-dim: rgba(118, 240, 200, 0.24);
+
+  /* The glass: a dark tint, a bright top edge, a soft drop. */
+  --glass: rgba(20, 22, 34, 0.44);
+  --glass-strong: rgba(16, 18, 28, 0.72);
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --glass-edge-soft: rgba(255, 255, 255, 0.07);
+  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --blur: blur(28px) saturate(160%);
+
+  --r-lg: 26px;
+  --r-md: 18px;
+  --r-sm: 13px;
 }
 
 * { box-sizing: border-box; }
@@ -27,10 +38,11 @@ html, body {
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  background: #8fd3e8;
+  background: #07080f;
   color: var(--ink);
-  font-family: "Nunito", "Quicksand", "Segoe UI Rounded", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable",
+    "Segoe UI", Inter, system-ui, sans-serif;
+  font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
@@ -47,6 +59,23 @@ html, body {
 #scene.petting { cursor: grabbing; }
 #scene.aiming { cursor: crosshair; }
 
+/* A vignette keeps the eye on the dragon and hides the island edges. */
+#app::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 45%, transparent 40%, rgba(4, 5, 12, 0.72) 100%);
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 0.5px solid var(--glass-edge-soft);
+  box-shadow: var(--glass-shadow), inset 0 0.5px 0 var(--glass-edge);
+}
+
 /* ---------- HUD ---------- */
 
 .hud {
@@ -55,75 +84,95 @@ html, body {
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  padding: max(12px, env(safe-area-inset-top)) 12px 0;
+  padding: max(14px, env(safe-area-inset-top)) 14px 0;
   pointer-events: none;
   user-select: none;
+  z-index: 2;
 }
 
 .panel {
-  background: var(--paper);
-  backdrop-filter: blur(8px);
-  border: 3px solid #fff;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 9px 14px;
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 0.5px solid var(--glass-edge-soft);
+  border-radius: var(--r-md);
+  box-shadow: var(--glass-shadow), inset 0 0.5px 0 var(--glass-edge);
+  padding: 11px 14px;
 }
 
-.pet-panel { min-width: 186px; }
+.pet-panel { min-width: 184px; }
 
-.pet-top { display: flex; align-items: baseline; gap: 8px; }
-.pet-name { font-size: 20px; font-weight: 900; color: var(--coral-deep); }
+.pet-top { display: flex; align-items: baseline; gap: 9px; }
+
+.pet-name {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
 .pet-stage {
-  font-size: 10.5px;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: .05em;
   color: var(--ink-soft);
-  background: rgba(120, 100, 150, .1);
-  padding: 2px 7px;
-  border-radius: 999px;
 }
 
-.bond { display: flex; gap: 3px; margin: 5px 0 6px; font-size: 13px; line-height: 1; }
-.bond span { filter: grayscale(1); opacity: .35; transition: filter .3s ease, opacity .3s ease, transform .3s ease; }
-.bond span.on { filter: none; opacity: 1; transform: scale(1.12); }
+/* Bond: five small runes that light up with the soul ember. */
+.bond { display: flex; gap: 5px; margin: 9px 0 10px; }
+.bond span {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  transition: background .5s ease, box-shadow .5s ease;
+}
+.bond span.on {
+  background: var(--ember);
+  box-shadow: 0 0 8px var(--ember-dim);
+}
 
-.needs { display: flex; flex-direction: column; gap: 4px; }
-.need { display: flex; align-items: center; gap: 6px; }
-.need-icon { font-size: 11px; width: 14px; text-align: center; }
+.needs { display: flex; flex-direction: column; gap: 7px; }
+.need { display: flex; align-items: center; gap: 9px; }
+.need-icon { width: 13px; height: 13px; display: block; color: var(--ink-soft); flex: none; }
+.need-icon svg { width: 100%; height: 100%; display: block; }
+
 .need-bar {
   flex: 1;
-  height: 7px;
-  border-radius: 999px;
-  background: rgba(110, 95, 140, .16);
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.12);
   overflow: hidden;
 }
 .need-bar i {
   display: block;
   height: 100%;
   width: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--mint), #7fe0c0);
-  transition: width .5s ease, background .5s ease;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.72);
+  transition: width .6s cubic-bezier(.22,.61,.36,1), background .6s ease;
 }
-.need-bar i.low { background: linear-gradient(90deg, #ffb26b, var(--gold)); }
+.need-bar i.low { background: var(--ember); }
 
-.buttons { display: flex; gap: 8px; padding: 8px; margin-left: auto; pointer-events: auto; }
+.buttons { display: flex; gap: 8px; padding: 7px; margin-left: auto; pointer-events: auto; }
 
 .icon-btn {
-  width: 40px; height: 40px;
-  border: none;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 3px 0 rgba(110, 95, 140, .2);
-  font-size: 18px;
-  font-weight: 900;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 0.5px solid var(--glass-edge-soft);
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--ink);
   cursor: pointer;
-  transition: transform .12s ease;
+  transition: background .2s ease, transform .15s cubic-bezier(.22,.61,.36,1);
 }
-.icon-btn:hover { transform: translateY(-2px); }
-.icon-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(110, 95, 140, .2); }
+.icon-btn svg { width: 17px; height: 17px; display: block; }
+.icon-btn:hover { background: rgba(255, 255, 255, 0.12); }
+.icon-btn:active { transform: scale(.94); }
+.icon-btn.off { color: var(--ink-faint); }
 
 /* ---------- Dragon thought ---------- */
 
@@ -131,78 +180,90 @@ html, body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 34px;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  color: var(--ember);
   pointer-events: none;
   opacity: 0;
-  transition: opacity .35s ease, transform .35s ease;
-  filter: drop-shadow(0 4px 10px rgba(60, 45, 80, .3));
+  transition: opacity .4s ease;
+  filter: drop-shadow(0 0 10px var(--ember-dim));
+  z-index: 2;
 }
-.mood.show { opacity: 1; }
+.mood svg { width: 100%; height: 100%; display: block; }
+.mood.show { opacity: .92; }
 
 /* ---------- Activity bar ---------- */
 
 .toolbar {
   position: absolute;
   left: 50%;
-  bottom: max(18px, env(safe-area-inset-bottom));
+  bottom: max(20px, env(safe-area-inset-bottom));
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
-  padding: 8px;
-  background: var(--paper);
-  backdrop-filter: blur(8px);
-  border: 3px solid #fff;
-  border-radius: 24px;
-  box-shadow: var(--shadow);
+  gap: 4px;
+  padding: 5px;
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 0.5px solid var(--glass-edge-soft);
+  border-radius: 22px;
+  box-shadow: var(--glass-shadow), inset 0 0.5px 0 var(--glass-edge);
   user-select: none;
+  z-index: 2;
 }
 
 .tool {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  min-width: 74px;
-  padding: 8px 10px 7px;
+  gap: 5px;
+  min-width: 72px;
+  padding: 10px 12px 9px;
   border: none;
-  border-radius: 18px;
+  border-radius: 17px;
   background: transparent;
   font: inherit;
-  color: var(--ink);
+  color: var(--ink-soft);
   cursor: pointer;
-  transition: background .15s ease, transform .12s ease;
+  transition: background .2s ease, color .2s ease, transform .15s cubic-bezier(.22,.61,.36,1);
 }
-.tool:hover { background: rgba(255, 143, 118, .14); transform: translateY(-2px); }
-.tool:active { transform: translateY(1px); }
+.tool svg { width: 20px; height: 20px; display: block; }
+.tool:hover { background: rgba(255, 255, 255, 0.07); color: var(--ink); }
+.tool:active { transform: scale(.95); }
 .tool.active {
-  background: linear-gradient(180deg, var(--coral), var(--coral-deep));
-  color: #fff;
-  box-shadow: 0 4px 0 #cf5637;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ember);
+  box-shadow: inset 0 0 0 0.5px var(--glass-edge);
 }
-.tool-icon { font-size: 22px; line-height: 1; }
-.tool-label { font-size: 11px; font-weight: 800; letter-spacing: .01em; }
+
+.tool-label { font-size: 10.5px; font-weight: 500; letter-spacing: 0.01em; }
 
 /* ---------- Toast ---------- */
 
 .toast {
   position: absolute;
   left: 50%;
-  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 92px);
-  transform: translate(-50%, 12px);
-  background: var(--paper);
-  border: 3px solid #fff;
+  bottom: calc(max(20px, env(safe-area-inset-bottom)) + 86px);
+  transform: translate(-50%, 8px);
+  padding: 9px 18px;
+  background: var(--glass-strong);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 0.5px solid var(--glass-edge-soft);
   border-radius: 999px;
-  padding: 8px 20px;
-  font-weight: 800;
-  box-shadow: var(--shadow);
+  box-shadow: var(--glass-shadow), inset 0 0.5px 0 var(--glass-edge);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
   opacity: 0;
   pointer-events: none;
-  transition: opacity .25s ease, transform .25s ease;
+  transition: opacity .4s ease, transform .4s cubic-bezier(.22,.61,.36,1);
   white-space: nowrap;
   max-width: 92vw;
   overflow: hidden;
   text-overflow: ellipsis;
+  z-index: 2;
 }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
@@ -213,116 +274,214 @@ html, body {
   inset: 0;
   display: grid;
   place-items: center;
-  padding: 16px;
-  background: rgba(60, 90, 110, .4);
-  backdrop-filter: blur(4px);
+  padding: 18px;
+  background: rgba(4, 5, 12, 0.55);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
   z-index: 10;
-  transition: opacity .35s ease;
+  transition: opacity .45s ease, visibility .45s linear;
 }
-.overlay.hidden { opacity: 0; pointer-events: none; }
+
+/* visibility, not just opacity: a backdrop-filtered layer keeps blurring the
+   page while it is merely transparent. */
+.overlay.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
 .card {
-  background: var(--paper-solid);
-  border: 4px solid #fff;
-  border-radius: 28px;
-  box-shadow: 0 10px 0 rgba(90, 70, 110, .16), 0 24px 50px rgba(50, 40, 70, .35);
-  padding: 26px 28px 24px;
-  max-width: 440px;
+  background: var(--glass-strong);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 0.5px solid var(--glass-edge-soft);
+  border-radius: var(--r-lg);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 0.5px 0 var(--glass-edge);
+  padding: 34px 30px 28px;
+  max-width: 400px;
   width: 100%;
   text-align: center;
-  max-height: calc(100vh - 32px);
+  max-height: calc(100vh - 36px);
   overflow-y: auto;
 }
 
-.egg { font-size: 54px; animation: wobble 2.6s ease-in-out infinite; }
-@keyframes wobble {
-  0%, 100% { transform: rotate(-5deg) translateY(0); }
-  25% { transform: rotate(6deg) translateY(-4px); }
-  60% { transform: rotate(-3deg) translateY(0); }
+.sigil {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 18px;
+  color: var(--ember);
+  filter: drop-shadow(0 0 16px var(--ember-dim));
+  animation: pulse 3.4s ease-in-out infinite;
+}
+.sigil svg { width: 100%; height: 100%; display: block; }
+
+@keyframes pulse {
+  0%, 100% { opacity: .78; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
 }
 
-.card h1 { margin: 8px 0 6px; font-size: 27px; color: var(--coral-deep); text-wrap: balance; }
-.sub { margin: 0 0 16px; color: var(--ink-soft); font-weight: 700; font-size: 14.5px; }
+.card h1 {
+  margin: 0 0 8px;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.sub {
+  margin: 0 0 22px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
 
 .name-form { display: flex; flex-direction: column; gap: 10px; }
 
 #nameInput {
   width: 100%;
-  padding: 13px 18px;
+  padding: 14px 18px;
   font: inherit;
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 500;
   text-align: center;
   color: var(--ink);
-  background: #fff;
-  border: 3px solid rgba(120, 100, 150, .18);
-  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 0.5px solid var(--glass-edge-soft);
+  border-radius: 14px;
   outline: none;
-  transition: border-color .2s ease;
+  transition: border-color .25s ease, background .25s ease;
 }
-#nameInput:focus { border-color: var(--mint); }
+#nameInput::placeholder { color: var(--ink-faint); }
+#nameInput:focus {
+  border-color: var(--ember-dim);
+  background: rgba(255, 255, 255, 0.09);
+}
 
-.rules { list-style: none; margin: 0 0 14px; padding: 0; text-align: left; }
+.rules { list-style: none; margin: 0 0 20px; padding: 0; text-align: left; }
 .rules li {
   display: flex;
-  gap: 10px;
+  gap: 13px;
   align-items: flex-start;
-  font-size: 14.5px;
-  font-weight: 700;
-  padding: 8px 0;
-  border-bottom: 2px dashed rgba(110, 95, 140, .14);
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  padding: 11px 0;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
 }
 .rules li:last-child { border-bottom: none; }
-.rules li span { font-size: 18px; line-height: 1.2; }
+.rules li b { color: var(--ink); font-weight: 600; }
+.rules li .ico { width: 17px; height: 17px; flex: none; margin-top: 1px; color: var(--ink-faint); }
+.rules li .ico svg { width: 100%; height: 100%; display: block; }
 
 .big-btn {
   width: 100%;
-  border: none;
-  border-radius: 999px;
+  border: 0.5px solid var(--glass-edge);
+  border-radius: 14px;
   padding: 15px 20px;
   font: inherit;
-  font-size: 18px;
-  font-weight: 900;
-  color: #fff;
-  background: linear-gradient(180deg, var(--coral), var(--coral-deep));
-  box-shadow: 0 6px 0 #cf5637, 0 12px 24px rgba(220, 90, 60, .3);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #06121a;
+  background: linear-gradient(180deg, #8ff6d6, var(--ember));
+  box-shadow: 0 8px 24px rgba(118, 240, 200, 0.22);
   cursor: pointer;
-  transition: transform .1s ease, box-shadow .1s ease;
+  transition: transform .15s cubic-bezier(.22,.61,.36,1), box-shadow .2s ease;
 }
-.big-btn:hover { transform: translateY(-2px); }
-.big-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #cf5637; }
+.big-btn:hover { box-shadow: 0 10px 30px rgba(118, 240, 200, 0.32); }
+.big-btn:active { transform: scale(.98); }
 
-.hint { margin: 14px 0 0; font-size: 12.5px; color: var(--ink-soft); font-weight: 700; }
+.hint { margin: 16px 0 0; font-size: 12px; color: var(--ink-faint); line-height: 1.45; }
 
 .loading {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  background: #8fd3e8;
-  color: #fff;
-  font-weight: 900;
-  font-size: 17px;
+  background: #07080f;
+  color: var(--ink-faint);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   z-index: 20;
-  transition: opacity .5s ease;
+  transition: opacity .7s ease;
 }
 .loading.gone { opacity: 0; pointer-events: none; }
 
+:focus-visible { outline: 1.5px solid var(--ember); outline-offset: 2px; }
+
 @media (max-width: 620px) {
   .pet-panel { min-width: 150px; }
-  .pet-name { font-size: 17px; }
-  .tool { min-width: 62px; padding: 7px 6px 6px; }
+  .tool { min-width: 62px; padding: 9px 8px 8px; }
   .tool-label { font-size: 10px; }
-  .card h1 { font-size: 23px; }
+  .card { padding: 28px 22px 24px; }
+  .card h1 { font-size: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .egg { animation: none; }
+  .sigil { animation: none; }
   * { transition-duration: .01ms !important; }
 }
 </style>
 </head>
 <body>
+<!-- Line icons live here once and are cloned into the interface. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-bone" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5.5 14.5 14 6"/>
+      <path d="M4.2 12.6a2 2 0 1 1 2.6-2.6 2 2 0 1 1-2.6 2.6Z"/>
+      <path d="M13.2 5.4a2 2 0 1 1 2.6 2.6 2 2 0 1 1-2.6-2.6Z"/>
+    </g>
+    <g id="i-spark" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2.5c1.6 3 3.8 4.2 3.8 7.2A3.8 3.8 0 0 1 10 13.5a3.8 3.8 0 0 1-3.8-3.8c0-3 2.2-4.2 3.8-7.2Z"/>
+      <path d="M10 17.5c2.8 0 4.6-1.4 5.4-3.2M10 17.5c-2.8 0-4.6-1.4-5.4-3.2"/>
+    </g>
+    <g id="i-orb" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10" cy="10" r="6.5"/>
+      <path d="M4.4 6.6c3.6 1.2 7.6 1.2 11.2 0M4.4 13.4c3.6-1.2 7.6-1.2 11.2 0"/>
+    </g>
+    <g id="i-moon" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 11.6A6.6 6.6 0 0 1 8.4 4a6.9 6.9 0 1 0 7.6 7.6Z"/>
+    </g>
+    <g id="i-hand" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 11V4.6a1.3 1.3 0 0 1 2.6 0V10"/>
+      <path d="M9.6 9.4V3.8a1.3 1.3 0 0 1 2.6 0v5.8"/>
+      <path d="M12.2 9.8V5.4a1.3 1.3 0 0 1 2.6 0V12c0 3.1-2.1 5.4-5 5.4-2.6 0-4.2-1.5-5.1-3.6l-1.2-2.9a1.3 1.3 0 0 1 2.2-1.3L7 11.4"/>
+    </g>
+    <g id="i-sound" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 8v4h2.6L10 15V5L6.6 8H4Z"/>
+      <path d="M12.6 7.6a3.4 3.4 0 0 1 0 4.8M14.8 5.4a6.5 6.5 0 0 1 0 9.2"/>
+    </g>
+    <g id="i-mute" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 8v4h2.6L10 15V5L6.6 8H4Z"/>
+      <path d="m13 8 4 4M17 8l-4 4"/>
+    </g>
+    <g id="i-help" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7.6 7.4a2.5 2.5 0 1 1 3.3 2.4c-.6.2-.9.8-.9 1.4v.5"/>
+      <path d="M10 15.1h.01"/>
+    </g>
+    <g id="i-eye" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.6 10S5.6 5.2 10 5.2 17.4 10 17.4 10s-3 4.8-7.4 4.8S2.6 10 2.6 10Z"/>
+      <circle cx="10" cy="10" r="1.9"/>
+    </g>
+    <g id="i-drag" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 3.2v13.6M3.2 10h13.6"/>
+      <path d="m7.4 5.8 2.6-2.6 2.6 2.6M7.4 14.2l2.6 2.6 2.6-2.6M5.8 7.4 3.2 10l2.6 2.6M14.2 7.4 16.8 10l-2.6 2.6"/>
+    </g>
+    <g id="i-skull" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 2.4c-4 0-6.6 2.8-6.6 6.4 0 2.2 1 3.6 2 4.5.5.4.8 1 .8 1.7v.8c0 .9.7 1.6 1.6 1.6h4.4c.9 0 1.6-.7 1.6-1.6V15c0-.7.3-1.3.8-1.7 1-.9 2-2.3 2-4.5 0-3.6-2.6-6.4-6.6-6.4Z"/>
+      <circle cx="7.4" cy="9" r="1.6"/>
+      <circle cx="12.6" cy="9" r="1.6"/>
+      <path d="M10 12v1.6"/>
+    </g>
+    <g id="i-zzz" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4.5 6.5h4l-4 5h4"/>
+      <path d="M11.5 4.5h4l-4 5h4"/>
+      <path d="M11.5 13h3l-3 3.5h3"/>
+    </g>
+  </defs>
+</svg>
+
 <div id="app">
   <canvas id="scene"></canvas>
 
@@ -330,19 +489,32 @@ html, body {
     <div class="panel pet-panel">
       <div class="pet-top">
         <span class="pet-name" id="petName">Dragon</span>
-        <span class="pet-stage" id="petStage">hatchling</span>
+        <span class="pet-stage" id="petStage">boneling</span>
       </div>
       <div class="bond" id="bond" title="Bond"></div>
       <div class="needs">
-        <div class="need" title="Fullness"><span class="need-icon">🍓</span><div class="need-bar"><i id="needFood"></i></div></div>
-        <div class="need" title="Energy"><span class="need-icon">⚡</span><div class="need-bar"><i id="needEnergy"></i></div></div>
-        <div class="need" title="Fun"><span class="need-icon">🎾</span><div class="need-bar"><i id="needFun"></i></div></div>
+        <div class="need" title="Fullness">
+          <span class="need-icon"><svg viewBox="0 0 20 20"><use href="#i-bone"/></svg></span>
+          <div class="need-bar"><i id="needFood"></i></div>
+        </div>
+        <div class="need" title="Energy">
+          <span class="need-icon"><svg viewBox="0 0 20 20"><use href="#i-spark"/></svg></span>
+          <div class="need-bar"><i id="needEnergy"></i></div>
+        </div>
+        <div class="need" title="Play">
+          <span class="need-icon"><svg viewBox="0 0 20 20"><use href="#i-orb"/></svg></span>
+          <div class="need-bar"><i id="needFun"></i></div>
+        </div>
       </div>
     </div>
 
     <div class="panel buttons">
-      <button class="icon-btn" id="soundBtn" title="Sound" aria-label="Sound">🔊</button>
-      <button class="icon-btn" id="helpBtn" title="What to do" aria-label="What to do">?</button>
+      <button class="icon-btn" id="soundBtn" title="Sound" aria-label="Sound">
+        <svg viewBox="0 0 20 20"><use href="#i-sound" id="soundIcon"/></svg>
+      </button>
+      <button class="icon-btn" id="helpBtn" title="What to do" aria-label="What to do">
+        <svg viewBox="0 0 20 20"><use href="#i-help"/></svg>
+      </button>
     </div>
   </header>
 
@@ -350,16 +522,16 @@ html, body {
 
   <div class="toolbar" id="toolbar" hidden>
     <button class="tool" id="treatBtn">
-      <span class="tool-icon">🍓</span>
-      <span class="tool-label">Treat</span>
+      <svg viewBox="0 0 20 20"><use href="#i-bone"/></svg>
+      <span class="tool-label">Marrow</span>
     </button>
     <button class="tool" id="ballBtn">
-      <span class="tool-icon">🎾</span>
-      <span class="tool-label">Ball</span>
+      <svg viewBox="0 0 20 20"><use href="#i-orb"/></svg>
+      <span class="tool-label">Wisp</span>
     </button>
     <button class="tool" id="sleepBtn">
-      <span class="tool-icon">💤</span>
-      <span class="tool-label">Sleep</span>
+      <svg viewBox="0 0 20 20"><use href="#i-moon"/></svg>
+      <span class="tool-label">Rest</span>
     </button>
   </div>
 
@@ -367,14 +539,14 @@ html, body {
 
   <div class="overlay" id="startScreen">
     <div class="card">
-      <div class="egg" id="eggArt">🥚</div>
-      <h1 id="startTitle">Your dragon just hatched</h1>
-      <p class="sub" id="startSub">They are tiny and do not know anyone yet. What is their name?</p>
+      <div class="sigil" id="eggArt"><svg viewBox="0 0 20 20"><use href="#i-skull"/></svg></div>
+      <h1 id="startTitle">Something small woke up</h1>
+      <p class="sub" id="startSub">A little dragon of bone and emberlight, alone on a dead island. They do not know anyone yet. What is their name?</p>
       <form class="name-form" id="nameForm">
         <input id="nameInput" type="text" maxlength="16" autocomplete="off" placeholder="Name your dragon" aria-label="Name your dragon">
-        <button class="big-btn" type="submit" id="startBtn">Say hello</button>
+        <button class="big-btn" type="submit" id="startBtn">Call them over</button>
       </form>
-      <p class="hint">Works with a mouse and with a finger. You cannot lose — your dragon is always happy to see you.</p>
+      <p class="hint">Mouse or finger, both work. Nothing here can be lost — they are always glad you came.</p>
     </div>
   </div>
 
@@ -382,18 +554,33 @@ html, body {
     <div class="card">
       <h1>What to do here</h1>
       <ul class="rules">
-        <li><span>✋</span> <b>Pet them.</b> Drag your finger or mouse across the dragon — they squint, lean in and rumble.</li>
-        <li><span>🎾</span> <b>Play fetch.</b> Press “Ball”, then tap the grass: they dash off, grab it and bring it back.</li>
-        <li><span>🍓</span> <b>Feed them.</b> Press “Treat” and hold the berry up to their snout.</li>
-        <li><span>💤</span> <b>Tuck them in.</b> When tired they yawn and curl up on their own. Or press “Sleep”.</li>
-        <li><span>🖱</span> <b>Look around.</b> Drag across the grass to walk around the meadow, scroll or pinch to zoom.</li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-hand"/></svg></span>
+          <span><b>Pet them.</b> Drag across the bones — the ember in their chest flares and they lean into your hand.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-orb"/></svg></span>
+          <span><b>Throw a wisp.</b> Press Wisp, then tap the ash: they will chase it down and carry it back.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-bone"/></svg></span>
+          <span><b>Feed them.</b> Press Marrow and hold it up to their jaws.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-zzz"/></svg></span>
+          <span><b>Let them rest.</b> When tired they curl up by the bone circle and the dark deepens.</span>
+        </li>
+        <li>
+          <span class="ico"><svg viewBox="0 0 20 20"><use href="#i-drag"/></svg></span>
+          <span><b>Look around.</b> Drag the ground to circle the island, scroll or pinch to come closer.</span>
+        </li>
       </ul>
-      <p class="sub">The more time you spend together, the more attached your dragon gets — and the more they grow. A grown dragon learns to fly.</p>
+      <p class="sub">The longer you stay, the brighter their ember burns — and the more they grow. A grown dragon takes to the air.</p>
       <button class="big-btn" id="closeHelpBtn">Got it</button>
     </div>
   </div>
 
-  <div class="loading" id="loading">The meadow is waking up…</div>
+  <div class="loading" id="loading">Lighting the ember…</div>
 </div>
 
 <script>
@@ -4603,16 +4790,18 @@ window.Audio3D = (function () {
     /** A greeting trill. */
     chirp: function (pitch) {
       pitch = pitch || 1;
-      tone({ from: 440 * pitch, to: 880 * pitch, dur: 0.16, volume: 0.09, type: 'triangle' });
-      tone({ from: 660 * pitch, to: 1180 * pitch, dur: 0.14, volume: 0.05, type: 'sine', delay: 0.1 });
+      tone({ from: 300 * pitch, to: 560 * pitch, dur: 0.2, volume: 0.08, type: 'triangle' });
+      tone({ from: 150 * pitch, to: 250 * pitch, dur: 0.26, volume: 0.05, type: 'sine', delay: 0.06 });
+      noise({ dur: 0.09, freq: 2400, q: 3, volume: 0.03 });
     },
 
     /** A pleased "mrr-ow". */
     happy: function (pitch) {
       pitch = pitch || 1;
       [0, 0.09, 0.19].forEach(function (d, i) {
-        tone({ from: 520 * pitch * (1 + i * 0.22), to: 760 * pitch * (1 + i * 0.22), dur: 0.18, volume: 0.08, delay: d });
+        tone({ from: 330 * pitch * (1 + i * 0.2), to: 520 * pitch * (1 + i * 0.2), dur: 0.22, volume: 0.075, delay: d });
       });
+      noise({ dur: 0.3, freq: 3200, q: 2, volume: 0.02, swell: true });
     },
 
     /** A questioning "mrm?" — when they want something. */
@@ -4632,7 +4821,9 @@ window.Audio3D = (function () {
     },
 
     step: function () {
-      noise({ dur: 0.08, freq: 260, q: 1.2, volume: 0.035 });
+      // Bone on stone: a dry click, not a soft footfall.
+      noise({ dur: 0.05, freq: 1600, q: 6, volume: 0.03 });
+      tone({ from: 220, to: 120, dur: 0.06, volume: 0.025, type: 'square' });
     },
 
     munch: function () {
@@ -4817,16 +5008,17 @@ window.World = (function () {
   }
 
   var PALETTE = {
-    grassLight: 0x9ede72,
-    grassDark: 0x6fbf55,
-    soil: 0x8a6a4a,
-    rock: 0x9a9bad,
-    water: 0x7fd4e8,
-    trunk: 0x9a6b48,
-    leaf: 0x5fb45c,
-    leafWarm: 0x86c95e,
-    petal: [0xfff1f4, 0xffd9e6, 0xfff6c8, 0xe3dcff],
-    cushion: 0xf0a7b4
+    grassLight: 0x3c4a52,
+    grassDark: 0x232c38,
+    soil: 0x1b1a26,
+    rock: 0x39394a,
+    water: 0x16283a,
+    trunk: 0x2b2533,
+    leaf: 0x2f3a3f,
+    leafWarm: 0x3a4148,
+    petal: [0x8fe8d0, 0x7fd4ff, 0xc9b6ff, 0xdfe8ff],   // ghost blooms
+    cushion: 0x2a2436,
+    ember: 0x76f0c8
   };
 
   /* ---------- building the world ---------- */
@@ -4835,8 +5027,8 @@ window.World = (function () {
     var geo = new THREE.SphereGeometry(90, 20, 14);
     var colors = [];
     var pos = geo.attributes.position;
-    var top = new THREE.Color(0x63b8e8);
-    var bottom = new THREE.Color(0xdff2f6);
+    var top = new THREE.Color(0x080a14);
+    var bottom = new THREE.Color(0x2a2340);
     for (var i = 0; i < pos.count; i++) {
       var t = smoothstep(-20, 55, pos.getY(i));
       var c = bottom.clone().lerp(top, t);
@@ -4892,7 +5084,7 @@ window.World = (function () {
     var blade = new THREE.ConeGeometry(0.05, 0.3, 3);
     blade.translate(0, 0.15, 0);
 
-    grassMat = new THREE.MeshLambertMaterial({ color: 0x86cf62, flatShading: true });
+    grassMat = new THREE.MeshLambertMaterial({ color: 0x46525c, flatShading: true });
     // Wind: blade tips sway in the vertex shader.
     grassMat.onBeforeCompile = function (shader) {
       shader.uniforms.uTime = clockUniform;
@@ -4932,7 +5124,8 @@ window.World = (function () {
       dummy.scale.set(s, rand(0.7, 1.35), s);
       dummy.updateMatrix();
       grass.setMatrixAt(placed, dummy.matrix);
-      color.setHSL(0.26 + rand(-0.03, 0.04), rand(0.42, 0.62), rand(0.42, 0.6));
+      // Dead, cold grass with the odd blade catching the soul light.
+      color.setHSL(0.46 + rand(-0.05, 0.06), rand(0.06, 0.22), rand(0.16, 0.34));
       grass.setColorAt(placed, color);
       placed++;
     }
@@ -4944,23 +5137,34 @@ window.World = (function () {
 
   function buildTree(x, z, scale) {
     var group = new THREE.Group();
-    var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.24, 1.5, 6), mat(PALETTE.trunk));
-    trunk.position.y = 0.75;
+    var trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.26, 2.1, 6), mat(PALETTE.trunk));
+    trunk.position.y = 1.05;
+    trunk.rotation.z = rand(-0.12, 0.12);
     trunk.castShadow = true;
     group.add(trunk);
 
-    var tiers = [
-      { r: 1.15, h: 1.5, y: 1.65, c: PALETTE.leaf },
-      { r: 0.9, h: 1.25, y: 2.4, c: PALETTE.leafWarm },
-      { r: 0.6, h: 1.0, y: 3.05, c: PALETTE.leaf }
-    ];
-    tiers.forEach(function (t) {
-      var cone = new THREE.Mesh(new THREE.ConeGeometry(t.r, t.h, 7), mat(t.c));
-      cone.position.y = t.y;
-      cone.rotation.y = rand(0, TAU);
-      cone.castShadow = true;
-      group.add(cone);
-    });
+    // Bare branches instead of a crown: the meadow died a long time ago.
+    var branches = Math.floor(rand(5, 8));
+    for (var b = 0; b < branches; b++) {
+      var len = rand(0.7, 1.5);
+      var branch = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.07, len, 4), mat(PALETTE.trunk));
+      var ang = (b / branches) * TAU + rand(-0.4, 0.4);
+      var lift = 1.0 + rand(0, 0.9);
+      branch.position.set(Math.cos(ang) * len * 0.32, lift + len * 0.32, Math.sin(ang) * len * 0.32);
+      branch.rotation.set(Math.cos(ang) * rand(0.5, 1.1), 0, -Math.sin(ang) * rand(0.5, 1.1));
+      branch.castShadow = true;
+      group.add(branch);
+
+      // A twig or two off each branch.
+      if (Math.random() < 0.7) {
+        var twig = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.03, len * 0.55, 4), mat(PALETTE.trunk));
+        twig.position.set(
+          Math.cos(ang) * len * 0.62, lift + len * 0.72, Math.sin(ang) * len * 0.62
+        );
+        twig.rotation.set(Math.cos(ang + 0.8) * 1.2, 0, -Math.sin(ang + 0.8) * 1.2);
+        group.add(twig);
+      }
+    }
 
     group.position.set(x, heightAt(x, z), z);
     group.scale.setScalar(scale);
@@ -4982,15 +5186,19 @@ window.World = (function () {
 
   function buildFlower(x, z) {
     var group = new THREE.Group();
-    var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.03, 0.3, 4), mat(0x66b653));
+    var stem = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.03, 0.3, 4), mat(0x2c3a38));
     stem.position.y = 0.15;
     group.add(stem);
     var petalColor = PALETTE.petal[Math.floor(Math.random() * PALETTE.petal.length)];
-    var head = new THREE.Mesh(new THREE.IcosahedronGeometry(0.11, 0), mat(petalColor));
+    var head = new THREE.Mesh(new THREE.IcosahedronGeometry(0.11, 0), new THREE.MeshBasicMaterial({
+      color: petalColor, transparent: true, opacity: 0.5
+    }));
     head.position.y = 0.32;
     head.scale.y = 0.7;
     group.add(head);
-    var core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.05, 0), mat(0xffcc57));
+    var core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.05, 0), new THREE.MeshBasicMaterial({
+      color: 0xdffff4, transparent: true, opacity: 0.8
+    }));
     core.position.y = 0.37;
     group.add(core);
     group.position.set(x, heightAt(x, z), z);
@@ -5003,8 +5211,9 @@ window.World = (function () {
   function buildPond() {
     var geo = new THREE.CircleGeometry(2.6, 22);
     geo.rotateX(-Math.PI / 2);
-    water = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({
-      color: PALETTE.water, flatShading: true, transparent: true, opacity: 0.85
+    water = new THREE.Mesh(geo, new THREE.MeshPhongMaterial({
+      color: PALETTE.water, flatShading: true, transparent: true, opacity: 0.9,
+      shininess: 90, specular: 0x9fd8ff
     }));
     water.position.set(5.4, heightAt(5.4, 4.2) - 0.12, 4.2);
     water.receiveShadow = false;
@@ -5020,23 +5229,45 @@ window.World = (function () {
   /** The bed — where the dragon comes to sleep. */
   function buildBed() {
     bed = new THREE.Group();
-    var pad = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.35, 0.22, 12), mat(PALETTE.cushion));
-    pad.receiveShadow = true;
-    pad.castShadow = true;
-    bed.add(pad);
-    var rim = new THREE.Mesh(new THREE.TorusGeometry(1.22, 0.17, 6, 14), mat(0xe08fa0));
-    rim.rotation.x = Math.PI / 2;
-    rim.position.y = 0.1;
-    rim.castShadow = true;
-    bed.add(rim);
-    bed.position.set(-5.2, heightAt(-5.2, -3.4) + 0.1, -3.4);
+    var slab = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.35, 0.22, 9), mat(PALETTE.cushion));
+    slab.receiveShadow = true;
+    slab.castShadow = true;
+    bed.add(slab);
+
+    // A ring of old bones instead of a cushion.
+    for (var b = 0; b < 11; b++) {
+      var a = (b / 11) * TAU;
+      var boneMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.05, 0.05, rand(0.4, 0.7), 4),
+        mat(0xd9d2be)
+      );
+      boneMesh.position.set(Math.cos(a) * 1.16, 0.14, Math.sin(a) * 1.16);
+      boneMesh.rotation.set(Math.PI / 2, 0, -a + rand(-0.3, 0.3));
+      boneMesh.castShadow = true;
+      bed.add(boneMesh);
+
+      var knob = new THREE.Mesh(new THREE.IcosahedronGeometry(0.075, 0), mat(0xd9d2be));
+      knob.position.set(Math.cos(a) * 1.16 + rand(-0.2, 0.2), 0.16, Math.sin(a) * 1.16 + rand(-0.2, 0.2));
+      bed.add(knob);
+    }
+
+    // A candle-like ember marking the resting place.
+    var flame = new THREE.Mesh(new THREE.IcosahedronGeometry(0.13, 0), new THREE.MeshBasicMaterial({
+      color: PALETTE.ember, transparent: true, opacity: 0.85, fog: false
+    }));
+    flame.position.set(0, 0.5, -1.25);
+    bed.add(flame);
+    var flameLight = new THREE.PointLight(PALETTE.ember, 1.4, 5, 2);
+    flameLight.position.copy(flame.position);
+    bed.add(flameLight);
+    bed.userData.flame = flame;    bed.position.set(-5.2, heightAt(-5.2, -3.4) + 0.1, -3.4);
     scene.add(bed);
   }
 
   function buildButterflies() {
     for (var i = 0; i < 5; i++) {
       var g = new THREE.Group();
-      var color = [0xfff0a8, 0xffd0e4, 0xd6e6ff, 0xffc9a8][i % 4];
+      var color = [0x9fb6c9, 0x8aa0b8, 0xb9c6d6, 0x7f93aa][i % 4];
       var wingGeo = new THREE.CircleGeometry(0.16, 4);
       var m = new THREE.MeshLambertMaterial({ color: color, flatShading: true, side: THREE.DoubleSide });
       var left = new THREE.Mesh(wingGeo, m);
@@ -5067,7 +5298,7 @@ window.World = (function () {
     }
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     fireflies = new THREE.Points(geo, new THREE.PointsMaterial({
-      color: 0xfff0a0, size: 0.16, transparent: true, opacity: 0, depthWrite: false,
+      color: 0x8ff0d8, size: 0.19, transparent: true, opacity: 0.6, depthWrite: false,
       blending: THREE.AdditiveBlending
     }));
     fireflies.userData.phases = Array.from({ length: count }, function () { return rand(0, TAU); });
@@ -5111,33 +5342,36 @@ window.World = (function () {
 
   function initTextures() {
     textures.heart = makeSpriteTexture(function (g) {
-      g.fillStyle = '#ff7d9e';
+      var grd = g.createRadialGradient(32, 32, 0, 32, 32, 26);
+      grd.addColorStop(0, 'rgba(232, 255, 246, 1)');
+      grd.addColorStop(0.45, 'rgba(118, 240, 200, 0.85)');
+      grd.addColorStop(1, 'rgba(118, 240, 200, 0)');
+      g.fillStyle = grd;
       g.beginPath();
-      g.moveTo(32, 52);
-      g.bezierCurveTo(-6, 28, 10, 4, 32, 22);
-      g.bezierCurveTo(54, 4, 70, 28, 32, 52);
+      g.moveTo(32, 4);
+      g.lineTo(48, 32);
+      g.lineTo(32, 60);
+      g.lineTo(16, 32);
+      g.closePath();
       g.fill();
-      g.strokeStyle = 'rgba(255,255,255,0.9)';
-      g.lineWidth = 3;
-      g.stroke();
     });
     textures.spark = makeSpriteTexture(function (g) {
       var grd = g.createRadialGradient(32, 32, 0, 32, 32, 30);
-      grd.addColorStop(0, 'rgba(255,255,220,1)');
-      grd.addColorStop(0.4, 'rgba(255,220,120,0.9)');
-      grd.addColorStop(1, 'rgba(255,200,80,0)');
+      grd.addColorStop(0, 'rgba(236,255,248,1)');
+      grd.addColorStop(0.4, 'rgba(140,244,208,0.85)');
+      grd.addColorStop(1, 'rgba(118,240,200,0)');
       g.fillStyle = grd;
       g.fillRect(0, 0, 64, 64);
     });
     textures.smoke = makeSpriteTexture(function (g) {
       var grd = g.createRadialGradient(32, 32, 0, 32, 32, 30);
-      grd.addColorStop(0, 'rgba(255,255,255,0.85)');
-      grd.addColorStop(1, 'rgba(230,235,245,0)');
+      grd.addColorStop(0, 'rgba(186,200,225,0.6)');
+      grd.addColorStop(1, 'rgba(150,168,200,0)');
       g.fillStyle = grd;
       g.fillRect(0, 0, 64, 64);
     });
     textures.note = makeSpriteTexture(function (g) {
-      g.fillStyle = '#ffffff';
+      g.fillStyle = '#bff4e4';
       g.font = 'bold 46px system-ui, sans-serif';
       g.textAlign = 'center';
       g.textBaseline = 'middle';
@@ -5255,16 +5489,16 @@ window.World = (function () {
       renderer.outputColorSpace = THREE.SRGBColorSpace;
 
       scene = new THREE.Scene();
-      scene.fog = new THREE.Fog(0xcfeaf2, 26, 62);
+      scene.fog = new THREE.Fog(0x0e1120, 14, 46);
 
       camera = new THREE.PerspectiveCamera(46, 1, 0.1, 200);
       cam.target = new THREE.Vector3(0, 0.4, 0);
       cam.desiredTarget = new THREE.Vector3(0, 0.4, 0);
 
-      hemi = new THREE.HemisphereLight(0xd9f2ff, 0x76a55a, 1.15);
+      hemi = new THREE.HemisphereLight(0x4a5891, 0x14171f, 1.05);
       scene.add(hemi);
 
-      sun = new THREE.DirectionalLight(0xfff2d6, 1.5);
+      sun = new THREE.DirectionalLight(0xbfd2ff, 1.25);   // moonlight
       sun.position.set(9, 14, 6);
       sun.castShadow = true;
       sun.shadow.mapSize.set(1024, 1024);
@@ -5405,20 +5639,20 @@ window.World = (function () {
       night += (nightTarget - night) * Math.min(1, dt * 0.7);
 
       // Light and sky drift gently into dusk.
-      var dayColor = new THREE.Color(0xfff2d6);
-      var nightColor = new THREE.Color(0x8fa8ff);
-      sun.color.copy(dayColor).lerp(nightColor, night);
-      sun.intensity = 1.5 - night * 1.05;
-      hemi.intensity = 1.15 - night * 0.6;
-      hemi.color.setHex(0xd9f2ff).lerp(new THREE.Color(0x415c9c), night);
-      hemi.groundColor.setHex(0x76a55a).lerp(new THREE.Color(0x2c3f52), night);
-      sky.material.color.setRGB(1, 1, 1).lerp(new THREE.Color(0x2f4a86), night * 0.92);
-      scene.fog.color.setHex(0xcfeaf2).lerp(new THREE.Color(0x27385f), night);
+      // The world is already dark; "night" deepens it further while the dragon sleeps.
+      var duskColor = new THREE.Color(0xa9c0ff);
+      var deepColor = new THREE.Color(0x5566b0);
+      sun.color.copy(duskColor).lerp(deepColor, night);
+      sun.intensity = 1.25 - night * 0.6;
+      hemi.intensity = 1.05 - night * 0.5;
+      hemi.color.setHex(0x35406b).lerp(new THREE.Color(0x1b2242), night);
+      sky.material.color.setRGB(1, 1, 1).lerp(new THREE.Color(0x4a4870), night * 0.6);
+      scene.fog.color.setHex(0x0e1120).lerp(new THREE.Color(0x06070f), night);
       renderer.setClearColor(scene.fog.color);
 
       if (fireflies) {
-        fireflies.material.opacity = night * 0.9;
-        if (night > 0.05) {
+        fireflies.material.opacity = 0.55 + night * 0.4;
+        {
           var fpos = fireflies.geometry.attributes.position;
           var phases = fireflies.userData.phases;
           for (var f = 0; f < phases.length; f++) {
@@ -5441,7 +5675,7 @@ window.World = (function () {
         var flap = Math.abs(Math.sin(u.flap)) * 1.1;
         u.left.rotation.y = flap;
         u.right.rotation.y = -flap;
-        b.visible = night < 0.55;
+        b.visible = true;
       });
 
       // Flowers sway.
@@ -5480,20 +5714,33 @@ window.Dragon = (function () {
   var TAU = Math.PI * 2;
 
   var COLORS = {
-    body: 0x63cfae,
-    bodyDeep: 0x46b394,
-    belly: 0xfbe6c4,
-    crest: 0xff9d7d,
-    membrane: 0xffb59c,
-    horn: 0xfff2d8,
-    eye: 0x2b2440,
-    blush: 0xff9fb0
+    bone: 0xe9e2cf,
+    boneShade: 0xb6ad96,
+    socket: 0x241f2e,
+    ember: 0x76f0c8,
+    emberLight: 0x63e6c4,
+    membrane: 0x584a70
   };
 
+  /** Bones are lit normally; embers ignore light so they glow against the dark. */
+  function boneMat() {
+    // A touch of emissive keeps the bones readable against a very dark world,
+    // without washing out the shading.
+    return new THREE.MeshLambertMaterial({
+      color: COLORS.bone, emissive: 0x2f3444, flatShading: true
+    });
+  }
+
+  function emberMat(opacity) {
+    return new THREE.MeshBasicMaterial({
+      color: COLORS.ember, transparent: opacity < 1, opacity: opacity, fog: false
+    });
+  }
+
   var STAGES = {
-    baby: { root: 0.95, head: 1.08, wing: 0.6, leg: 1, label: 'hatchling' },
-    teen: { root: 1.2, head: 1.0, wing: 0.85, leg: 1.08, label: 'fledgling' },
-    flyer: { root: 1.45, head: 0.94, wing: 1.15, leg: 1.14, label: 'flier' }
+    baby: { root: 0.95, head: 1.08, wing: 0.6, leg: 1, label: 'boneling' },
+    teen: { root: 1.2, head: 1.0, wing: 0.85, leg: 1.08, label: 'wyrmling' },
+    flyer: { root: 1.45, head: 0.94, wing: 1.15, leg: 1.14, label: 'wraith' }
   };
 
   // Target values for a pose. Everything animated lives here and blends smoothly.
@@ -5561,232 +5808,334 @@ window.Dragon = (function () {
   Dragon.prototype.build = function () {
     var self = this;
 
-    // --- body ---
+    // --- body: a spine, a ribcage and a soul ember instead of flesh ---
     this.body = new THREE.Group();
     this.root.add(this.body);
 
     this.torso = new THREE.Group();
     this.body.add(this.torso);
 
-    var torsoGeo = new THREE.IcosahedronGeometry(0.66, 1);
-    torsoGeo.scale(0.98, 0.9, 1.3);
-    this.torsoMesh = mesh(torsoGeo, COLORS.body);
+    // The spine runs through the whole torso; ribs hang off it.
+    var spine = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.075, 0.075, 1.35, 6),
+      boneMat()
+    );
+    spine.rotation.x = Math.PI / 2;
+    spine.position.set(0, 0.16, -0.05);
+    this.torso.add(spine);
+
+    // torsoMesh is what the breathing animation scales — here it is the ribcage.
+    this.torsoMesh = new THREE.Group();
     this.torso.add(this.torsoMesh);
 
-    var bellyGeo = new THREE.IcosahedronGeometry(0.46, 1);
-    bellyGeo.scale(0.92, 0.8, 1.1);
-    this.bellyMesh = mesh(bellyGeo, COLORS.belly);
-    this.bellyMesh.position.set(0, -0.22, 0.06);
+    var ribCount = 5;
+    for (var r = 0; r < ribCount; r++) {
+      var t = r / (ribCount - 1);
+      var span = 0.5 - Math.abs(t - 0.42) * 0.34;      // widest around the chest
+      var rib = new THREE.Mesh(
+        new THREE.TorusGeometry(span, 0.045, 4, 10, Math.PI * 1.15),
+        boneMat()
+      );
+      rib.rotation.set(0, Math.PI / 2, Math.PI * 0.5 + 0.08);
+      rib.position.set(0, 0.12, 0.44 - t * 1.12);
+      this.torsoMesh.add(rib);
+    }
+
+    // Sternum, so the ribcage reads as closed from the front.
+    var sternum = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.07, 0.95), boneMat());
+    sternum.position.set(0, -0.32, 0.0);
+    this.torsoMesh.add(sternum);
+
+    // Hips.
+    var pelvis = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.06, 4, 8), boneMat());
+    pelvis.rotation.set(Math.PI / 2, 0, 0);
+    pelvis.position.set(0, 0.02, -0.6);
+    this.torso.add(pelvis);
+
+    // Shoulder blades.
+    [-1, 1].forEach(function (side) {
+      var blade = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.26, 0.3), boneMat());
+      blade.position.set(side * 0.3, 0.28, 0.34);
+      blade.rotation.z = side * 0.3;
+      self.torso.add(blade);
+    });
+
+    // The soul: a warm ember floating inside the ribs. bellyMesh, so it breathes.
+    this.bellyMesh = new THREE.Group();
+    this.bellyMesh.position.set(0, 0.02, 0.1);
     this.torso.add(this.bellyMesh);
 
-    // The crest along the spine.
+    var core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.17, 0), emberMat(0.95));
+    this.bellyMesh.add(core);
+    var halo = new THREE.Mesh(new THREE.IcosahedronGeometry(0.3, 0), emberMat(0.22));
+    this.bellyMesh.add(halo);
+    this.soulCore = core;
+    this.soulHalo = halo;
+
+    // A single light lives in the chest: it lifts the bones out of the dark
+    // and paints the grass around the dragon.
+    this.soulLight = new THREE.PointLight(COLORS.emberLight, 2.6, 7, 2);
+    this.bellyMesh.add(this.soulLight);
+
+    // Spikes along the spine.
     this.crest = [];
-    for (var i = 0; i < 4; i++) {
-      var spike = mesh(new THREE.ConeGeometry(0.09 - i * 0.012, 0.24 - i * 0.03, 4), COLORS.crest);
-      spike.position.set(0, 0.55 - i * 0.04, 0.35 - i * 0.3);
-      spike.rotation.x = -0.25 + i * 0.06;
+    for (var i = 0; i < 5; i++) {
+      var spike = new THREE.Mesh(new THREE.ConeGeometry(0.05 - i * 0.005, 0.2 - i * 0.02, 4), boneMat());
+      spike.position.set(0, 0.42 - i * 0.02, 0.38 - i * 0.24);
+      spike.rotation.x = -0.3 + i * 0.05;
       this.torso.add(spike);
       this.crest.push(spike);
     }
 
-    // --- neck and head ---
+    // --- neck and skull ---
     this.neck = new THREE.Group();
-    this.neck.position.set(0, 0.42, 0.38);
+    this.neck.position.set(0, 0.38, 0.42);
     this.torso.add(this.neck);
 
-    var neckGeo = new THREE.CylinderGeometry(0.22, 0.28, 0.42, 7);
-    var neckMesh = mesh(neckGeo, COLORS.body);
-    neckMesh.position.y = 0.18;
-    neckMesh.rotation.x = 0.16;
-    this.neck.add(neckMesh);
+    [0, 1, 2].forEach(function (n) {
+      var vert = new THREE.Mesh(new THREE.IcosahedronGeometry(0.11 - n * 0.008, 0), boneMat());
+      vert.position.set(0, 0.09 * n, 0.02 * n);
+      self.neck.add(vert);
+    });
 
     this.neck2 = new THREE.Group();
-    this.neck2.position.set(0, 0.3, 0.08);
+    this.neck2.position.set(0, 0.28, 0.06);
     this.neck.add(this.neck2);
+
+    [0, 1].forEach(function (n) {
+      var vert = new THREE.Mesh(new THREE.IcosahedronGeometry(0.1 - n * 0.01, 0), boneMat());
+      vert.position.set(0, 0.09 * n, 0.02 * n);
+      self.neck2.add(vert);
+    });
 
     this.head = new THREE.Group();
     this.head.position.set(0, 0.2, 0.06);
     this.neck2.add(this.head);
 
-    var skullGeo = new THREE.IcosahedronGeometry(0.36, 1);
-    skullGeo.scale(1, 0.94, 1.06);
-    this.head.add(mesh(skullGeo, COLORS.body));
+    // Cranium: round and slightly oversized, because a cute skull is a round skull.
+    var skullGeo = new THREE.IcosahedronGeometry(0.34, 1);
+    skullGeo.scale(1, 0.95, 1.02);
+    this.head.add(new THREE.Mesh(skullGeo, boneMat()));
 
-    var snoutGeo = new THREE.BoxGeometry(0.34, 0.24, 0.34);
-    var snout = mesh(snoutGeo, COLORS.body);
-    snout.position.set(0, -0.06, 0.32);
+    // Muzzle with a hint of a nasal ridge.
+    var snout = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.17, 0.34), boneMat());
+    snout.position.set(0, -0.04, 0.32);
     this.head.add(snout);
     this.snout = snout;
 
-    var nostrilGeo = new THREE.SphereGeometry(0.03, 5, 4);
-    [-0.09, 0.09].forEach(function (x) {
-      var n = mesh(nostrilGeo, COLORS.bodyDeep);
-      n.position.set(x, 0.02, 0.49);
-      self.head.add(n);
+    var nasal = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.07, 0.3), boneMat());
+    nasal.position.set(0, 0.08, 0.33);
+    this.head.add(nasal);
+
+    // Upper teeth.
+    [-0.09, -0.03, 0.03, 0.09].forEach(function (x) {
+      var tooth = new THREE.Mesh(new THREE.ConeGeometry(0.022, 0.08, 4), boneMat());
+      tooth.position.set(x, -0.13, 0.36);
+      tooth.rotation.x = Math.PI;
+      self.head.add(tooth);
     });
 
-    // The jaw — opens for yawns, meals and chirps.
+    // Lower jaw: opens for yawns, meals and chirps.
     this.jawGroup = new THREE.Group();
-    this.jawGroup.position.set(0, -0.14, 0.16);
+    this.jawGroup.position.set(0, -0.14, 0.14);
     this.head.add(this.jawGroup);
-    var jawMesh = mesh(new THREE.BoxGeometry(0.3, 0.12, 0.32), COLORS.belly);
-    jawMesh.position.set(0, -0.04, 0.16);
-    this.jawGroup.add(jawMesh);
 
-    // Eyes: big, dark, with a highlight. Blinking squashes them vertically.
+    var jawMesh = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.07, 0.34), boneMat());
+    jawMesh.position.set(0, -0.03, 0.16);
+    this.jawGroup.add(jawMesh);
+    [-0.07, 0, 0.07].forEach(function (x) {
+      var tooth = new THREE.Mesh(new THREE.ConeGeometry(0.02, 0.07, 4), boneMat());
+      tooth.position.set(x, 0.04, 0.24);
+      self.jawGroup.add(tooth);
+    });
+
+    // Eye sockets with an ember inside. Blinking squeezes the flame, which reads
+    // as a flicker rather than an eyelid.
     this.eyes = [];
     this.pupils = [];
     [-1, 1].forEach(function (side) {
+      var socket = new THREE.Mesh(new THREE.IcosahedronGeometry(0.14, 0), new THREE.MeshLambertMaterial({
+        color: COLORS.socket, flatShading: true
+      }));
+      socket.position.set(side * 0.19, 0.06, 0.2);
+      socket.scale.set(1, 0.92, 0.7);
+      self.head.add(socket);
+
       var eye = new THREE.Group();
-      eye.position.set(side * 0.21, 0.08, 0.24);
+      eye.position.set(side * 0.19, 0.06, 0.26);
       self.head.add(eye);
 
-      var ball = mesh(new THREE.SphereGeometry(0.115, 10, 8), COLORS.eye);
-      eye.add(ball);
-
-      var shine = mesh(new THREE.SphereGeometry(0.042, 6, 5), 0xffffff);
-      shine.position.set(side * 0.03, 0.045, 0.085);
-      eye.add(shine);
-
-      var shine2 = mesh(new THREE.SphereGeometry(0.022, 5, 4), 0xffffff);
-      shine2.position.set(side * -0.04, -0.03, 0.09);
-      eye.add(shine2);
+      var flame = new THREE.Mesh(new THREE.IcosahedronGeometry(0.075, 0), emberMat(0.98));
+      eye.add(flame);
+      var glow = new THREE.Mesh(new THREE.IcosahedronGeometry(0.13, 0), emberMat(0.3));
+      eye.add(glow);
+      var spark = new THREE.Mesh(new THREE.IcosahedronGeometry(0.03, 0), emberMat(1));
+      spark.position.set(side * 0.03, 0.03, 0.05);
+      eye.add(spark);
 
       self.eyes.push(eye);
-      self.pupils.push({ ball: ball, shine: shine, shine2: shine2 });
+      self.pupils.push({ ball: flame, shine: spark, shine2: glow });
     });
 
-    // Blush.
-    [-1, 1].forEach(function (side) {
-      var blush = mesh(new THREE.SphereGeometry(0.075, 6, 5), COLORS.blush, { transparent: true, opacity: 0.55 });
-      blush.scale.set(1, 0.6, 0.4);
-      blush.position.set(side * 0.28, -0.04, 0.16);
-      self.head.add(blush);
-    });
-
-    // Horns.
+    // Horns: curved back, a little too big for the skull.
     this.horns = [];
     [-1, 1].forEach(function (side) {
-      var horn = mesh(new THREE.ConeGeometry(0.07, 0.34, 5), COLORS.horn);
-      horn.position.set(side * 0.15, 0.3, -0.1);
-      horn.rotation.set(-0.5, 0, side * 0.25);
+      var horn = new THREE.Group();
+      horn.position.set(side * 0.15, 0.26, -0.08);
+      var base = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.26, 5), boneMat());
+      base.position.y = 0.12;
+      base.rotation.x = -0.45;
+      horn.add(base);
+      var tip = new THREE.Mesh(new THREE.ConeGeometry(0.04, 0.2, 5), boneMat());
+      tip.position.set(0, 0.26, -0.12);
+      tip.rotation.x = -0.95;
+      horn.add(tip);
+      horn.rotation.z = side * 0.22;
       self.head.add(horn);
       self.horns.push(horn);
     });
 
-    // Ears — they twitch.
+    // "Ears": thin bone fins that twitch like ears.
     this.ears = [];
     [-1, 1].forEach(function (side) {
       var ear = new THREE.Group();
-      ear.position.set(side * 0.28, 0.16, -0.08);
-      var earMesh = mesh(new THREE.ConeGeometry(0.11, 0.3, 4), COLORS.body);
-      earMesh.scale.set(1, 1, 0.45);
-      earMesh.position.y = 0.12;
-      ear.add(earMesh);
-      var inner = mesh(new THREE.ConeGeometry(0.06, 0.2, 4), COLORS.membrane);
-      inner.scale.set(1, 1, 0.4);
-      inner.position.set(0, 0.11, 0.03);
-      ear.add(inner);
-      ear.rotation.z = side * 0.55;
+      ear.position.set(side * 0.26, 0.1, -0.1);
+      var fin = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.3, 3), boneMat());
+      fin.scale.set(1, 1, 0.32);
+      fin.position.y = 0.12;
+      ear.add(fin);
+      var strut = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.26, 4), boneMat());
+      strut.position.y = 0.12;
+      ear.add(strut);
+      ear.rotation.z = side * 0.5;
       self.head.add(ear);
       self.ears.push(ear);
     });
 
-    // --- tail: a chain of segments, each lagging behind the previous one ---
+    // --- tail: a chain of vertebrae, each lagging behind the previous one ---
     this.tail = [];
     var parent = this.torso;
-    for (var t = 0; t < 7; t++) {
+    for (var s = 0; s < 8; s++) {
       var seg = new THREE.Group();
-      seg.position.set(0, t === 0 ? 0.06 : 0, t === 0 ? -0.6 : -0.24);
-      var r = 0.2 - t * 0.024;
-      var segMesh = mesh(new THREE.CylinderGeometry(r * 0.82, r, 0.26, 6), COLORS.body);
-      segMesh.rotation.x = Math.PI / 2;
-      segMesh.position.z = -0.12;
-      seg.add(segMesh);
-      if (t > 1 && t < 6) {
-        var fin = mesh(new THREE.ConeGeometry(0.055, 0.16, 4), COLORS.crest);
-        fin.position.set(0, r * 0.9, -0.1);
-        fin.rotation.x = -0.3;
+      seg.position.set(0, s === 0 ? 0.04 : 0, s === 0 ? -0.66 : -0.2);
+      var rad = 0.1 - s * 0.009;
+
+      var vertebra = new THREE.Mesh(new THREE.IcosahedronGeometry(rad, 0), boneMat());
+      vertebra.position.z = -0.1;
+      seg.add(vertebra);
+
+      var link = new THREE.Mesh(new THREE.CylinderGeometry(rad * 0.4, rad * 0.4, 0.14, 4), boneMat());
+      link.rotation.x = Math.PI / 2;
+      link.position.z = -0.03;
+      seg.add(link);
+
+      if (s > 0 && s < 7) {
+        var fin = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.13, 4), boneMat());
+        fin.position.set(0, rad * 1.1, -0.09);
+        fin.rotation.x = -0.35;
         seg.add(fin);
       }
+
       parent.add(seg);
       parent = seg;
       this.tail.push(seg);
     }
-    // The tuft at the tip.
-    var tip = mesh(new THREE.ConeGeometry(0.16, 0.34, 5), COLORS.crest);
+
+    var tip = new THREE.Mesh(new THREE.ConeGeometry(0.07, 0.24, 5), boneMat());
     tip.rotation.x = -Math.PI / 2;
-    tip.position.z = -0.26;
+    tip.position.z = -0.2;
     this.tail[this.tail.length - 1].add(tip);
 
-    // --- wings ---
+    // --- wings: bone fingers with a tattered membrane ---
     this.wings = [];
     [-1, 1].forEach(function (side) {
       var wing = new THREE.Group();
-      wing.position.set(side * 0.3, 0.52, -0.08);
+      wing.position.set(side * 0.28, 0.46, -0.02);
       self.torso.add(wing);
 
-      var arm = mesh(new THREE.CylinderGeometry(0.05, 0.06, 0.5, 5), COLORS.bodyDeep);
-      arm.rotation.z = side * -Math.PI / 2;
-      arm.position.x = side * 0.25;
-      wing.add(arm);
+      var upper = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.05, 0.5, 5), boneMat());
+      upper.rotation.z = side * -Math.PI / 2;
+      upper.position.x = side * 0.25;
+      wing.add(upper);
 
-      var membraneGeo = new THREE.BufferGeometry();
+      var elbow = new THREE.Mesh(new THREE.IcosahedronGeometry(0.06, 0), boneMat());
+      elbow.position.x = side * 0.5;
+      wing.add(elbow);
+
+      // Three finger bones fanning out.
+      [[0.34, -0.2], [0.16, -0.5], [-0.05, -0.62]].forEach(function (dir) {
+        var len = Math.hypot(0.55, dir[1]);
+        var finger = new THREE.Mesh(new THREE.CylinderGeometry(0.028, 0.035, len, 4), boneMat());
+        finger.position.set(side * (0.5 + 0.27), dir[0] * 0.5 + dir[1] * 0.5, 0);
+        finger.rotation.z = side * (-Math.PI / 2 + Math.atan2(dir[1], 0.55) * -1);
+        wing.add(finger);
+      });
+
+      // The membrane: torn at the trailing edge, so it reads as old.
       var pts = [
         0, 0, 0,
-        side * 0.95, 0.34, -0.12,
-        side * 1.05, -0.16, 0.02,
-        side * 0.72, -0.5, 0.06,
-        side * 0.3, -0.32, 0.02
+        side * 0.52, 0.02, -0.04,
+        side * 1.02, 0.3, -0.1,
+        side * 1.06, -0.12, 0.0,
+        side * 0.86, -0.34, 0.03,
+        side * 0.7, -0.16, 0.03,
+        side * 0.52, -0.46, 0.04,
+        side * 0.3, -0.24, 0.02
       ];
-      var idx = [0, 1, 2, 0, 2, 3, 0, 3, 4];
+      var idx = [0, 1, 2, 1, 3, 2, 1, 5, 3, 3, 5, 4, 1, 7, 5, 5, 7, 6, 0, 7, 1];
+      var membraneGeo = new THREE.BufferGeometry();
       membraneGeo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
       membraneGeo.setIndex(idx);
       membraneGeo.computeVertexNormals();
-      var membrane = mesh(membraneGeo, COLORS.membrane, { side: THREE.DoubleSide });
+      var membrane = new THREE.Mesh(membraneGeo, new THREE.MeshLambertMaterial({
+        color: COLORS.membrane, emissive: 0x231d33, flatShading: true,
+        side: THREE.DoubleSide, transparent: true, opacity: 0.6
+      }));
       wing.add(membrane);
 
       self.wings.push(wing);
     });
 
-    // --- legs ---
+    // --- legs: bare bone with joints ---
     this.legs = [];
     var legDefs = [
-      { x: -0.34, z: 0.34, front: true },
-      { x: 0.34, z: 0.34, front: true },
-      { x: -0.36, z: -0.3, front: false },
-      { x: 0.36, z: -0.3, front: false }
+      { x: -0.3, z: 0.36, front: true },
+      { x: 0.3, z: 0.36, front: true },
+      { x: -0.32, z: -0.44, front: false },
+      { x: 0.32, z: -0.44, front: false }
     ];
     legDefs.forEach(function (def, index) {
       var hip = new THREE.Group();
-      hip.position.set(def.x, -0.3, def.z);
+      hip.position.set(def.x, -0.18, def.z);
       self.torso.add(hip);
 
-      var thigh = mesh(new THREE.CylinderGeometry(0.13, 0.11, 0.3, 6), COLORS.body);
-      thigh.position.y = -0.15;
+      hip.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.085, 0), boneMat()));
+
+      var thigh = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.055, 0.32, 5), boneMat());
+      thigh.position.y = -0.16;
       hip.add(thigh);
 
       var knee = new THREE.Group();
-      knee.position.y = -0.28;
+      knee.position.y = -0.3;
       hip.add(knee);
+      knee.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.07, 0), boneMat()));
 
-      var shin = mesh(new THREE.CylinderGeometry(0.1, 0.09, 0.26, 6), COLORS.body);
-      shin.position.y = -0.13;
+      var shin = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.045, 0.28, 5), boneMat());
+      shin.position.y = -0.15;
       knee.add(shin);
 
       var foot = new THREE.Group();
-      foot.position.y = -0.24;
+      foot.position.y = -0.28;
       knee.add(foot);
 
-      var pad = mesh(new THREE.BoxGeometry(0.22, 0.1, 0.28), COLORS.belly);
-      pad.position.z = 0.05;
+      var pad = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.06, 0.2), boneMat());
+      pad.position.z = 0.04;
       foot.add(pad);
 
-      // Claws.
-      [-0.07, 0, 0.07].forEach(function (cx) {
-        var claw = mesh(new THREE.ConeGeometry(0.025, 0.08, 4), COLORS.horn);
+      [-0.06, 0, 0.06].forEach(function (cx) {
+        var claw = new THREE.Mesh(new THREE.ConeGeometry(0.024, 0.11, 4), boneMat());
         claw.rotation.x = Math.PI / 2;
-        claw.position.set(cx, -0.02, 0.19);
+        claw.position.set(cx, -0.01, 0.18);
         foot.add(claw);
       });
 
@@ -5862,6 +6211,15 @@ window.Dragon = (function () {
     var breathAmt = Math.sin(this.breath) * (moving ? 0.012 : 0.022);
     this.torsoMesh.scale.set(1 + breathAmt, 1 + breathAmt * 0.7, 1 - breathAmt * 0.4);
     this.bellyMesh.scale.set(1 + breathAmt * 1.4, 1 + breathAmt, 1);
+
+    // The soul in the ribcage is the only warm thing about this dragon:
+    // it beats with the breath and flares when they are happy.
+    var beat = 1 + Math.sin(this.breath * 1.6) * 0.09 + Math.sin(this.breath * 4.1) * 0.03;
+    var warmth = 0.55 + this.happiness * 0.75;
+    this.soulCore.scale.setScalar(beat);
+    this.soulHalo.scale.setScalar(beat * (1.05 + this.happiness * 0.2));
+    this.soulHalo.material.opacity = 0.14 + this.happiness * 0.16;
+    this.soulLight.intensity = 1.9 * warmth + Math.sin(this.breath * 1.6) * 0.25;
 
     // --- body pose ---
     var bob = moving ? Math.abs(Math.sin(this.walkPhase * 2)) * 0.045 : Math.sin(this.breath * 0.6) * 0.012;
@@ -6095,18 +6453,18 @@ window.Pet = (function () {
 
   Pet.prototype.buildBall = function () {
     var group = new THREE.Group();
-    var ball = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.22, 1),
-      new THREE.MeshLambertMaterial({ color: 0xffe066, flatShading: true })
+    var core = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(0.16, 0),
+      new THREE.MeshBasicMaterial({ color: 0x9ffbe4, fog: false })
     );
-    ball.castShadow = true;
-    group.add(ball);
-    var stripe = new THREE.Mesh(
-      new THREE.TorusGeometry(0.2, 0.045, 5, 10),
-      new THREE.MeshLambertMaterial({ color: 0xff7f6b, flatShading: true })
+    group.add(core);
+    var halo = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(0.28, 0),
+      new THREE.MeshBasicMaterial({ color: 0x76f0c8, transparent: true, opacity: 0.28, fog: false })
     );
-    stripe.rotation.x = Math.PI / 2;
-    group.add(stripe);
+    group.add(halo);
+    var wispLight = new THREE.PointLight(0x76f0c8, 1.6, 4.5, 2);
+    group.add(wispLight);
     group.visible = false;
     World.scene.add(group);
 
@@ -6120,19 +6478,18 @@ window.Pet = (function () {
 
   Pet.prototype.buildTreat = function () {
     var group = new THREE.Group();
-    var berry = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(0.17, 0),
-      new THREE.MeshLambertMaterial({ color: 0xff5d7a, flatShading: true })
-    );
-    berry.castShadow = true;
-    group.add(berry);
-    var leaf = new THREE.Mesh(
-      new THREE.ConeGeometry(0.08, 0.14, 4),
-      new THREE.MeshLambertMaterial({ color: 0x74c46a, flatShading: true })
-    );
-    leaf.position.set(0.04, 0.16, 0);
-    leaf.rotation.z = -0.6;
-    group.add(leaf);
+    var boneMaterial = new THREE.MeshLambertMaterial({ color: 0xe9e2cf, flatShading: true });
+    var shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.34, 5), boneMaterial);
+    shaft.rotation.z = Math.PI / 2;
+    shaft.castShadow = true;
+    group.add(shaft);
+    [-0.17, 0.17].forEach(function (x) {
+      [-1, 1].forEach(function (y) {
+        var knob = new THREE.Mesh(new THREE.IcosahedronGeometry(0.055, 0), boneMaterial);
+        knob.position.set(x, y * 0.045, 0);
+        group.add(knob);
+      });
+    });
     group.visible = false;
     World.scene.add(group);
 
@@ -6192,7 +6549,7 @@ window.Pet = (function () {
     }
     this.offerTreat(false);
     this.setState('goToBed');
-    this.onToast(this.name + ' is heading to bed');
+    this.onToast(this.name + ' goes to rest');
   };
 
   Pet.prototype.wakeUp = function () {
@@ -6355,7 +6712,7 @@ window.Pet = (function () {
     d.setPose(this.pose);
     d.update(dt, time);
 
-    this.mood = this.moodEmoji();
+    this.mood = this.moodIcon();
   };
 
   Pet.prototype.stateHandler = function (state) {
@@ -6684,7 +7041,7 @@ window.Pet = (function () {
       this.offerTreat(false);
       this.needs.food = clamp01(this.needs.food + 0.35);
       this.bond = clamp01(this.bond + 0.02);
-      this.onToast(this.name + ' loved that 🍓');
+      this.onToast(this.name + ' crunches happily');
       this.checkGrowth();
     }
 
@@ -6710,7 +7067,7 @@ window.Pet = (function () {
       World.setNight(0.8);
       this.dragon.openJaw(0.8, 1.1);
       window.Audio3D.whine(0.8);
-      this.onToast(this.name + ' is falling asleep…');
+      this.onToast(this.name + ' settles among the bones…');
     }
   };
 
@@ -6768,16 +7125,16 @@ window.Pet = (function () {
 
   /* ---------- what to show the player ---------- */
 
-  Pet.prototype.moodEmoji = function () {
-    if (this.state === 'sleep') return '💤';
-    if (this.state === 'petted') return '💗';
-    if (this.state === 'eat' || this.state === 'goToTreat') return '😋';
-    if (this.state === 'goToBall' || this.state === 'returnBall') return '🎾';
-    if (this.needs.food < 0.25) return '🍓';
-    if (this.needs.energy < 0.22) return '🥱';
-    if (this.needs.fun < 0.25) return '🎾';
-    if (this.idleAttention > 12) return '👀';
-    if (this.happiness > 0.75) return '💛';
+  Pet.prototype.moodIcon = function () {
+    if (this.state === 'sleep') return 'zzz';
+    if (this.state === 'petted') return 'spark';
+    if (this.state === 'eat' || this.state === 'goToTreat') return 'bone';
+    if (this.state === 'goToBall' || this.state === 'returnBall') return 'orb';
+    if (this.needs.food < 0.25) return 'bone';
+    if (this.needs.energy < 0.22) return 'moon';
+    if (this.needs.fun < 0.25) return 'orb';
+    if (this.idleAttention > 12) return 'eye';
+    if (this.happiness > 0.75) return 'spark';
     return '';
   };
 
@@ -7030,7 +7387,7 @@ window.Input = (function () {
     loading: document.getElementById('loading')
   };
 
-  var NAME_IDEAS = ['Puff', 'Ember', 'Sparky', 'Bubble', 'Cloud', 'Pip', 'Minty', 'Peach'];
+  var NAME_IDEAS = ['Ash', 'Cinder', 'Wisp', 'Marrow', 'Onyx', 'Ember', 'Hollow', 'Rune'];
 
   var state = null;      // data for the current session
   var savedData = null;  // the save we found (if a dragon already existed)
@@ -7062,10 +7419,9 @@ window.Input = (function () {
     if (hudCache.hearts !== hearts) {
       ui.bond.innerHTML = '';
       for (var i = 0; i < 5; i++) {
-        var span = document.createElement('span');
-        span.textContent = '💗';
-        if (i < hearts) span.className = 'on';
-        ui.bond.appendChild(span);
+        var rune = document.createElement('span');
+        if (i < hearts) rune.className = 'on';
+        ui.bond.appendChild(rune);
       }
       hudCache.hearts = hearts;
     }
@@ -7074,13 +7430,16 @@ window.Input = (function () {
     setBar(ui.needEnergy, pet.needs.energy);
     setBar(ui.needFun, pet.needs.fun);
 
-    // The emoji thought floats above the dragon head.
+    // The thought icon floats above the skull.
     if (pet.mood) {
       var head = pet.dragon.headWorldPosition();
       head.y += 0.9;
       var screen = World.toScreen(head);
       ui.mood.hidden = false;
-      ui.mood.textContent = pet.mood;
+      if (hudCache.mood !== pet.mood) {
+        ui.mood.innerHTML = '<svg viewBox="0 0 20 20"><use href="#i-' + pet.mood + '"/></svg>';
+        hudCache.mood = pet.mood;
+      }
       ui.mood.style.left = screen.x + 'px';
       ui.mood.style.top = screen.y + 'px';
       ui.mood.classList.toggle('show', screen.visible);
@@ -7114,8 +7473,8 @@ window.Input = (function () {
     pet.onToast = showToast;
     pet.onGrow = function (stage) {
       var text = stage === 'teen'
-        ? pet.name + ' grew up! They can hop on their wings now'
-        : pet.name + ' grew up and learned to fly! 🐉';
+        ? pet.name + ' has grown — their wings can lift them now'
+        : pet.name + ' has grown into a wraith and taken to the air';
       showToast(text);
       hudCache.stage = null;
     };
@@ -7124,7 +7483,7 @@ window.Input = (function () {
     Input.onMode = function (mode) {
       ui.ballBtn.classList.toggle('active', mode === 'aimBall');
       ui.treatBtn.classList.toggle('active', mode === 'treat');
-      if (mode === 'aimBall') showToast('Tap the grass — your dragon will chase the ball');
+      if (mode === 'aimBall') showToast('Tap the ash — your dragon will chase the wisp');
     };
 
     ui.hud.hidden = false;
@@ -7135,11 +7494,11 @@ window.Input = (function () {
     window.Audio3D.unlock();
 
     if (isNew) {
-      showToast('Say hello to ' + pet.name + '!');
+      showToast(pet.name + ' is listening');
     } else if (saveData.awayHours > 0.5) {
-      showToast(pet.name + ' missed you while you were away');
+      showToast(pet.name + ' waited for you in the dark');
     } else {
-      showToast('Welcome back!');
+      showToast('Welcome back');
     }
   }
 
@@ -7170,8 +7529,14 @@ window.Input = (function () {
 
   ui.soundBtn.addEventListener('click', function () {
     window.Audio3D.setEnabled(!window.Audio3D.enabled);
-    ui.soundBtn.textContent = window.Audio3D.enabled ? '🔊' : '🔇';
+    syncSoundIcon();
   });
+
+  function syncSoundIcon() {
+    var on = window.Audio3D.enabled;
+    ui.soundBtn.classList.toggle('off', !on);
+    ui.soundBtn.innerHTML = '<svg viewBox="0 0 20 20"><use href="#i-' + (on ? 'sound' : 'mute') + '"/></svg>';
+  }
 
   ui.ballBtn.addEventListener('click', function () { Input.toggleBall(); });
   ui.treatBtn.addEventListener('click', function () { Input.toggleTreat(); });
@@ -7230,7 +7595,7 @@ window.Input = (function () {
     try {
       World.init(ui.canvas);
     } catch (err) {
-      ui.loading.textContent = 'Looks like this browser cannot do 3D 😿';
+      ui.loading.textContent = 'This browser cannot show 3D';
       console.error(err);
       return;
     }
@@ -7253,12 +7618,13 @@ window.Input = (function () {
     savedData = Save.load();
     if (savedData) {
       // A dragon already exists — the welcome screen invites you straight back to them.
-      ui.eggArt.textContent = '🐉';
-      ui.startTitle.textContent = 'Welcome back!';
-      ui.startSub.textContent = savedData.name + ' has been waiting for you in the meadow.';
+      ui.startTitle.textContent = 'Welcome back';
+      ui.startSub.textContent = savedData.name + ' has been waiting in the dark, ember still lit.';
       ui.nameInput.hidden = true;
       ui.startBtn.textContent = 'Go to ' + savedData.name;
     }
+
+    syncSoundIcon();
 
     ui.loading.classList.add('gone');
     setTimeout(function () { ui.loading.hidden = true; }, 600);

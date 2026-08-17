@@ -1,27 +1,31 @@
 # 🐉 Dragon Meadow
 
-A cute low-poly dragon lives on a floating meadow. They do not wait for clicks: they wander around,
-chase butterflies, sniff the grass, dig with a paw, yawn — and look you in the eye if you have been
-quiet for too long. Your virtual pet.
+A small dragon of bone and emberlight keeps you company on a dead floating island. They do not wait
+for clicks: they wander the ash, chase moths, sniff the ground, dig with a claw, yawn — and look you
+in the eye if you have been quiet for too long. Your virtual pet, just not a living one.
 
 **Play:** https://alxxvine.github.io/cutten/
 
 ## What to do
 
-- ✋ **Pet them** — drag your mouse or finger across the dragon: they squint, rumble, hearts fly up.
-- 🎾 **Play fetch** — press “Ball” and tap the grass: they dash off, grab it and bring it back.
-- 🍓 **Feed them** — press “Treat” and hold the berry up to their snout. They chew and burp sparks.
-- 💤 **Tuck them in** — when tired they curl up on the cushion by themselves and the meadow dims.
-- 🖱 **Look around** — drag across the grass to walk around the meadow, scroll or pinch to zoom.
+- **Pet them** — drag your mouse or finger across the bones: the ember in their ribs flares and they
+  lean into your hand.
+- **Throw a wisp** — press Wisp and tap the ash: they dash off, catch it and carry it back to you.
+- **Feed them** — press Marrow and hold the bone up to their jaws. They crunch it and burp sparks.
+- **Let them rest** — when tired they curl up inside the bone circle and the dark deepens.
+- **Look around** — drag the ground to circle the island, scroll or pinch to come closer.
 
-The dragon has three gentle bars (fullness, energy, fun) and a bond that only ever grows.
-You cannot lose: a hungry dragon looks sad and stares into your eyes, but nothing bad happens.
+The dragon has three gentle bars (fullness, energy, play) and a bond that only ever grows.
+You cannot lose: a hungry dragon stares into your eyes, but nothing bad ever happens here.
 
-**They grow.** With the bond a hatchling becomes a fledgling and then learns to fly, circling above
-the meadow. Proportions change too: the head gets smaller, the wings get bigger.
+**They grow.** With the bond a boneling becomes a wyrmling and then a wraith that circles above the
+island. Proportions change too: the skull gets smaller, the wings get bigger.
 
 Everything is stored in the browser, including the time of your last visit — come back a day later
-and your dragon will be a little hungrier and very happy to see you.
+and their ember will be dimmer, and they will be very glad you came.
+
+The world is dark on purpose: bone-white against near-black, one ember colour for everything alive,
+and a glass interface that stays out of the way.
 
 ## What is inside
 
@@ -30,12 +34,12 @@ built in code.
 
 | File | What it does |
 | --- | --- |
-| `index.html` / `style.css` | Hatching screen, HUD, activity bar |
-| `js/scene.js` | Island, terrain, grass with wind, pond, light, shadows, day and night |
-| `js/dragon.js` | The dragon model, its rig and all the procedural animation |
+| `index.html` / `style.css` | Waking screen, glass HUD, line icons, activity bar |
+| `js/scene.js` | Island, terrain, dead grass with wind, black water, moonlight, shadows, dusk |
+| `js/dragon.js` | The skeleton — ribs, skull, soul ember — its rig and all the procedural animation |
 | `js/pet.js` | Needs, behaviour, activities, growth |
-| `js/input.js` | Petting, ball throwing, treats, camera |
-| `js/audio.js` | WebAudio sound: rumbling, trills, wing beats, snoring |
+| `js/input.js` | Petting, wisp throwing, marrow, camera |
+| `js/audio.js` | WebAudio sound: rumbling, dry chirps, bone clicks, wing beats |
 | `js/save.js` | Saving, and accounting for the time between visits |
 | `vendor/three.min.js` | three.js bundled into a single file (see below) |
 

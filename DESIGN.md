@@ -4,9 +4,9 @@ Status: **v1 is done**. The roadmap is at the bottom.
 
 ## 1. The fantasy
 
-> A small dragon lives on a floating island. They are little, curious and busy with their own
-> things: sniffing the grass, chasing butterflies, digging a hole, yawning. You arrive — and they
-> come running.
+> A small dragon of bone lives on a dead floating island. They are little, curious and busy with
+> their own things: sniffing the ash, chasing moths, digging a hole, yawning. The only warm thing
+> for miles is the ember burning in their ribcage. You arrive — and they come running.
 
 The key feeling is **they are alive even without you**. A virtual pet dies as an idea the moment it
 turns into a set of buttons — feed / play / wash — because then it is not a creature, it is a
@@ -55,19 +55,35 @@ There is no punishment: a hungry dragon looks sad and stares into your eyes, but
 Between visits the bars change with time, but capped at 8 hours: a day away should read as
 "missed you", not as guilt.
 
-Three stages by bond: **hatchling** (0) → **fledgling** (0.35) → **flier** (0.75).
+Three stages by bond: **boneling** (0) → **wyrmling** (0.35) → **wraith** (0.75).
 Proportions change (smaller head, bigger wings and legs) and so does the behaviour set: a fledgling
 hops on their wings, a flier circles above the meadow.
+
+## 4a. Bone and emberlight
+
+The dragon is a skeleton, and that is the whole art direction: **bone-white against near-black, one
+ember colour for everything that is alive.** The ember lives in the ribcage, beats with the breath,
+burns in the eye sockets and is the only light source that moves with the dragon. Wisps, ghost
+blooms, soul motes and the interface accent are all the same green — so anything glowing reads as
+"alive" at a glance.
+
+Cute, not grim: a round oversized skull, big flickering eye sockets, stubby legs. A skeleton is
+unsettling when it is anatomically correct and charming when its proportions are those of a puppy.
+
+The interface follows the same idea: dark glass, hairline edges, thin monochrome line icons, and the
+ember used only where something is active. It never competes with the dragon.
 
 ## 5. The world
 
 A floating island — so there is no endless landscape to build, and so the world reads as
 *their place*. The terrain is analytic (a sum of sines): easy to walk on, to plant grass on and to
-drop a ball onto. Grass is instanced with wind in the vertex shader; there is a rippling pond,
-trees, rocks, flowers, a cushion, butterflies by day and fireflies at night.
+drop a wisp onto. Dead grass is instanced with wind in the vertex shader; there is still black
+water, bare crooked trees, rocks, ghost blooms, a circle of old bones to sleep in, ash moths and
+soul motes drifting over everything.
 
 The camera keeps a cosy three-quarter view, follows the dragon and orbits by dragging.
-The sun travels with the camera, so a small shadow map covers everything that matters.
+The moon travels with the camera, so a small shadow map covers everything that matters, and a
+vignette closes the frame around the dragon.
 
 ## 6. What we learned while building it
 
