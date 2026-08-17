@@ -21,9 +21,13 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
+      # enablement: true включает Pages и переключает источник на GitHub Actions,
+      # иначе шаг падает с «Get Pages site failed», если в настройках выбран другой источник.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
